@@ -1,0 +1,22 @@
+{
+  "overview": "A student management system where admins create subjects and multiple-choice questions, students take quizzes by subject, and admins evaluate student scores with per-answer correct/incorrect breakdowns.",
+  "features": [
+    "Admin and student login via Internet Identity",
+    "Admin creates subjects including programming languages (Python, JavaScript, Go, etc.)",
+    "Admin adds multiple-choice questions per subject",
+    "Students take quizzes grouped by subject",
+    "Admin views student scores and evaluates individual answers",
+    "Per-answer correct/incorrect visual indicator in admin results",
+    "Student quiz history and results"
+  ],
+  "category": "education",
+  "tags": [
+    "quiz",
+    "student-management",
+    "education",
+    "multiple-choice",
+    "admin",
+    "programming-languages"
+  ],
+  "last_updated": "2026-05-15T16:39:08.295Z"
+}

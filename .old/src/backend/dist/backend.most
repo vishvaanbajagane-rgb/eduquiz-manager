@@ -1,0 +1,91 @@
+// Version: 1.0.0
+type AttemptId__173561908 = Nat;
+type Data__791452850<K, V> =
+  {var count : Nat__490723111; kvs : [var ?(K, V)]};
+type Internal__8484328<K, V> =
+  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
+type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
+type Map__158565046<K, V> = Map__297112838<K, V>;
+type Map__297112838<K, V> =
+  {var root : Node__46230540<K, V>; var size : Nat__490723111};
+type Map__605269027<K, V> = Map__158565046<K, V>;
+type Nat__490723111 = Nat__920180692;
+type Nat__920180692 = Nat;
+type Node__46230540<K, V> =
+  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type QuestionId__77764146 = Nat;
+type Question__290945081 =
+  {
+    correctOptionIndex : Nat;
+    createdAt : Timestamp__301639476;
+    id : QuestionId__77764146;
+    options : [Text];
+    subjectId : SubjectId__402408784;
+    text : Text
+  };
+type Question__836207852 = Question__290945081;
+type QuizAttempt__431857804 = QuizAttempt__529564763;
+type QuizAttempt__529564763 =
+  {
+    var answers : [Nat];
+    var completed : Bool;
+    var completedAt : ?Timestamp__301639476;
+    id : AttemptId__173561908;
+    var score : Nat;
+    startedAt : Timestamp__301639476;
+    studentPrincipal : UserId__158757552;
+    subjectId : SubjectId__402408784;
+    totalQuestions : Nat
+  };
+type StudentProfile__388526123 = StudentProfile__553316508;
+type StudentProfile__553316508 =
+  {
+    var displayName : Text;
+    principal : UserId__158757552;
+    registeredAt : Timestamp__301639476
+  };
+type SubjectId__402408784 = Nat;
+type Subject__69355533 =
+  {
+    createdAt : Timestamp__301639476;
+    description : Text;
+    id : SubjectId__402408784;
+    name : Text
+  };
+type Subject__947334269 = Subject__69355533;
+type Timestamp__301639476 = Int;
+type UserId__158757552 = Principal;
+type UserRole__1073662873 = {#admin; #guest; #user};
+actor {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__605269027<Principal, UserRole__1073662873>
+    };
+  stable attempts :
+    {
+      var root : Node__46230540<AttemptId__173561908, QuizAttempt__431857804>;
+      var size : Nat__490723111
+    };
+  stable questions :
+    {
+      var root : Node__46230540<QuestionId__77764146, Question__836207852>;
+      var size : Nat__490723111
+    };
+  stable state :
+    {
+      var nextAttemptId : Nat;
+      var nextQuestionId : Nat;
+      var nextSubjectId : Nat
+    };
+  stable students :
+    {
+      var root : Node__46230540<UserId__158757552, StudentProfile__388526123>;
+      var size : Nat__490723111
+    };
+  stable subjects :
+    {
+      var root : Node__46230540<SubjectId__402408784, Subject__947334269>;
+      var size : Nat__490723111
+    }
+};

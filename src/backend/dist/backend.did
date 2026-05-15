@@ -1,0 +1,138 @@
+type UserRole = 
+ variant {
+   admin;
+   guest;
+   user;
+ };
+type UserId = principal;
+type UpdateSubjectPayload = 
+ record {
+   description: text;
+   id: SubjectId;
+   name: text;
+ };
+type UpdateQuestionPayload = 
+ record {
+   correctOptionIndex: nat;
+   id: QuestionId;
+   options: vec text;
+   subjectId: SubjectId;
+   "text": text;
+ };
+type Timestamp = int;
+type SubmitQuizResult = 
+ record {
+   attempt: QuizAttemptPublic;
+   correctAnswers: vec nat;
+ };
+type SubmitAnswersPayload = 
+ record {
+   answers: vec nat;
+   attemptId: AttemptId;
+ };
+type SubjectWithStats = 
+ record {
+   createdAt: Timestamp;
+   description: text;
+   id: SubjectId;
+   name: text;
+   questionCount: nat;
+ };
+type SubjectId = nat;
+type Subject = 
+ record {
+   createdAt: Timestamp;
+   description: text;
+   id: SubjectId;
+   name: text;
+ };
+type StudentSummary = 
+ record {
+   averageScore: nat;
+   displayName: text;
+   "principal": UserId;
+   totalAttempts: nat;
+ };
+type StudentProfilePublic = 
+ record {
+   displayName: text;
+   "principal": UserId;
+   registeredAt: Timestamp;
+ };
+type QuizAttemptPublic = 
+ record {
+   answers: vec nat;
+   completed: bool;
+   completedAt: opt Timestamp;
+   id: AttemptId;
+   score: nat;
+   scorePercentage: nat;
+   startedAt: Timestamp;
+   studentPrincipal: UserId;
+   subjectId: SubjectId;
+   totalQuestions: nat;
+ };
+type QuestionPublic = 
+ record {
+   createdAt: Timestamp;
+   id: QuestionId;
+   options: vec text;
+   subjectId: SubjectId;
+   "text": text;
+ };
+type QuestionId = nat;
+type Question = 
+ record {
+   correctOptionIndex: nat;
+   createdAt: Timestamp;
+   id: QuestionId;
+   options: vec text;
+   subjectId: SubjectId;
+   "text": text;
+ };
+type CreateSubjectPayload = 
+ record {
+   description: text;
+   name: text;
+ };
+type CreateQuestionPayload = 
+ record {
+   correctOptionIndex: nat;
+   options: vec text;
+   subjectId: SubjectId;
+   "text": text;
+ };
+type AttemptId = nat;
+type AttemptDetails = 
+ record {
+   attempt: QuizAttemptPublic;
+   correctAnswers: vec nat;
+ };
+service : {
+  _initializeAccessControl: () -> ();
+  assignCallerUserRole: (user: principal, role: UserRole) -> ();
+  createQuestion: (payload: CreateQuestionPayload) -> (Question);
+  createSubject: (payload: CreateSubjectPayload) -> (Subject);
+  deleteQuestion: (id: QuestionId) -> (bool);
+  deleteSubject: (id: SubjectId) -> (bool);
+  getAllAttempts: () -> (vec QuizAttemptPublic) query;
+  getAttemptDetails: (attemptId: AttemptId) -> (opt AttemptDetails) query;
+  getAttemptsByStudent: (studentId: UserId) -> (vec QuizAttemptPublic) query;
+  getAttemptsBySubject: (subjectId: SubjectId) ->
+   (vec QuizAttemptPublic) query;
+  getCallerUserRole: () -> (UserRole) query;
+  getMyAttempts: () -> (vec QuizAttemptPublic) query;
+  getMyProfile: () -> (opt StudentProfilePublic) query;
+  isCallerAdmin: () -> (bool) query;
+  listAllStudents: () -> (vec StudentSummary) query;
+  listQuestionsBySubject: (subjectId: SubjectId) ->
+   (vec QuestionPublic) query;
+  listQuestionsWithAnswers: (subjectId: SubjectId) -> (vec Question) query;
+  listSubjects: () -> (vec SubjectWithStats) query;
+  registerStudent: () -> (StudentProfilePublic);
+  startQuiz: (subjectId: SubjectId) -> (QuizAttemptPublic);
+  submitQuizAnswers: (payload: SubmitAnswersPayload) -> (SubmitQuizResult);
+  updateMyDisplayName: (name: text) -> (bool);
+  updateQuestion: (payload: UpdateQuestionPayload) -> (bool);
+  updateSubject: (payload: UpdateSubjectPayload) -> (bool);
+}
