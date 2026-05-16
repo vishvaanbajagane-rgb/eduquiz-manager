@@ -1,18 +1,30 @@
 // Version: 1.0.0
 type AttemptId__173561908 = Nat;
-type Data__791452850<K, V> =
-  {var count : Nat__490723111; kvs : [var ?(K, V)]};
-type Internal__8484328<K, V> =
-  {children : [var ?Node__46230540<K, V>]; data : Data__791452850<K, V>};
-type Leaf__809889148<K, V> = {data : Data__791452850<K, V>};
-type Map__158565046<K, V> = Map__297112838<K, V>;
-type Map__297112838<K, V> =
-  {var root : Node__46230540<K, V>; var size : Nat__490723111};
-type Map__605269027<K, V> = Map__158565046<K, V>;
-type Nat__490723111 = Nat__920180692;
+type CertificateId__417577722 = Nat;
+type Certificate__111188169 = Certificate__592097419;
+type Certificate__592097419 =
+  {
+    completedAt : Timestamp__301639476;
+    id : CertificateId__417577722;
+    score : Nat;
+    studentId : UserId__158757552;
+    studentName : Text;
+    subjectId : SubjectId__402408784;
+    subjectName : Text;
+    totalQuestions : Nat
+  };
+type Data__45091661<K, V> = {var count : Nat__369452189; kvs : [var ?(K, V)]};
+type Internal__112456046<K, V> =
+  {children : [var ?Node__462531142<K, V>]; data : Data__45091661<K, V>};
+type Leaf__57387986<K, V> = {data : Data__45091661<K, V>};
+type Map__148053270<K, V> = Map__706432854<K, V>;
+type Map__528685958<K, V> =
+  {var root : Node__462531142<K, V>; var size : Nat__369452189};
+type Map__706432854<K, V> = Map__528685958<K, V>;
+type Nat__369452189 = Nat__920180692;
 type Nat__920180692 = Nat;
-type Node__46230540<K, V> =
-  {#internal : Internal__8484328<K, V>; #leaf : Leaf__809889148<K, V>};
+type Node__462531142<K, V> =
+  {#internal : Internal__112456046<K, V>; #leaf : Leaf__57387986<K, V>};
 type QuestionId__77764146 = Nat;
 type Question__290945081 =
   {
@@ -35,14 +47,20 @@ type QuizAttempt__529564763 =
     startedAt : Timestamp__301639476;
     studentPrincipal : UserId__158757552;
     subjectId : SubjectId__402408784;
+    timeLimitMinutes : ?Nat;
     totalQuestions : Nat
   };
 type StudentProfile__388526123 = StudentProfile__553316508;
 type StudentProfile__553316508 =
   {
+    var accentColor : Text;
+    var department : Text;
     var displayName : Text;
+    var enrollNumber : Text;
     principal : UserId__158757552;
-    registeredAt : Timestamp__301639476
+    var registerNumber : Text;
+    registeredAt : Timestamp__301639476;
+    var section : Text
   };
 type SubjectId__402408784 = Nat;
 type Subject__69355533 =
@@ -50,7 +68,8 @@ type Subject__69355533 =
     createdAt : Timestamp__301639476;
     description : Text;
     id : SubjectId__402408784;
-    name : Text
+    name : Text;
+    timerMinutes : ?Nat
   };
 type Subject__947334269 = Subject__69355533;
 type Timestamp__301639476 = Int;
@@ -60,32 +79,40 @@ actor {
   stable accessControlState :
     {
       var adminAssigned : Bool;
-      userRoles : Map__605269027<Principal, UserRole__1073662873>
+      userRoles : Map__148053270<Principal, UserRole__1073662873>
     };
   stable attempts :
     {
-      var root : Node__46230540<AttemptId__173561908, QuizAttempt__431857804>;
-      var size : Nat__490723111
+      var root : Node__462531142<AttemptId__173561908, QuizAttempt__431857804>;
+      var size : Nat__369452189
     };
+  stable certificates :
+    {
+      var root :
+        Node__462531142<CertificateId__417577722, Certificate__111188169>;
+      var size : Nat__369452189
+    };
+  stable var openAIApiKey : {var value : ?Text};
   stable questions :
     {
-      var root : Node__46230540<QuestionId__77764146, Question__836207852>;
-      var size : Nat__490723111
+      var root : Node__462531142<QuestionId__77764146, Question__836207852>;
+      var size : Nat__369452189
     };
   stable state :
     {
       var nextAttemptId : Nat;
+      var nextCertificateId : Nat;
       var nextQuestionId : Nat;
       var nextSubjectId : Nat
     };
   stable students :
     {
-      var root : Node__46230540<UserId__158757552, StudentProfile__388526123>;
-      var size : Nat__490723111
+      var root : Node__462531142<UserId__158757552, StudentProfile__388526123>;
+      var size : Nat__369452189
     };
   stable subjects :
     {
-      var root : Node__46230540<SubjectId__402408784, Subject__947334269>;
-      var size : Nat__490723111
+      var root : Node__462531142<SubjectId__402408784, Subject__947334269>;
+      var size : Nat__369452189
     }
 };

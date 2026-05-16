@@ -10,6 +10,7 @@ type UpdateSubjectPayload =
    description: text;
    id: SubjectId;
    name: text;
+   timerMinutes: opt nat;
  };
 type UpdateQuestionPayload = 
  record {
@@ -37,6 +38,7 @@ type SubjectWithStats =
    id: SubjectId;
    name: text;
    questionCount: nat;
+   timerMinutes: opt nat;
  };
 type SubjectId = nat;
 type Subject = 
@@ -45,6 +47,7 @@ type Subject =
    description: text;
    id: SubjectId;
    name: text;
+   timerMinutes: opt nat;
  };
 type StudentSummary = 
  record {
@@ -55,9 +58,14 @@ type StudentSummary =
  };
 type StudentProfilePublic = 
  record {
+   accentColor: text;
+   department: text;
    displayName: text;
+   enrollNumber: text;
    "principal": UserId;
+   registerNumber: text;
    registeredAt: Timestamp;
+   section: text;
  };
 type QuizAttemptPublic = 
  record {
@@ -70,6 +78,7 @@ type QuizAttemptPublic =
    startedAt: Timestamp;
    studentPrincipal: UserId;
    subjectId: SubjectId;
+   timeLimitMinutes: opt nat;
    totalQuestions: nat;
  };
 type QuestionPublic = 
@@ -90,10 +99,19 @@ type Question =
    subjectId: SubjectId;
    "text": text;
  };
+type LeaderboardEntry = 
+ record {
+   averageScore: nat;
+   displayName: text;
+   "principal": UserId;
+   rank: nat;
+   totalAttempts: nat;
+ };
 type CreateSubjectPayload = 
  record {
    description: text;
    name: text;
+   timerMinutes: opt nat;
  };
 type CreateQuestionPayload = 
  record {
@@ -101,6 +119,18 @@ type CreateQuestionPayload =
    options: vec text;
    subjectId: SubjectId;
    "text": text;
+ };
+type CertificateId = nat;
+type Certificate = 
+ record {
+   completedAt: Timestamp;
+   id: CertificateId;
+   score: nat;
+   studentId: UserId;
+   studentName: text;
+   subjectId: SubjectId;
+   subjectName: text;
+   totalQuestions: nat;
  };
 type AttemptId = nat;
 type AttemptDetails = 
@@ -121,8 +151,11 @@ service : {
   getAttemptsBySubject: (subjectId: SubjectId) ->
    (vec QuizAttemptPublic) query;
   getCallerUserRole: () -> (UserRole) query;
+  getCertificates: () -> (vec Certificate) query;
+  getLeaderboard: () -> (vec LeaderboardEntry) query;
   getMyAttempts: () -> (vec QuizAttemptPublic) query;
   getMyProfile: () -> (opt StudentProfilePublic) query;
+  getSubjectCertificate: (subjectId: SubjectId) -> (opt Certificate) query;
   isCallerAdmin: () -> (bool) query;
   listAllStudents: () -> (vec StudentSummary) query;
   listQuestionsBySubject: (subjectId: SubjectId) ->
@@ -132,7 +165,12 @@ service : {
   registerStudent: () -> (StudentProfilePublic);
   startQuiz: (subjectId: SubjectId) -> (QuizAttemptPublic);
   submitQuizAnswers: (payload: SubmitAnswersPayload) -> (SubmitQuizResult);
+  updateMyAccentColor: (color: text) -> (bool);
+  updateMyDepartment: (value: text) -> (bool);
   updateMyDisplayName: (name: text) -> (bool);
+  updateMyEnrollNumber: (value: text) -> (bool);
+  updateMyRegisterNumber: (value: text) -> (bool);
+  updateMySection: (value: text) -> (bool);
   updateQuestion: (payload: UpdateQuestionPayload) -> (bool);
   updateSubject: (payload: UpdateSubjectPayload) -> (bool);
 }

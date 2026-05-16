@@ -33,6 +33,41 @@ mixin (
     StudentsLib.updateDisplayName(students, caller, name);
   };
 
+  public shared ({ caller }) func updateMyAccentColor(color : Text) : async Bool {
+    if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
+      Runtime.trap("Unauthorized: must be logged in");
+    };
+    StudentsLib.updateAccentColor(students, caller, color);
+  };
+
+  public shared ({ caller }) func updateMyDepartment(value : Text) : async Bool {
+    if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
+      Runtime.trap("Unauthorized: must be logged in");
+    };
+    StudentsLib.updateDepartment(students, caller, value);
+  };
+
+  public shared ({ caller }) func updateMyRegisterNumber(value : Text) : async Bool {
+    if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
+      Runtime.trap("Unauthorized: must be logged in");
+    };
+    StudentsLib.updateRegisterNumber(students, caller, value);
+  };
+
+  public shared ({ caller }) func updateMyEnrollNumber(value : Text) : async Bool {
+    if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
+      Runtime.trap("Unauthorized: must be logged in");
+    };
+    StudentsLib.updateEnrollNumber(students, caller, value);
+  };
+
+  public shared ({ caller }) func updateMySection(value : Text) : async Bool {
+    if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
+      Runtime.trap("Unauthorized: must be logged in");
+    };
+    StudentsLib.updateSection(students, caller, value);
+  };
+
   public query ({ caller }) func listAllStudents() : async [StudentTypes.StudentSummary] {
     if (not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: only admins can view all students");

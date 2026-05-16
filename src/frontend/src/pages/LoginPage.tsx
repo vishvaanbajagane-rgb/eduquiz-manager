@@ -1,24 +1,33 @@
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { useAuth } from "@/hooks/useAuth";
 import { useRole } from "@/hooks/useRole";
 import { useNavigate } from "@tanstack/react-router";
 import {
   BookOpen,
-  ClipboardCheck,
+  CheckCircle2,
   Fingerprint,
   GraduationCap,
   ShieldCheck,
+  Sparkles,
+  Star,
+  Zap,
 } from "lucide-react";
 import { useEffect } from "react";
+
+const ADMIN_FEATURES = [
+  "Manage subjects & topics",
+  "Create multiple-choice questions",
+  "View student results & scores",
+  "Set quiz timers per subject",
+];
+
+const STUDENT_FEATURES = [
+  "Take quizzes by subject",
+  "Compete on the leaderboard",
+  "Earn completion certificates",
+  "Ask the AI doubt assistant",
+];
 
 export default function LoginPage() {
   const { isAuthenticated, isInitializing, isLoggingIn, login } = useAuth();
@@ -37,113 +46,164 @@ export default function LoginPage() {
     return <LoadingSpinner fullScreen label="Initializing…" />;
   }
 
-  const features = [
-    {
-      icon: ShieldCheck,
-      role: "Admin",
-      color: "bg-primary/10 text-primary",
-      items: [
-        "Manage subjects & topics",
-        "Create multiple-choice questions",
-        "View student results",
-      ],
-    },
-    {
-      icon: BookOpen,
-      role: "Student",
-      color: "bg-accent/10 text-accent",
-      items: [
-        "Take quizzes by subject",
-        "Review quiz history",
-        "Track your progress",
-      ],
-    },
-  ];
-
   return (
     <div
-      className="min-h-screen bg-background flex flex-col"
+      className="min-h-screen flex flex-col relative overflow-hidden"
+      style={{
+        background:
+          "linear-gradient(135deg, oklch(0.13 0.04 265) 0%, oklch(0.16 0.07 280) 30%, oklch(0.18 0.09 300) 60%, oklch(0.14 0.05 240) 100%)",
+      }}
       data-ocid="login.page"
     >
+      {/* Floating decorative blobs */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -top-24 -left-24 h-96 w-96 rounded-full opacity-20 animate-float"
+        style={{
+          background:
+            "radial-gradient(circle, oklch(0.65 0.28 270) 0%, transparent 70%)",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -bottom-32 -right-32 h-[500px] w-[500px] rounded-full opacity-15"
+        style={{
+          background:
+            "radial-gradient(circle, oklch(0.62 0.22 200) 0%, transparent 70%)",
+          animationDelay: "1.5s",
+        }}
+      />
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute top-1/3 right-1/4 h-64 w-64 rounded-full opacity-10 animate-spin-slow"
+        style={{
+          background:
+            "conic-gradient(from 0deg, oklch(0.68 0.26 310), oklch(0.55 0.28 270), oklch(0.68 0.26 310))",
+        }}
+      />
+
       {/* Header */}
-      <header className="zone-header">
+      <header className="relative z-10 px-6 py-5">
         <div className="max-w-5xl mx-auto flex items-center gap-3">
-          <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-            <GraduationCap className="h-5 w-5 text-primary-foreground" />
+          <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-glow">
+            <GraduationCap className="h-6 w-6 text-white" />
           </div>
-          <span className="font-display font-semibold text-foreground">
-            EduManage
+          <span className="font-display font-bold text-lg text-white tracking-tight">
+            EduQuiz
+          </span>
+          <span className="badge-pill bg-white/10 text-white/70 ml-1">
+            <Sparkles className="h-3 w-3" />
+            Manager
           </span>
         </div>
       </header>
 
       {/* Hero */}
-      <main className="flex-1 flex items-center justify-center px-4 py-16">
+      <main className="flex-1 flex items-center justify-center px-4 py-12 relative z-10">
         <div className="w-full max-w-3xl space-y-10">
           {/* Title block */}
-          <div className="text-center space-y-4">
-            <Badge variant="secondary" className="gap-1.5 px-3 py-1 text-xs">
-              <ClipboardCheck className="h-3 w-3" />
+          <div className="text-center space-y-5 animate-fade-in-up">
+            <div className="inline-flex items-center gap-2 badge-pill bg-white/10 text-white/80 border border-white/20 text-sm">
+              <Star className="h-3.5 w-3.5 text-yellow-300" />
               Student Management System
-            </Badge>
-            <h1 className="font-display text-4xl md:text-5xl font-bold text-foreground leading-tight">
+              <Star className="h-3.5 w-3.5 text-yellow-300" />
+            </div>
+            <h1 className="font-display text-5xl md:text-6xl font-extrabold text-white leading-tight tracking-tight">
               Learn smarter,
               <br />
-              <span className="text-primary">test better.</span>
+              <span className="gradient-text-vivid">test better.</span>
             </h1>
-            <p className="text-muted-foreground text-lg max-w-md mx-auto">
-              Manage subjects, create quizzes, and track student progress — all
-              in one place.
+            <p className="text-white/60 text-lg max-w-md mx-auto leading-relaxed">
+              Manage subjects, create quizzes, earn certificates and track
+              student progress — all in one beautiful platform.
             </p>
           </div>
 
           {/* Role cards */}
-          <div className="grid md:grid-cols-2 gap-4">
-            {features.map((f) => {
-              const Icon = f.icon;
-              return (
-                <Card key={f.role} className="zone-section border-border">
-                  <CardHeader className="pb-3">
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`h-10 w-10 rounded-lg flex items-center justify-center ${f.color}`}
-                      >
-                        <Icon className="h-5 w-5" />
-                      </div>
-                      <div>
-                        <CardTitle className="text-base font-display">
-                          {f.role} Access
-                        </CardTitle>
-                        <CardDescription className="text-xs">
-                          Sign in as {f.role.toLowerCase()}
-                        </CardDescription>
-                      </div>
-                    </div>
-                  </CardHeader>
-                  <CardContent className="pt-0">
-                    <ul className="space-y-1.5">
-                      {f.items.map((item) => (
-                        <li
-                          key={item}
-                          className="flex items-center gap-2 text-sm text-muted-foreground"
-                        >
-                          <span className="h-1.5 w-1.5 rounded-full bg-primary shrink-0" />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </CardContent>
-                </Card>
-              );
-            })}
+          <div
+            className="grid md:grid-cols-2 gap-5"
+            style={{ animationDelay: "100ms" }}
+          >
+            {/* Admin card */}
+            <div className="glass-card rounded-2xl p-6 card-elevated hover:scale-[1.02] transition-smooth group">
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="h-12 w-12 rounded-xl flex items-center justify-center shadow-glow shrink-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(0.55 0.25 270) 0%, oklch(0.48 0.28 295) 100%)",
+                  }}
+                >
+                  <ShieldCheck className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-display font-bold text-white text-base">
+                    Admin Access
+                  </h2>
+                  <p className="text-white/50 text-xs">Manage & oversee</p>
+                </div>
+                <Zap className="h-4 w-4 text-yellow-300/70 ml-auto group-hover:text-yellow-300 transition-colors" />
+              </div>
+              <ul className="space-y-2">
+                {ADMIN_FEATURES.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-white/65"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-primary shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Student card */}
+            <div
+              className="glass-card rounded-2xl p-6 card-elevated hover:scale-[1.02] transition-smooth group"
+              style={{ animationDelay: "80ms" }}
+            >
+              <div className="flex items-center gap-3 mb-4">
+                <div
+                  className="h-12 w-12 rounded-xl flex items-center justify-center shrink-0"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, oklch(0.58 0.22 200) 0%, oklch(0.50 0.24 220) 100%)",
+                    boxShadow: "0 0 16px 2px oklch(0.55 0.22 200 / 0.30)",
+                  }}
+                >
+                  <BookOpen className="h-6 w-6 text-white" />
+                </div>
+                <div>
+                  <h2 className="font-display font-bold text-white text-base">
+                    Student Access
+                  </h2>
+                  <p className="text-white/50 text-xs">Learn & compete</p>
+                </div>
+                <Star className="h-4 w-4 text-cyan-300/70 ml-auto group-hover:text-cyan-300 transition-colors" />
+              </div>
+              <ul className="space-y-2">
+                {STUDENT_FEATURES.map((item) => (
+                  <li
+                    key={item}
+                    className="flex items-center gap-2 text-sm text-white/65"
+                  >
+                    <CheckCircle2 className="h-4 w-4 text-cyan-400 shrink-0" />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
 
           {/* CTA */}
-          <div className="flex justify-center">
+          <div
+            className="flex flex-col items-center gap-3 animate-fade-in-up"
+            style={{ animationDelay: "200ms" }}
+          >
             <Button
               type="button"
               size="lg"
-              className="gap-2 px-8 font-display font-semibold text-base h-12"
+              className="gap-2.5 px-10 font-display font-bold text-base h-14 rounded-2xl gradient-primary text-white border-0 shadow-glow animate-pulse-glow hover:opacity-90 transition-smooth"
               onClick={login}
               disabled={isInitializing || isLoggingIn}
               data-ocid="login.sign_in_button"
@@ -151,11 +211,10 @@ export default function LoginPage() {
               <Fingerprint className="h-5 w-5" />
               {isLoggingIn ? "Connecting…" : "Sign in with Internet Identity"}
             </Button>
+            <p className="text-center text-xs text-white/35">
+              The first user to sign in automatically becomes admin.
+            </p>
           </div>
-
-          <p className="text-center text-xs text-muted-foreground">
-            The first user to sign in automatically becomes admin.
-          </p>
         </div>
       </main>
     </div>

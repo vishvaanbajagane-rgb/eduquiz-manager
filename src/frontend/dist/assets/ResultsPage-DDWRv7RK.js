@@ -1,18 +1,21 @@
-import { c as createLucideIcon, u as useNavigate, r as reactExports, j as jsxRuntimeExports, L as LoadingSpinner, B as Button } from "./index-BtG-7keB.js";
-import { u as useAuth, a as useRole, g as useActor, h as useQuery, C as Card, f as CardContent, c as CardHeader, d as CardTitle, B as Badge, i as createActor } from "./useRole-DKmUvK7y.js";
-import { j as ChartColumn, A as AdminLayout, I as Input } from "./AdminLayout-C4TKwBUP.js";
-import { S as Select, a as SelectTrigger, b as SelectValue, c as SelectContent, d as SelectItem, C as ChevronDown } from "./select-BLzaCnGn.js";
-import { T as Table, a as TableHeader, b as TableRow, c as TableHead, d as TableBody, e as TableCell } from "./table-B2mMw4ue.js";
-import { T as Trophy, C as ChevronRight, a as CircleX } from "./trophy-CEN2CDc2.js";
-import { C as CircleCheck } from "./circle-check-CvYA9p_X.js";
-import "./separator-C0JGTHfA.js";
+import { c as createLucideIcon, u as useNavigate, r as reactExports, j as jsxRuntimeExports, L as LoadingSpinner, B as Button } from "./index-Hh1gENll.js";
+import { u as useAuth, a as useActor, b as useQuery, c as createActor } from "./backend-Bub9mio5.js";
+import { C as Card, a as CardContent, b as CardHeader, c as CardTitle } from "./card-DE0aOoMx.js";
+import { S as Select, a as SelectTrigger, b as SelectValue, c as SelectContent, d as SelectItem, I as Input, C as ChevronDown } from "./select-D4QHv7pU.js";
+import { T as Table, a as TableHeader, b as TableRow, c as TableHead, d as TableBody, e as TableCell } from "./table-CTiXg-on.js";
+import { u as useRole } from "./useRole-DOnT3i7R.js";
+import { a as ChartColumn, A as AdminLayout } from "./AdminLayout-DuNcujI_.js";
+import { U as Users } from "./users-BrsFg6AR.js";
+import { T as Trophy } from "./badge-EMKhFOLg.js";
+import { C as ChevronRight, a as CircleX } from "./circle-x-jSkZb9nB.js";
+import { C as CircleCheck } from "./circle-check-BCDIuKY2.js";
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode$2 = [
+const __iconNode$1 = [
   [
     "path",
     {
@@ -21,18 +24,7 @@ const __iconNode$2 = [
     }
   ]
 ];
-const Funnel = createLucideIcon("funnel", __iconNode$2);
-/**
- * @license lucide-react v0.511.0 - ISC
- *
- * This source code is licensed under the ISC license.
- * See the LICENSE file in the root directory of this source tree.
- */
-const __iconNode$1 = [
-  ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
-  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
-];
-const Search = createLucideIcon("search", __iconNode$1);
+const Funnel = createLucideIcon("funnel", __iconNode$1);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -40,12 +32,10 @@ const Search = createLucideIcon("search", __iconNode$1);
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode = [
-  ["path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2", key: "1yyitq" }],
-  ["path", { d: "M16 3.128a4 4 0 0 1 0 7.744", key: "16gr8j" }],
-  ["path", { d: "M22 21v-2a4 4 0 0 0-3-3.87", key: "kshegd" }],
-  ["circle", { cx: "9", cy: "7", r: "4", key: "nufk8" }]
+  ["path", { d: "m21 21-4.34-4.34", key: "14j7rj" }],
+  ["circle", { cx: "11", cy: "11", r: "8", key: "4ej97u" }]
 ];
-const Users = createLucideIcon("users", __iconNode);
+const Search = createLucideIcon("search", __iconNode);
 function ScoreBadge({
   pct,
   score,
@@ -53,10 +43,10 @@ function ScoreBadge({
 }) {
   const label = `${score.toString()}/${total.toString()} (${pct}%)`;
   if (pct >= 70)
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { className: "bg-green-100 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400 text-xs tabular-nums", children: label });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-sm", children: label });
   if (pct >= 40)
-    return /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { className: "bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-900/30 dark:text-yellow-400 text-xs tabular-nums", children: label });
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(Badge, { className: "bg-red-100 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 text-xs tabular-nums", children: label });
+    return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-white shadow-sm", children: label });
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-rose-500 to-red-500 text-white shadow-sm", children: label });
 }
 function AnswerBreakdown({
   attempt,
@@ -72,11 +62,11 @@ function AnswerBreakdown({
     return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "py-4 pl-12 text-sm text-muted-foreground", children: "Could not load answer details." });
   const { correctAnswers } = details;
   const { answers } = attempt;
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-muted/20 border-b border-border", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "px-6 py-3 grid grid-cols-[auto_1fr_1fr_auto] gap-x-6 gap-y-1 max-w-3xl", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wide", children: "#" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wide", children: "Student Answer" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wide", children: "Correct Answer" }),
-    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-semibold text-muted-foreground uppercase tracking-wide", children: "Result" }),
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "bg-gradient-to-r from-muted/30 to-muted/10 border-b border-border", children: /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "px-6 py-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "grid grid-cols-[auto_1fr_1fr_auto] gap-x-6 gap-y-2 max-w-3xl", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold text-muted-foreground uppercase tracking-wider", children: "#" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold text-muted-foreground uppercase tracking-wider", children: "Student Answer" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold text-muted-foreground uppercase tracking-wider", children: "Correct Answer" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold text-muted-foreground uppercase tracking-wider", children: "Result" }),
     answers.map((ans, idx) => {
       const correct = correctAnswers[idx];
       const isRight = ans === correct;
@@ -97,7 +87,7 @@ function AnswerBreakdown({
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "span",
           {
-            className: `text-xs py-1 font-medium ${isRight ? "text-emerald-700" : "text-red-700"}`,
+            className: `text-xs py-1 font-semibold ${isRight ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`,
             children: [
               "Option ",
               ansLabel
@@ -108,7 +98,7 @@ function AnswerBreakdown({
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           "span",
           {
-            className: "text-xs py-1 text-foreground",
+            className: "text-xs py-1 text-foreground font-medium",
             children: [
               "Option ",
               correctLabel
@@ -120,13 +110,13 @@ function AnswerBreakdown({
           "span",
           {
             className: "py-1",
-            children: isRight ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-4 w-4 text-emerald-600" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "h-4 w-4 text-red-500" })
+            children: isRight ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-4 w-4 text-emerald-500" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "h-4 w-4 text-rose-500" })
           },
           `r-${idx}-${isRight ? "pass" : "fail"}`
         )
       ];
     })
-  ] }) });
+  ] }) }) });
 }
 function AttemptRow({
   attempt,
@@ -150,23 +140,19 @@ function AttemptRow({
   const subjectName = subjectMap.get(attempt.subjectId.toString()) ?? "Unknown Subject";
   const date = attempt.completedAt ? new Date(Number(attempt.completedAt) / 1e6).toLocaleDateString(
     void 0,
-    {
-      month: "short",
-      day: "numeric",
-      year: "numeric"
-    }
+    { month: "short", day: "numeric", year: "numeric" }
   ) : "—";
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs(
       TableRow,
       {
-        className: "cursor-pointer hover:bg-muted/40 transition-colors",
+        className: `cursor-pointer transition-colors hover:bg-primary/5 ${rowIndex % 2 === 0 ? "bg-muted/20" : ""}`,
         onClick: () => setExpanded((v) => !v),
         "data-ocid": `admin.results.attempt.item.${rowIndex}`,
         children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: "w-8 pl-4 pr-0", children: expanded ? /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { className: "h-3.5 w-3.5 text-muted-foreground" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-3.5 w-3.5 text-muted-foreground" }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "text-xs bg-muted px-1.5 py-0.5 rounded font-mono", children: truncatedPrincipal }) }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: "text-sm text-foreground font-medium", children: subjectName }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: "w-8 pl-4 pr-0", children: expanded ? /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronDown, { className: "h-4 w-4 text-primary" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(ChevronRight, { className: "h-4 w-4 text-muted-foreground" }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { children: /* @__PURE__ */ jsxRuntimeExports.jsx("code", { className: "text-xs bg-muted/60 border border-border px-2 py-1 rounded-lg font-mono text-muted-foreground", children: truncatedPrincipal }) }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: "text-sm text-foreground font-semibold", children: subjectName }),
           /* @__PURE__ */ jsxRuntimeExports.jsx(TableCell, { className: "text-right", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
             ScoreBadge,
             {
@@ -189,6 +175,11 @@ function AttemptRow({
     ) }) })
   ] });
 }
+const STAT_GRADIENTS = [
+  "from-blue-500 to-indigo-600",
+  "from-violet-500 to-purple-600",
+  "from-amber-500 to-orange-600"
+];
 function ResultsPage() {
   const { isAuthenticated } = useAuth();
   const role = useRole();
@@ -236,46 +227,71 @@ function ResultsPage() {
   );
   const filteredAttempts = reactExports.useMemo(() => {
     let list = completedAttempts;
-    if (filterSubjectId !== "all") {
+    if (filterSubjectId !== "all")
       list = list.filter((a) => a.subjectId.toString() === filterSubjectId);
-    }
     const q = search.trim().toLowerCase();
-    if (q) {
+    if (q)
       list = list.filter(
         (a) => a.studentPrincipal.toString().toLowerCase().includes(q)
       );
-    }
     return list.slice().sort((a, b) => Number((b.completedAt ?? 0n) - (a.completedAt ?? 0n)));
   }, [completedAttempts, filterSubjectId, search]);
   if (role === "loading" || loadingAttempts || loadingSubjects)
     return /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingSpinner, { fullScreen: true });
   const STATS = [
-    { label: "Total Students", value: uniqueStudents, icon: Users },
+    {
+      label: "Total Students",
+      value: uniqueStudents,
+      icon: Users,
+      grad: STAT_GRADIENTS[0]
+    },
     {
       label: "Quiz Attempts",
       value: completedAttempts.length,
-      icon: ChartColumn
+      icon: ChartColumn,
+      grad: STAT_GRADIENTS[1]
     },
-    { label: "Avg. Score %", value: `${avgScore}%`, icon: Trophy }
+    {
+      label: "Avg. Score %",
+      value: `${avgScore}%`,
+      icon: Trophy,
+      grad: STAT_GRADIENTS[2]
+    }
   ];
   return /* @__PURE__ */ jsxRuntimeExports.jsx(AdminLayout, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-6xl mx-auto", "data-ocid": "admin.results.page", children: [
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-2xl font-bold text-foreground", children: "Results" }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-0.5", children: "Review quiz submissions and answer breakdowns" })
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-8", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-3xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent", children: "Results" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground text-sm mt-1", children: "Review quiz submissions and answer breakdowns" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-3 gap-4 mb-8", children: STATS.map((stat) => {
       const Icon = stat.icon;
-      return /* @__PURE__ */ jsxRuntimeExports.jsx(Card, { className: "zone-section", children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { className: "h-5 w-5 text-primary" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-2xl font-display font-bold text-foreground", children: stat.value }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: stat.label })
-        ] })
-      ] }) }) }, stat.label);
+      return /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Card,
+        {
+          className: "border-0 shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: `h-1 w-full bg-gradient-to-r ${stat.grad}` }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "pt-4", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsx(
+                "div",
+                {
+                  className: `h-11 w-11 rounded-xl bg-gradient-to-br ${stat.grad} flex items-center justify-center shrink-0 shadow`,
+                  children: /* @__PURE__ */ jsxRuntimeExports.jsx(Icon, { className: "h-5 w-5 text-white" })
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "min-w-0", children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-2xl font-display font-bold text-foreground", children: stat.value }),
+                /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground", children: stat.label })
+              ] })
+            ] }) })
+          ]
+        },
+        stat.label
+      );
     }) }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "zone-section", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "font-display text-base", children: "Quiz Submissions" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "border-0 shadow-md overflow-hidden", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-3 bg-gradient-to-r from-card to-muted/20", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-wrap items-center justify-between gap-3", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "font-display text-lg", children: "Quiz Submissions" }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-1.5", children: [
             /* @__PURE__ */ jsxRuntimeExports.jsx(Funnel, { className: "h-3.5 w-3.5 text-muted-foreground shrink-0" }),
@@ -341,12 +357,12 @@ function ResultsPage() {
       /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "p-0", children: completedAttempts.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
         "div",
         {
-          className: "text-center py-12 text-muted-foreground",
+          className: "text-center py-16",
           "data-ocid": "admin.results.attempts.empty_state",
           children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(ChartColumn, { className: "h-8 w-8 mx-auto mb-2 opacity-30" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm font-medium", children: "No quiz submissions yet" }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs mt-1", children: "Results will appear here once students complete quizzes." })
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-14 w-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/30", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ChartColumn, { className: "h-7 w-7 text-white" }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-semibold text-foreground", children: "No quiz submissions yet" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-xs text-muted-foreground mt-1", children: "Results will appear here once students complete quizzes." })
           ]
         }
       ) : filteredAttempts.length === 0 ? /* @__PURE__ */ jsxRuntimeExports.jsxs(
@@ -360,12 +376,12 @@ function ResultsPage() {
           ]
         }
       ) : /* @__PURE__ */ jsxRuntimeExports.jsxs(Table, { children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(TableHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TableRow, { children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx(TableHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs(TableRow, { className: "bg-muted/30", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "w-8 pl-4 pr-0" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { children: "Student" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { children: "Subject" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "text-right", children: "Score" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "text-right", children: "Date" })
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "font-semibold", children: "Student" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "font-semibold", children: "Subject" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "text-right font-semibold", children: "Score" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx(TableHead, { className: "text-right font-semibold", children: "Date" })
         ] }) }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(TableBody, { children: filteredAttempts.map((attempt, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
           AttemptRow,

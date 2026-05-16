@@ -15,8 +15,20 @@ import QuestionsMixin "mixins/questions-api";
 import QuizMixin "mixins/quiz-api";
 import StudentsMixin "mixins/students-api";
 import Time "mo:core/Time";
+import _CertificatesTypes "types/certificates";
+import CertificatesLib "lib/certificates";
+import CertificatesMixin "mixins/certificates-api";
+import LeaderboardMixin "mixins/leaderboard-api";
+import Nat "mo:core/Nat";
+
+
+
+
+
+
 
 actor {
+  stable var openAIApiKey : { var value : ?Text } = { var value = null };
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
@@ -25,10 +37,13 @@ actor {
   let attempts = Map.empty<CommonTypes.AttemptId, QuizLib.QuizAttempt>();
   let students = Map.empty<CommonTypes.UserId, StudentsLib.StudentProfile>();
 
+  let certificates = Map.empty<CommonTypes.CertificateId, CertificatesLib.Certificate>();
+
   let state = {
     var nextSubjectId : Nat = 0;
     var nextQuestionId : Nat = 0;
     var nextAttemptId : Nat = 0;
+    var nextCertificateId : Nat = 0;
   };
 
   // Pre-populate programming language subjects on first deploy
@@ -42,12 +57,15 @@ actor {
         name = lang;
         description = lang # " programming language quiz";
         createdAt = Time.now();
+        timerMinutes = null;
       });
     };
   };
 
   include SubjectsMixin(accessControlState, subjects, questions, state);
   include QuestionsMixin(accessControlState, questions, state);
-  include QuizMixin(accessControlState, attempts, questions, state);
+  include QuizMixin(accessControlState, attempts, questions, subjects, certificates, students, state);
   include StudentsMixin(accessControlState, students, attempts);
+  include CertificatesMixin(accessControlState, certificates);
+  include LeaderboardMixin(accessControlState, students, attempts);
 };

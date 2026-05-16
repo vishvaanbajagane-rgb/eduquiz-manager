@@ -1,22 +1,26 @@
 {
-  "overview": "A student management system where admins create subjects and multiple-choice questions, students take quizzes by subject, and admins evaluate student scores with per-answer correct/incorrect breakdowns.",
+  "overview": "A full-featured student management system with admin and student roles. Admins manage subjects, questions, and view student results. Students take timed quizzes, see a global leaderboard, ask an AI assistant for help, and earn completion certificates.",
   "features": [
-    "Admin and student login via Internet Identity",
-    "Admin creates subjects including programming languages (Python, JavaScript, Go, etc.)",
-    "Admin adds multiple-choice questions per subject",
-    "Students take quizzes grouped by subject",
-    "Admin views student scores and evaluates individual answers",
-    "Per-answer correct/incorrect visual indicator in admin results",
-    "Student quiz history and results"
+    "Admin subject and question management",
+    "Multiple-choice quizzes grouped by subject",
+    "Quiz countdown timer (admin-configurable per subject)",
+    "Global leaderboard ranked by average score",
+    "AI-powered doubt assistant chatbot for students",
+    "Admin OpenAI API key configuration",
+    "Completion certificates with print/PDF support",
+    "Admin student results and score tracking",
+    "Role-based access (admin vs student)"
   ],
   "category": "education",
   "tags": [
-    "quiz",
     "student-management",
+    "quiz",
+    "leaderboard",
+    "ai-assistant",
+    "certificates",
     "education",
-    "multiple-choice",
     "admin",
-    "programming-languages"
+    "multiple-choice"
   ],
-  "last_updated": "2026-05-15T16:39:08.295Z"
+  "last_updated": "2026-05-15T16:55:15.882Z"
 }

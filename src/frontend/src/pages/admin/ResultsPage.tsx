@@ -43,7 +43,6 @@ import {
 } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-// ─── Score Badge ────────────────────────────────────────────────────────────
 function ScoreBadge({
   pct,
   score,
@@ -52,24 +51,23 @@ function ScoreBadge({
   const label = `${score.toString()}/${total.toString()} (${pct}%)`;
   if (pct >= 70)
     return (
-      <Badge className="bg-green-100 text-green-800 border-green-200 hover:bg-green-100 dark:bg-green-900/30 dark:text-green-400 text-xs tabular-nums">
+      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-emerald-500 to-green-500 text-white shadow-sm">
         {label}
-      </Badge>
+      </span>
     );
   if (pct >= 40)
     return (
-      <Badge className="bg-yellow-100 text-yellow-800 border-yellow-200 hover:bg-yellow-100 dark:bg-yellow-900/30 dark:text-yellow-400 text-xs tabular-nums">
+      <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-amber-400 to-yellow-500 text-white shadow-sm">
         {label}
-      </Badge>
+      </span>
     );
   return (
-    <Badge className="bg-red-100 text-red-800 border-red-200 hover:bg-red-100 dark:bg-red-900/30 dark:text-red-400 text-xs tabular-nums">
+    <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-gradient-to-r from-rose-500 to-red-500 text-white shadow-sm">
       {label}
-    </Badge>
+    </span>
   );
 }
 
-// ─── Answer Breakdown ────────────────────────────────────────────────────────
 function AnswerBreakdown({
   attempt,
   details,
@@ -98,63 +96,64 @@ function AnswerBreakdown({
   const { answers } = attempt;
 
   return (
-    <div className="bg-muted/20 border-b border-border">
-      <div className="px-6 py-3 grid grid-cols-[auto_1fr_1fr_auto] gap-x-6 gap-y-1 max-w-3xl">
-        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          #
-        </span>
-        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          Student Answer
-        </span>
-        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          Correct Answer
-        </span>
-        <span className="text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-          Result
-        </span>
-        {answers.map((ans, idx) => {
-          const correct = correctAnswers[idx];
-          const isRight = ans === correct;
-          const ansLabel = (Number(ans) + 1).toString();
-          const correctLabel =
-            correct !== undefined ? (Number(correct) + 1).toString() : "—";
-          return [
-            <span
-              key={`q-${idx}-${ansLabel}`}
-              className="text-xs text-muted-foreground py-1"
-            >
-              Q{idx + 1}
-            </span>,
-            <span
-              key={`sa-${idx}-${ansLabel}`}
-              className={`text-xs py-1 font-medium ${isRight ? "text-emerald-700" : "text-red-700"}`}
-            >
-              Option {ansLabel}
-            </span>,
-            <span
-              key={`ca-${idx}-${correctLabel}`}
-              className="text-xs py-1 text-foreground"
-            >
-              Option {correctLabel}
-            </span>,
-            <span
-              key={`r-${idx}-${isRight ? "pass" : "fail"}`}
-              className="py-1"
-            >
-              {isRight ? (
-                <CheckCircle2 className="h-4 w-4 text-emerald-600" />
-              ) : (
-                <XCircle className="h-4 w-4 text-red-500" />
-              )}
-            </span>,
-          ];
-        })}
+    <div className="bg-gradient-to-r from-muted/30 to-muted/10 border-b border-border">
+      <div className="px-6 py-4">
+        <div className="grid grid-cols-[auto_1fr_1fr_auto] gap-x-6 gap-y-2 max-w-3xl">
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            #
+          </span>
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            Student Answer
+          </span>
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            Correct Answer
+          </span>
+          <span className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            Result
+          </span>
+          {answers.map((ans, idx) => {
+            const correct = correctAnswers[idx];
+            const isRight = ans === correct;
+            const ansLabel = (Number(ans) + 1).toString();
+            const correctLabel =
+              correct !== undefined ? (Number(correct) + 1).toString() : "—";
+            return [
+              <span
+                key={`q-${idx}-${ansLabel}`}
+                className="text-xs text-muted-foreground py-1"
+              >
+                Q{idx + 1}
+              </span>,
+              <span
+                key={`sa-${idx}-${ansLabel}`}
+                className={`text-xs py-1 font-semibold ${isRight ? "text-emerald-600 dark:text-emerald-400" : "text-rose-600 dark:text-rose-400"}`}
+              >
+                Option {ansLabel}
+              </span>,
+              <span
+                key={`ca-${idx}-${correctLabel}`}
+                className="text-xs py-1 text-foreground font-medium"
+              >
+                Option {correctLabel}
+              </span>,
+              <span
+                key={`r-${idx}-${isRight ? "pass" : "fail"}`}
+                className="py-1"
+              >
+                {isRight ? (
+                  <CheckCircle2 className="h-4 w-4 text-emerald-500" />
+                ) : (
+                  <XCircle className="h-4 w-4 text-rose-500" />
+                )}
+              </span>,
+            ];
+          })}
+        </div>
       </div>
     </div>
   );
 }
 
-// ─── Attempt Row ─────────────────────────────────────────────────────────────
 function AttemptRow({
   attempt,
   subjectMap,
@@ -188,34 +187,32 @@ function AttemptRow({
   const date = attempt.completedAt
     ? new Date(Number(attempt.completedAt) / 1_000_000).toLocaleDateString(
         undefined,
-        {
-          month: "short",
-          day: "numeric",
-          year: "numeric",
-        },
+        { month: "short", day: "numeric", year: "numeric" },
       )
     : "—";
 
   return (
     <>
       <TableRow
-        className="cursor-pointer hover:bg-muted/40 transition-colors"
+        className={`cursor-pointer transition-colors hover:bg-primary/5 ${
+          rowIndex % 2 === 0 ? "bg-muted/20" : ""
+        }`}
         onClick={() => setExpanded((v) => !v)}
         data-ocid={`admin.results.attempt.item.${rowIndex}`}
       >
         <TableCell className="w-8 pl-4 pr-0">
           {expanded ? (
-            <ChevronDown className="h-3.5 w-3.5 text-muted-foreground" />
+            <ChevronDown className="h-4 w-4 text-primary" />
           ) : (
-            <ChevronRight className="h-3.5 w-3.5 text-muted-foreground" />
+            <ChevronRight className="h-4 w-4 text-muted-foreground" />
           )}
         </TableCell>
         <TableCell>
-          <code className="text-xs bg-muted px-1.5 py-0.5 rounded font-mono">
+          <code className="text-xs bg-muted/60 border border-border px-2 py-1 rounded-lg font-mono text-muted-foreground">
             {truncatedPrincipal}
           </code>
         </TableCell>
-        <TableCell className="text-sm text-foreground font-medium">
+        <TableCell className="text-sm text-foreground font-semibold">
           {subjectName}
         </TableCell>
         <TableCell className="text-right">
@@ -244,7 +241,12 @@ function AttemptRow({
   );
 }
 
-// ─── Main Page ────────────────────────────────────────────────────────────────
+const STAT_GRADIENTS = [
+  "from-blue-500 to-indigo-600",
+  "from-violet-500 to-purple-600",
+  "from-amber-500 to-orange-600",
+];
+
 export default function ResultsPage() {
   const { isAuthenticated } = useAuth();
   const role = useRole();
@@ -306,15 +308,13 @@ export default function ResultsPage() {
 
   const filteredAttempts = useMemo(() => {
     let list = completedAttempts;
-    if (filterSubjectId !== "all") {
+    if (filterSubjectId !== "all")
       list = list.filter((a) => a.subjectId.toString() === filterSubjectId);
-    }
     const q = search.trim().toLowerCase();
-    if (q) {
+    if (q)
       list = list.filter((a) =>
         a.studentPrincipal.toString().toLowerCase().includes(q),
       );
-    }
     return list
       .slice()
       .sort((a, b) => Number((b.completedAt ?? 0n) - (a.completedAt ?? 0n)));
@@ -324,24 +324,34 @@ export default function ResultsPage() {
     return <LoadingSpinner fullScreen />;
 
   const STATS = [
-    { label: "Total Students", value: uniqueStudents, icon: Users },
+    {
+      label: "Total Students",
+      value: uniqueStudents,
+      icon: Users,
+      grad: STAT_GRADIENTS[0],
+    },
     {
       label: "Quiz Attempts",
       value: completedAttempts.length,
       icon: BarChart3,
+      grad: STAT_GRADIENTS[1],
     },
-    { label: "Avg. Score %", value: `${avgScore}%`, icon: Trophy },
+    {
+      label: "Avg. Score %",
+      value: `${avgScore}%`,
+      icon: Trophy,
+      grad: STAT_GRADIENTS[2],
+    },
   ];
 
   return (
     <AdminLayout>
       <div className="max-w-6xl mx-auto" data-ocid="admin.results.page">
-        {/* Page header */}
-        <div className="mb-6">
-          <h1 className="font-display text-2xl font-bold text-foreground">
+        <div className="mb-8">
+          <h1 className="font-display text-3xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent">
             Results
           </h1>
-          <p className="text-muted-foreground text-sm mt-0.5">
+          <p className="text-muted-foreground text-sm mt-1">
             Review quiz submissions and answer breakdowns
           </p>
         </div>
@@ -351,11 +361,17 @@ export default function ResultsPage() {
           {STATS.map((stat) => {
             const Icon = stat.icon;
             return (
-              <Card key={stat.label} className="zone-section">
+              <Card
+                key={stat.label}
+                className="border-0 shadow-md hover:shadow-lg transition-all duration-200 overflow-hidden"
+              >
+                <div className={`h-1 w-full bg-gradient-to-r ${stat.grad}`} />
                 <CardContent className="pt-4">
                   <div className="flex items-center gap-3">
-                    <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center shrink-0">
-                      <Icon className="h-5 w-5 text-primary" />
+                    <div
+                      className={`h-11 w-11 rounded-xl bg-gradient-to-br ${stat.grad} flex items-center justify-center shrink-0 shadow`}
+                    >
+                      <Icon className="h-5 w-5 text-white" />
                     </div>
                     <div className="min-w-0">
                       <p className="text-2xl font-display font-bold text-foreground">
@@ -373,14 +389,13 @@ export default function ResultsPage() {
         </div>
 
         {/* Attempts table */}
-        <Card className="zone-section">
-          <CardHeader className="pb-3">
+        <Card className="border-0 shadow-md overflow-hidden">
+          <CardHeader className="pb-3 bg-gradient-to-r from-card to-muted/20">
             <div className="flex flex-wrap items-center justify-between gap-3">
-              <CardTitle className="font-display text-base">
+              <CardTitle className="font-display text-lg">
                 Quiz Submissions
               </CardTitle>
               <div className="flex items-center gap-2">
-                {/* Subject filter */}
                 <div className="flex items-center gap-1.5">
                   <Filter className="h-3.5 w-3.5 text-muted-foreground shrink-0" />
                   <Select
@@ -406,8 +421,6 @@ export default function ResultsPage() {
                     </SelectContent>
                   </Select>
                 </div>
-
-                {/* Student search */}
                 <div className="relative">
                   <Search className="h-3.5 w-3.5 absolute left-2.5 top-1/2 -translate-y-1/2 text-muted-foreground pointer-events-none" />
                   <Input
@@ -418,7 +431,6 @@ export default function ResultsPage() {
                     data-ocid="admin.results.search_input"
                   />
                 </div>
-
                 {(search || filterSubjectId !== "all") && (
                   <Button
                     type="button"
@@ -437,16 +449,19 @@ export default function ResultsPage() {
               </div>
             </div>
           </CardHeader>
-
           <CardContent className="p-0">
             {completedAttempts.length === 0 ? (
               <div
-                className="text-center py-12 text-muted-foreground"
+                className="text-center py-16"
                 data-ocid="admin.results.attempts.empty_state"
               >
-                <BarChart3 className="h-8 w-8 mx-auto mb-2 opacity-30" />
-                <p className="text-sm font-medium">No quiz submissions yet</p>
-                <p className="text-xs mt-1">
+                <div className="h-14 w-14 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-amber-500/30">
+                  <BarChart3 className="h-7 w-7 text-white" />
+                </div>
+                <p className="font-semibold text-foreground">
+                  No quiz submissions yet
+                </p>
+                <p className="text-xs text-muted-foreground mt-1">
                   Results will appear here once students complete quizzes.
                 </p>
               </div>
@@ -463,12 +478,16 @@ export default function ResultsPage() {
             ) : (
               <Table>
                 <TableHeader>
-                  <TableRow>
+                  <TableRow className="bg-muted/30">
                     <TableHead className="w-8 pl-4 pr-0" />
-                    <TableHead>Student</TableHead>
-                    <TableHead>Subject</TableHead>
-                    <TableHead className="text-right">Score</TableHead>
-                    <TableHead className="text-right">Date</TableHead>
+                    <TableHead className="font-semibold">Student</TableHead>
+                    <TableHead className="font-semibold">Subject</TableHead>
+                    <TableHead className="text-right font-semibold">
+                      Score
+                    </TableHead>
+                    <TableHead className="text-right font-semibold">
+                      Date
+                    </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>

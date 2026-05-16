@@ -1,8 +1,7 @@
 import { createActor } from "@/backend";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Card, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -36,6 +35,12 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 
 const OPTION_LABELS = ["A", "B", "C", "D"];
+const OPTION_COLORS = [
+  "bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border-blue-200 dark:border-blue-700",
+  "bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-700",
+  "bg-orange-100 dark:bg-orange-900/30 text-orange-700 dark:text-orange-300 border-orange-200 dark:border-orange-700",
+  "bg-teal-100 dark:bg-teal-900/30 text-teal-700 dark:text-teal-300 border-teal-200 dark:border-teal-700",
+];
 
 function QuestionForm({
   form,
@@ -55,26 +60,27 @@ function QuestionForm({
   return (
     <div className="space-y-4">
       <div className="space-y-1.5">
-        <Label>Question Text</Label>
+        <Label className="font-semibold text-sm">Question Text</Label>
         <Input
           value={form.text}
           onChange={(e) => setForm((f) => ({ ...f, text: e.target.value }))}
           placeholder="Enter the question..."
+          className="border-border/60 focus:border-primary/50"
           data-ocid={`${ocidPrefix}.text_input`}
         />
       </div>
       <div className="space-y-2">
-        <Label>Answer Options</Label>
+        <Label className="font-semibold text-sm">Answer Options</Label>
         <p className="text-xs text-muted-foreground -mt-1">
-          Select the radio next to the correct answer.
+          Click the radio to mark the correct answer.
         </p>
         {form.options.map((opt, idx) => (
           <div
             key={`form-opt-${idx}-${opt.slice(0, 8)}`}
-            className={`flex items-center gap-2.5 p-2 rounded-lg border transition-smooth ${
+            className={`flex items-center gap-2.5 p-2 rounded-xl border-2 transition-all duration-200 ${
               form.correctOptionIndex === idx
-                ? "border-primary/50 bg-primary/5"
-                : "border-transparent hover:border-border"
+                ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/20"
+                : "border-border/50 hover:border-border"
             }`}
           >
             <input
@@ -84,10 +90,12 @@ function QuestionForm({
               onChange={() =>
                 setForm((f) => ({ ...f, correctOptionIndex: idx }))
               }
-              className="shrink-0 accent-primary"
+              className="shrink-0 accent-emerald-500"
               aria-label={`Mark option ${OPTION_LABELS[idx]} as correct`}
             />
-            <span className="text-xs font-semibold text-muted-foreground w-4 shrink-0">
+            <span
+              className={`text-xs font-bold px-1.5 py-0.5 rounded-md border shrink-0 ${OPTION_COLORS[idx]}`}
+            >
               {OPTION_LABELS[idx]}
             </span>
             <Input
@@ -100,9 +108,12 @@ function QuestionForm({
                 })
               }
               placeholder={`Option ${OPTION_LABELS[idx]}`}
-              className="flex-1"
+              className="flex-1 border-0 bg-transparent focus-visible:ring-0 p-0 h-auto text-sm"
               data-ocid={`${ocidPrefix}.option_input.${idx + 1}`}
             />
+            {form.correctOptionIndex === idx && (
+              <CheckCircle2 className="h-4 w-4 text-emerald-500 shrink-0" />
+            )}
           </div>
         ))}
       </div>
@@ -251,18 +262,19 @@ export default function QuestionsPage() {
   return (
     <AdminLayout>
       <div className="max-w-4xl mx-auto" data-ocid="admin.questions.page">
-        <div className="flex items-center justify-between mb-6">
+        {/* Header */}
+        <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="font-display text-2xl font-bold text-foreground">
+            <h1 className="font-display text-3xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
               Questions
             </h1>
-            <p className="text-muted-foreground text-sm mt-0.5">
+            <p className="text-muted-foreground text-sm mt-1">
               Manage multiple-choice questions
             </p>
           </div>
           <Button
             type="button"
-            className="gap-2"
+            className="gap-2 bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white shadow-lg shadow-blue-500/25 hover:shadow-blue-500/40 transition-all duration-200 hover:-translate-y-0.5"
             onClick={() => {
               resetForm();
               setShowCreate(true);
@@ -274,14 +286,17 @@ export default function QuestionsPage() {
           </Button>
         </div>
 
+        {/* Subject selector */}
         <div className="mb-6">
-          <Label className="mb-1.5 block">Filter by Subject</Label>
+          <Label className="mb-1.5 block font-semibold text-sm">
+            Filter by Subject
+          </Label>
           <Select
             value={selectedSubjectId}
             onValueChange={setSelectedSubjectId}
           >
             <SelectTrigger
-              className="w-64"
+              className="w-72 border-border/60 focus:border-blue-400 focus:ring-blue-400/20"
               data-ocid="admin.questions.subject_select"
             >
               <SelectValue placeholder="Select a subject" />
@@ -298,12 +313,16 @@ export default function QuestionsPage() {
 
         {!selectedSubjectId && (
           <div
-            className="text-center py-16 text-muted-foreground"
+            className="text-center py-20 rounded-2xl border-2 border-dashed border-blue-200 dark:border-blue-800/50 bg-blue-50/50 dark:bg-blue-950/10"
             data-ocid="admin.questions.empty_state"
           >
-            <HelpCircle className="h-12 w-12 mx-auto mb-3 opacity-30" />
-            <p className="font-medium">Select a subject</p>
-            <p className="text-sm mt-1">
+            <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center mx-auto mb-4 shadow-lg shadow-blue-500/30">
+              <HelpCircle className="h-8 w-8 text-white" />
+            </div>
+            <p className="font-display font-bold text-xl text-foreground mb-2">
+              Select a subject
+            </p>
+            <p className="text-muted-foreground text-sm">
               Choose a subject above to view and manage its questions.
             </p>
           </div>
@@ -313,52 +332,53 @@ export default function QuestionsPage() {
 
         {selectedSubjectId && !isLoading && questions?.length === 0 && (
           <div
-            className="text-center py-16 text-muted-foreground"
+            className="text-center py-20 rounded-2xl border-2 border-dashed border-border bg-muted/20"
             data-ocid="admin.questions.no_questions_state"
           >
-            <HelpCircle className="h-12 w-12 mx-auto mb-3 opacity-30" />
-            <p className="font-medium">No questions yet</p>
-            <p className="text-sm mt-1">
+            <HelpCircle className="h-12 w-12 mx-auto mb-3 text-muted-foreground/40" />
+            <p className="font-medium text-foreground">No questions yet</p>
+            <p className="text-sm text-muted-foreground mt-1">
               Add the first question for this subject.
             </p>
           </div>
         )}
 
-        <div className="space-y-3" data-ocid="admin.questions.list">
+        <div className="space-y-4" data-ocid="admin.questions.list">
           {questions?.map((q, i) => (
             <Card
               key={q.id.toString()}
-              className="zone-section"
+              className="group overflow-hidden border-0 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-300"
               data-ocid={`admin.questions.item.${i + 1}`}
             >
-              <CardHeader className="pb-3">
+              <div className="h-1 w-full bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500" />
+              <CardContent className="pt-4 pb-4">
                 <div className="flex items-start justify-between gap-4">
                   <div className="min-w-0 flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <Badge variant="outline" className="text-xs shrink-0">
+                      <span className="inline-flex items-center justify-center h-6 w-8 rounded-md bg-gradient-to-r from-blue-500 to-indigo-600 text-white text-xs font-bold">
                         Q{i + 1}
-                      </Badge>
+                      </span>
                     </div>
-                    <CardTitle className="text-sm font-medium leading-relaxed mb-3">
+                    <p className="text-sm font-semibold text-foreground leading-relaxed mb-3">
                       {q.text}
-                    </CardTitle>
-                    <div className="grid grid-cols-2 gap-1.5">
+                    </p>
+                    <div className="grid grid-cols-2 gap-2">
                       {q.options.map((opt, oi) => {
                         const isCorrect = oi === Number(q.correctOptionIndex);
                         return (
                           <div
                             key={`opt-${oi}-${opt.slice(0, 8)}`}
-                            className={`flex items-center gap-2 px-2.5 py-1.5 rounded-md text-xs border ${
+                            className={`flex items-center gap-2 px-3 py-2 rounded-xl text-xs border-2 font-medium ${
                               isCorrect
-                                ? "border-primary/50 bg-primary/10 text-primary font-semibold"
-                                : "border-border bg-muted/50 text-muted-foreground"
+                                ? "border-emerald-400 bg-emerald-50 dark:bg-emerald-950/20 text-emerald-700 dark:text-emerald-300"
+                                : `${OPTION_COLORS[oi]}`
                             }`}
                           >
-                            <span className="font-bold shrink-0">
+                            <span className="font-bold shrink-0 w-4">
                               {OPTION_LABELS[oi]}
                             </span>
                             {isCorrect && (
-                              <CheckCircle2 className="h-3 w-3 shrink-0" />
+                              <CheckCircle2 className="h-3 w-3 shrink-0 text-emerald-500" />
                             )}
                             <span className="truncate">{opt}</span>
                           </div>
@@ -366,12 +386,12 @@ export default function QuestionsPage() {
                       })}
                     </div>
                   </div>
-                  <div className="flex items-center gap-1 shrink-0">
+                  <div className="flex items-center gap-1 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <Button
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8"
+                      className="h-8 w-8 hover:bg-blue-50 dark:hover:bg-blue-900/20 hover:text-blue-600"
                       onClick={() => openEdit(q)}
                       aria-label="Edit question"
                       data-ocid={`admin.questions.edit_button.${i + 1}`}
@@ -382,7 +402,7 @@ export default function QuestionsPage() {
                       type="button"
                       variant="ghost"
                       size="icon"
-                      className="h-8 w-8 text-destructive hover:text-destructive hover:bg-destructive/10"
+                      className="h-8 w-8 hover:bg-rose-50 dark:hover:bg-rose-900/20 text-destructive hover:text-rose-600"
                       onClick={() => setDeleteId(q.id)}
                       aria-label="Delete question"
                       data-ocid={`admin.questions.delete_button.${i + 1}`}
@@ -391,12 +411,12 @@ export default function QuestionsPage() {
                     </Button>
                   </div>
                 </div>
-              </CardHeader>
+              </CardContent>
             </Card>
           ))}
         </div>
 
-        {/* Create */}
+        {/* Create dialog */}
         <Dialog
           open={showCreate}
           onOpenChange={(v) => {
@@ -404,9 +424,19 @@ export default function QuestionsPage() {
             if (!v) setFormErrors({});
           }}
         >
-          <DialogContent data-ocid="admin.questions.create.dialog">
+          <DialogContent
+            className="border-0 shadow-2xl"
+            data-ocid="admin.questions.create.dialog"
+          >
             <DialogHeader>
-              <DialogTitle>New Question</DialogTitle>
+              <div className="flex items-center gap-3 mb-1">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow">
+                  <Plus className="h-4 w-4 text-white" />
+                </div>
+                <DialogTitle className="font-display text-xl">
+                  New Question
+                </DialogTitle>
+              </div>
             </DialogHeader>
             <div className="space-y-1">
               <QuestionForm
@@ -425,7 +455,7 @@ export default function QuestionsPage() {
                 </p>
               )}
             </div>
-            <DialogFooter>
+            <DialogFooter className="gap-2">
               <Button
                 type="button"
                 variant="outline"
@@ -438,6 +468,7 @@ export default function QuestionsPage() {
                 type="button"
                 onClick={handleCreate}
                 disabled={createMutation.isPending}
+                className="bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 text-white"
                 data-ocid="admin.questions.create.submit_button"
               >
                 Create Question
@@ -446,21 +477,31 @@ export default function QuestionsPage() {
           </DialogContent>
         </Dialog>
 
-        {/* Edit */}
+        {/* Edit dialog */}
         <Dialog
           open={!!editQuestion}
           onOpenChange={(v) => !v && setEditQuestion(null)}
         >
-          <DialogContent data-ocid="admin.questions.edit.dialog">
+          <DialogContent
+            className="border-0 shadow-2xl"
+            data-ocid="admin.questions.edit.dialog"
+          >
             <DialogHeader>
-              <DialogTitle>Edit Question</DialogTitle>
+              <div className="flex items-center gap-3 mb-1">
+                <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow">
+                  <Pencil className="h-4 w-4 text-white" />
+                </div>
+                <DialogTitle className="font-display text-xl">
+                  Edit Question
+                </DialogTitle>
+              </div>
             </DialogHeader>
             <QuestionForm
               form={form}
               setForm={setForm}
               ocidPrefix="admin.questions.edit"
             />
-            <DialogFooter>
+            <DialogFooter className="gap-2">
               <Button
                 type="button"
                 variant="outline"
@@ -473,6 +514,7 @@ export default function QuestionsPage() {
                 type="button"
                 onClick={handleUpdate}
                 disabled={updateMutation.isPending}
+                className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white"
                 data-ocid="admin.questions.edit.save_button"
               >
                 Save Changes
@@ -486,14 +528,24 @@ export default function QuestionsPage() {
           open={deleteId !== null}
           onOpenChange={(v) => !v && setDeleteId(null)}
         >
-          <DialogContent data-ocid="admin.questions.delete.dialog">
+          <DialogContent
+            className="border-0 shadow-2xl max-w-sm"
+            data-ocid="admin.questions.delete.dialog"
+          >
             <DialogHeader>
-              <DialogTitle>Delete Question?</DialogTitle>
+              <div className="flex items-center gap-3 mb-1">
+                <div className="h-9 w-9 rounded-xl bg-rose-100 dark:bg-rose-900/30 flex items-center justify-center">
+                  <Trash2 className="h-4 w-4 text-rose-600" />
+                </div>
+                <DialogTitle className="font-display text-xl">
+                  Delete Question?
+                </DialogTitle>
+              </div>
             </DialogHeader>
-            <p className="text-sm text-muted-foreground">
-              This action cannot be undone.
+            <p className="text-sm text-muted-foreground bg-rose-50 dark:bg-rose-950/20 border border-rose-200 dark:border-rose-800/40 rounded-lg p-3">
+              ⚠️ This action cannot be undone.
             </p>
-            <DialogFooter>
+            <DialogFooter className="gap-2">
               <Button
                 type="button"
                 variant="outline"
@@ -509,6 +561,7 @@ export default function QuestionsPage() {
                   deleteId !== null && deleteMutation.mutate(deleteId)
                 }
                 disabled={deleteMutation.isPending}
+                className="bg-rose-600 hover:bg-rose-700"
                 data-ocid="admin.questions.delete.confirm_button"
               >
                 Delete

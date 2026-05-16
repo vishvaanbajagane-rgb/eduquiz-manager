@@ -6,6 +6,7 @@ const jsSubjectId = BigInt(2);
 
 export const mockBackend: backendInterface = {
   assignCallerUserRole: async () => undefined,
+  _initializeAccessControl: async () => undefined,
 
   createQuestion: async (payload) => ({
     id: BigInt(10),
@@ -86,7 +87,12 @@ export const mockBackend: backendInterface = {
   getMyProfile: async () => ({
     principal: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
     displayName: "Alex Johnson",
+    accentColor: "",
     registeredAt: BigInt(Date.now() - 86400000 * 30),
+    department: "Computer Science",
+    registerNumber: "CS2021001",
+    enrollNumber: "EN2021001",
+    section: "A",
   }),
 
   isCallerAdmin: async () => true,
@@ -210,7 +216,12 @@ export const mockBackend: backendInterface = {
   registerStudent: async () => ({
     principal: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
     displayName: "New Student",
+    accentColor: "",
     registeredAt: BigInt(Date.now()),
+    department: "Computer Science",
+    registerNumber: "CS2021001",
+    enrollNumber: "EN2021001",
+    section: "A",
   }),
 
   startQuiz: async (subjectId) => ({
@@ -241,8 +252,6 @@ export const mockBackend: backendInterface = {
     correctAnswers: [BigInt(1), BigInt(2), BigInt(2)],
   }),
 
-  _initializeAccessControl: async () => {},
-
   getAttemptDetails: async (attemptId) => ({
     attempt: {
       id: attemptId,
@@ -263,9 +272,63 @@ export const mockBackend: backendInterface = {
 
   getAttemptsBySubject: async () => [],
 
+  getLeaderboard: async () => [
+    {
+      principal: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
+      displayName: "Maria Garcia",
+      rank: BigInt(1),
+      totalAttempts: BigInt(3),
+      averageScore: BigInt(92),
+    },
+    {
+      principal: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
+      displayName: "Alex Johnson",
+      rank: BigInt(2),
+      totalAttempts: BigInt(5),
+      averageScore: BigInt(78),
+    },
+    {
+      principal: { _isPrincipal: true, toText: () => "4yzrs-xyz" } as any,
+      displayName: "David Chen",
+      rank: BigInt(3),
+      totalAttempts: BigInt(7),
+      averageScore: BigInt(65),
+    },
+  ],
+
+  getCertificates: async () => [
+    {
+      id: BigInt(1),
+      completedAt: BigInt(Date.now() - 86400000),
+      studentId: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
+      studentName: "Alex Johnson",
+      subjectName: "Python",
+      score: BigInt(10),
+      totalQuestions: BigInt(12),
+      subjectId: BigInt(1),
+    },
+  ],
+
+  getSubjectCertificate: async (_subjectId) => ({
+    id: BigInt(1),
+    completedAt: BigInt(Date.now() - 86400000),
+    studentId: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
+    studentName: "Alex Johnson",
+    subjectName: "Python",
+    score: BigInt(10),
+    totalQuestions: BigInt(12),
+    subjectId: BigInt(1),
+  }),
+
+  updateMyAccentColor: async () => true,
   updateMyDisplayName: async () => true,
+  updateMyDepartment: async () => true,
+  updateMyEnrollNumber: async () => true,
+  updateMyRegisterNumber: async () => true,
+  updateMySection: async () => true,
 
   updateQuestion: async () => true,
 
   updateSubject: async () => true,
+
 };

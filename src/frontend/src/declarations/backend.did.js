@@ -32,12 +32,14 @@ export const Question = IDL.Record({
 });
 export const CreateSubjectPayload = IDL.Record({
   'name' : IDL.Text,
+  'timerMinutes' : IDL.Opt(IDL.Nat),
   'description' : IDL.Text,
 });
 export const Subject = IDL.Record({
   'id' : SubjectId,
   'name' : IDL.Text,
   'createdAt' : Timestamp,
+  'timerMinutes' : IDL.Opt(IDL.Nat),
   'description' : IDL.Text,
 });
 export const AttemptId = IDL.Nat;
@@ -52,16 +54,40 @@ export const QuizAttemptPublic = IDL.Record({
   'scorePercentage' : IDL.Nat,
   'score' : IDL.Nat,
   'totalQuestions' : IDL.Nat,
+  'timeLimitMinutes' : IDL.Opt(IDL.Nat),
   'subjectId' : SubjectId,
 });
 export const AttemptDetails = IDL.Record({
   'attempt' : QuizAttemptPublic,
   'correctAnswers' : IDL.Vec(IDL.Nat),
 });
+export const CertificateId = IDL.Nat;
+export const Certificate = IDL.Record({
+  'id' : CertificateId,
+  'completedAt' : Timestamp,
+  'studentId' : UserId,
+  'studentName' : IDL.Text,
+  'subjectName' : IDL.Text,
+  'score' : IDL.Nat,
+  'totalQuestions' : IDL.Nat,
+  'subjectId' : SubjectId,
+});
+export const LeaderboardEntry = IDL.Record({
+  'principal' : UserId,
+  'displayName' : IDL.Text,
+  'rank' : IDL.Nat,
+  'totalAttempts' : IDL.Nat,
+  'averageScore' : IDL.Nat,
+});
 export const StudentProfilePublic = IDL.Record({
   'principal' : UserId,
   'displayName' : IDL.Text,
+  'section' : IDL.Text,
+  'registerNumber' : IDL.Text,
+  'accentColor' : IDL.Text,
+  'department' : IDL.Text,
   'registeredAt' : Timestamp,
+  'enrollNumber' : IDL.Text,
 });
 export const StudentSummary = IDL.Record({
   'principal' : UserId,
@@ -80,6 +106,7 @@ export const SubjectWithStats = IDL.Record({
   'id' : SubjectId,
   'name' : IDL.Text,
   'createdAt' : Timestamp,
+  'timerMinutes' : IDL.Opt(IDL.Nat),
   'description' : IDL.Text,
   'questionCount' : IDL.Nat,
 });
@@ -101,6 +128,7 @@ export const UpdateQuestionPayload = IDL.Record({
 export const UpdateSubjectPayload = IDL.Record({
   'id' : SubjectId,
   'name' : IDL.Text,
+  'timerMinutes' : IDL.Opt(IDL.Nat),
   'description' : IDL.Text,
 });
 
@@ -128,8 +156,15 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getCertificates' : IDL.Func([], [IDL.Vec(Certificate)], ['query']),
+  'getLeaderboard' : IDL.Func([], [IDL.Vec(LeaderboardEntry)], ['query']),
   'getMyAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
   'getMyProfile' : IDL.Func([], [IDL.Opt(StudentProfilePublic)], ['query']),
+  'getSubjectCertificate' : IDL.Func(
+      [SubjectId],
+      [IDL.Opt(Certificate)],
+      ['query'],
+    ),
   'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
   'listAllStudents' : IDL.Func([], [IDL.Vec(StudentSummary)], ['query']),
   'listQuestionsBySubject' : IDL.Func(
@@ -150,7 +185,12 @@ export const idlService = IDL.Service({
       [SubmitQuizResult],
       [],
     ),
+  'updateMyAccentColor' : IDL.Func([IDL.Text], [IDL.Bool], []),
+  'updateMyDepartment' : IDL.Func([IDL.Text], [IDL.Bool], []),
   'updateMyDisplayName' : IDL.Func([IDL.Text], [IDL.Bool], []),
+  'updateMyEnrollNumber' : IDL.Func([IDL.Text], [IDL.Bool], []),
+  'updateMyRegisterNumber' : IDL.Func([IDL.Text], [IDL.Bool], []),
+  'updateMySection' : IDL.Func([IDL.Text], [IDL.Bool], []),
   'updateQuestion' : IDL.Func([UpdateQuestionPayload], [IDL.Bool], []),
   'updateSubject' : IDL.Func([UpdateSubjectPayload], [IDL.Bool], []),
 });
@@ -182,12 +222,14 @@ export const idlFactory = ({ IDL }) => {
   });
   const CreateSubjectPayload = IDL.Record({
     'name' : IDL.Text,
+    'timerMinutes' : IDL.Opt(IDL.Nat),
     'description' : IDL.Text,
   });
   const Subject = IDL.Record({
     'id' : SubjectId,
     'name' : IDL.Text,
     'createdAt' : Timestamp,
+    'timerMinutes' : IDL.Opt(IDL.Nat),
     'description' : IDL.Text,
   });
   const AttemptId = IDL.Nat;
@@ -202,16 +244,40 @@ export const idlFactory = ({ IDL }) => {
     'scorePercentage' : IDL.Nat,
     'score' : IDL.Nat,
     'totalQuestions' : IDL.Nat,
+    'timeLimitMinutes' : IDL.Opt(IDL.Nat),
     'subjectId' : SubjectId,
   });
   const AttemptDetails = IDL.Record({
     'attempt' : QuizAttemptPublic,
     'correctAnswers' : IDL.Vec(IDL.Nat),
   });
+  const CertificateId = IDL.Nat;
+  const Certificate = IDL.Record({
+    'id' : CertificateId,
+    'completedAt' : Timestamp,
+    'studentId' : UserId,
+    'studentName' : IDL.Text,
+    'subjectName' : IDL.Text,
+    'score' : IDL.Nat,
+    'totalQuestions' : IDL.Nat,
+    'subjectId' : SubjectId,
+  });
+  const LeaderboardEntry = IDL.Record({
+    'principal' : UserId,
+    'displayName' : IDL.Text,
+    'rank' : IDL.Nat,
+    'totalAttempts' : IDL.Nat,
+    'averageScore' : IDL.Nat,
+  });
   const StudentProfilePublic = IDL.Record({
     'principal' : UserId,
     'displayName' : IDL.Text,
+    'section' : IDL.Text,
+    'registerNumber' : IDL.Text,
+    'accentColor' : IDL.Text,
+    'department' : IDL.Text,
     'registeredAt' : Timestamp,
+    'enrollNumber' : IDL.Text,
   });
   const StudentSummary = IDL.Record({
     'principal' : UserId,
@@ -230,6 +296,7 @@ export const idlFactory = ({ IDL }) => {
     'id' : SubjectId,
     'name' : IDL.Text,
     'createdAt' : Timestamp,
+    'timerMinutes' : IDL.Opt(IDL.Nat),
     'description' : IDL.Text,
     'questionCount' : IDL.Nat,
   });
@@ -251,6 +318,7 @@ export const idlFactory = ({ IDL }) => {
   const UpdateSubjectPayload = IDL.Record({
     'id' : SubjectId,
     'name' : IDL.Text,
+    'timerMinutes' : IDL.Opt(IDL.Nat),
     'description' : IDL.Text,
   });
   
@@ -278,8 +346,15 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getCertificates' : IDL.Func([], [IDL.Vec(Certificate)], ['query']),
+    'getLeaderboard' : IDL.Func([], [IDL.Vec(LeaderboardEntry)], ['query']),
     'getMyAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
     'getMyProfile' : IDL.Func([], [IDL.Opt(StudentProfilePublic)], ['query']),
+    'getSubjectCertificate' : IDL.Func(
+        [SubjectId],
+        [IDL.Opt(Certificate)],
+        ['query'],
+      ),
     'isCallerAdmin' : IDL.Func([], [IDL.Bool], ['query']),
     'listAllStudents' : IDL.Func([], [IDL.Vec(StudentSummary)], ['query']),
     'listQuestionsBySubject' : IDL.Func(
@@ -300,7 +375,12 @@ export const idlFactory = ({ IDL }) => {
         [SubmitQuizResult],
         [],
       ),
+    'updateMyAccentColor' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'updateMyDepartment' : IDL.Func([IDL.Text], [IDL.Bool], []),
     'updateMyDisplayName' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'updateMyEnrollNumber' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'updateMyRegisterNumber' : IDL.Func([IDL.Text], [IDL.Bool], []),
+    'updateMySection' : IDL.Func([IDL.Text], [IDL.Bool], []),
     'updateQuestion' : IDL.Func([UpdateQuestionPayload], [IDL.Bool], []),
     'updateSubject' : IDL.Func([UpdateSubjectPayload], [IDL.Bool], []),
   });

@@ -2,6 +2,7 @@ import Map "mo:core/Map";
 import Time "mo:core/Time";
 import QuestionTypes "../types/questions";
 import CommonTypes "../types/common";
+import Nat "mo:core/Nat";
 
 module {
   public type Question = QuestionTypes.Question;
@@ -61,8 +62,7 @@ module {
     switch (questions.get(payload.id)) {
       case null false;
       case (?existing) {
-        questions.add(
-          payload.id,
+        questions.add(payload.id,
           {
             existing with
             subjectId = payload.subjectId;

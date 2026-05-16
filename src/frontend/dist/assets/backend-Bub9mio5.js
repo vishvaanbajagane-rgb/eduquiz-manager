@@ -7,7 +7,7 @@ var __privateAdd = (obj, member, value) => member.has(obj) ? __typeError("Cannot
 var __privateSet = (obj, member, value, setter) => (__accessCheck(obj, member, "write to private field"), setter ? setter.call(obj, value) : member.set(obj, value), value);
 var __privateMethod = (obj, member, method) => (__accessCheck(obj, member, "access private method"), method);
 var _client, _currentQuery, _currentQueryInitialState, _currentResult, _currentResultState, _currentResultOptions, _currentThenable, _selectError, _selectFn, _selectResult, _lastQueryWithDefinedData, _staleTimeoutId, _refetchIntervalId, _currentRefetchInterval, _trackedProps, _QueryObserver_instances, executeFetch_fn, updateStaleTimeout_fn, computeRefetchInterval_fn, updateRefetchInterval_fn, updateTimers_fn, clearStaleTimeout_fn, clearRefetchInterval_fn, updateQuery_fn, notify_fn, _a;
-import { P as ProtocolError, T as TimeoutWaitingForResponseErrorCode, t as utf8ToBytes, E as ExternalError, M as MissingRootKeyErrorCode, C as Certificate, w as lookupResultToBuffer, x as RequestStatusResponseStatus, U as UnknownError, y as RequestStatusDoneNoReplyErrorCode, z as RejectError, A as CertifiedRejectErrorCode, D as UNREACHABLE_ERROR, I as InputError, F as InvalidReadStateRequestErrorCode, G as ReadRequestType, H as Principal, J as IDL, K as MissingCanisterIdErrorCode, N as HttpAgent, O as encode, Q as QueryResponseStatus, V as UncertifiedRejectErrorCode, W as isV3ResponseBody, X as isV2ResponseBody, Y as UncertifiedRejectUpdateErrorCode, Z as UnexpectedErrorCode, _ as decode, S as Subscribable, $ as pendingThenable, a0 as resolveEnabled, s as shallowEqualObjects, a1 as resolveStaleTime, o as noop, a2 as environmentManager, a3 as isValidTimeout, a4 as timeUntilStale, a5 as timeoutManager, a6 as focusManager, a7 as fetchState, a8 as replaceData, n as notifyManager, r as reactExports, p as shouldThrowError, b as useQueryClient, a9 as useInternetIdentity, aa as createActorWithConfig, c as createLucideIcon, j as jsxRuntimeExports, ab as Slot, a as cn, ac as cva, ad as Variant, ae as Record, af as Vec, ag as Opt, ah as Service, ai as Func, aj as Nat, ak as Principal$1, al as Null, am as Text, an as Int, ao as Bool } from "./index-BtG-7keB.js";
+import { P as ProtocolError, T as TimeoutWaitingForResponseErrorCode, x as utf8ToBytes, E as ExternalError, M as MissingRootKeyErrorCode, C as Certificate$1, y as lookupResultToBuffer, A as RequestStatusResponseStatus, U as UnknownError, D as RequestStatusDoneNoReplyErrorCode, F as RejectError, G as CertifiedRejectErrorCode, H as UNREACHABLE_ERROR, I as InputError, J as InvalidReadStateRequestErrorCode, K as ReadRequestType, N as Principal, O as IDL, Q as MissingCanisterIdErrorCode, V as HttpAgent, W as encode, X as QueryResponseStatus, Y as UncertifiedRejectErrorCode, Z as isV3ResponseBody, _ as isV2ResponseBody, $ as UncertifiedRejectUpdateErrorCode, a0 as UnexpectedErrorCode, a1 as decode, S as Subscribable, a2 as pendingThenable, a3 as resolveEnabled, s as shallowEqualObjects, a4 as resolveStaleTime, p as noop, a5 as environmentManager, a6 as isValidTimeout, a7 as timeUntilStale, a8 as timeoutManager, a9 as focusManager, aa as fetchState, ab as replaceData, n as notifyManager, r as reactExports, q as shouldThrowError, b as useQueryClient, ac as useInternetIdentity, ad as createActorWithConfig, c as createLucideIcon, ae as Variant, af as Record, ag as Vec, ah as Opt, ai as Service, aj as Func, ak as Nat, al as Principal$1, am as Null, an as Text, ao as Int, ap as Bool } from "./index-Hh1gENll.js";
 const FIVE_MINUTES_IN_MSEC = 5 * 60 * 1e3;
 function defaultStrategy() {
   return chain(conditionalDelay(once(), 1e3), backoff(1e3, 1.2), timeout(FIVE_MINUTES_IN_MSEC));
@@ -84,7 +84,7 @@ async function pollForResponse(agent, canisterId, requestId, options = {}) {
   if (agent.rootKey == null) {
     throw ExternalError.fromCode(new MissingRootKeyErrorCode());
   }
-  const cert = await Certificate.create({
+  const cert = await Certificate$1.create({
     certificate: state.certificate,
     rootKey: agent.rootKey,
     canisterId,
@@ -361,7 +361,7 @@ function _createActorMethod(actor, methodName, func, blsVerify) {
           throw ExternalError.fromCode(new MissingRootKeyErrorCode());
         }
         const cert = response.body.certificate;
-        certificate = await Certificate.create({
+        certificate = await Certificate$1.create({
           certificate: cert,
           rootKey: agent.rootKey,
           canisterId: ecid,
@@ -1104,94 +1104,6 @@ const __iconNode = [
   ["path", { d: "M6 12.5V16a6 3 0 0 0 12 0v-3.5", key: "1r8lef" }]
 ];
 const GraduationCap = createLucideIcon("graduation-cap", __iconNode);
-const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
-  {
-    variants: {
-      variant: {
-        default: "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary: "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        destructive: "border-transparent bg-destructive text-destructive-foreground [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline: "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground"
-      }
-    },
-    defaultVariants: {
-      variant: "default"
-    }
-  }
-);
-function Badge({
-  className,
-  variant,
-  asChild = false,
-  ...props
-}) {
-  const Comp = asChild ? Slot : "span";
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    Comp,
-    {
-      "data-slot": "badge",
-      className: cn(badgeVariants({ variant }), className),
-      ...props
-    }
-  );
-}
-function Card({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card",
-      className: cn(
-        "bg-card text-card-foreground flex flex-col gap-6 rounded-xl border py-6 shadow-sm",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardHeader({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-header",
-      className: cn(
-        "@container/card-header grid auto-rows-min grid-rows-[auto_auto] items-start gap-1.5 px-6 has-data-[slot=card-action]:grid-cols-[1fr_auto] [.border-b]:pb-6",
-        className
-      ),
-      ...props
-    }
-  );
-}
-function CardTitle({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-title",
-      className: cn("leading-none font-semibold", className),
-      ...props
-    }
-  );
-}
-function CardDescription({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-description",
-      className: cn("text-muted-foreground text-sm", className),
-      ...props
-    }
-  );
-}
-function CardContent({ className, ...props }) {
-  return /* @__PURE__ */ jsxRuntimeExports.jsx(
-    "div",
-    {
-      "data-slot": "card-content",
-      className: cn("px-6", className),
-      ...props
-    }
-  );
-}
 function useAuth() {
   const {
     login,
@@ -1243,12 +1155,14 @@ const Question = Record({
 });
 const CreateSubjectPayload = Record({
   "name": Text,
+  "timerMinutes": Opt(Nat),
   "description": Text
 });
 const Subject = Record({
   "id": SubjectId,
   "name": Text,
   "createdAt": Timestamp,
+  "timerMinutes": Opt(Nat),
   "description": Text
 });
 const AttemptId = Nat;
@@ -1263,16 +1177,40 @@ const QuizAttemptPublic = Record({
   "scorePercentage": Nat,
   "score": Nat,
   "totalQuestions": Nat,
+  "timeLimitMinutes": Opt(Nat),
   "subjectId": SubjectId
 });
 const AttemptDetails = Record({
   "attempt": QuizAttemptPublic,
   "correctAnswers": Vec(Nat)
 });
+const CertificateId = Nat;
+const Certificate = Record({
+  "id": CertificateId,
+  "completedAt": Timestamp,
+  "studentId": UserId,
+  "studentName": Text,
+  "subjectName": Text,
+  "score": Nat,
+  "totalQuestions": Nat,
+  "subjectId": SubjectId
+});
+const LeaderboardEntry = Record({
+  "principal": UserId,
+  "displayName": Text,
+  "rank": Nat,
+  "totalAttempts": Nat,
+  "averageScore": Nat
+});
 const StudentProfilePublic = Record({
   "principal": UserId,
   "displayName": Text,
-  "registeredAt": Timestamp
+  "section": Text,
+  "registerNumber": Text,
+  "accentColor": Text,
+  "department": Text,
+  "registeredAt": Timestamp,
+  "enrollNumber": Text
 });
 const StudentSummary = Record({
   "principal": UserId,
@@ -1291,6 +1229,7 @@ const SubjectWithStats = Record({
   "id": SubjectId,
   "name": Text,
   "createdAt": Timestamp,
+  "timerMinutes": Opt(Nat),
   "description": Text,
   "questionCount": Nat
 });
@@ -1312,6 +1251,7 @@ const UpdateQuestionPayload = Record({
 const UpdateSubjectPayload = Record({
   "id": SubjectId,
   "name": Text,
+  "timerMinutes": Opt(Nat),
   "description": Text
 });
 Service({
@@ -1338,8 +1278,15 @@ Service({
     ["query"]
   ),
   "getCallerUserRole": Func([], [UserRole], ["query"]),
+  "getCertificates": Func([], [Vec(Certificate)], ["query"]),
+  "getLeaderboard": Func([], [Vec(LeaderboardEntry)], ["query"]),
   "getMyAttempts": Func([], [Vec(QuizAttemptPublic)], ["query"]),
   "getMyProfile": Func([], [Opt(StudentProfilePublic)], ["query"]),
+  "getSubjectCertificate": Func(
+    [SubjectId],
+    [Opt(Certificate)],
+    ["query"]
+  ),
   "isCallerAdmin": Func([], [Bool], ["query"]),
   "listAllStudents": Func([], [Vec(StudentSummary)], ["query"]),
   "listQuestionsBySubject": Func(
@@ -1360,7 +1307,12 @@ Service({
     [SubmitQuizResult],
     []
   ),
+  "updateMyAccentColor": Func([Text], [Bool], []),
+  "updateMyDepartment": Func([Text], [Bool], []),
   "updateMyDisplayName": Func([Text], [Bool], []),
+  "updateMyEnrollNumber": Func([Text], [Bool], []),
+  "updateMyRegisterNumber": Func([Text], [Bool], []),
+  "updateMySection": Func([Text], [Bool], []),
   "updateQuestion": Func([UpdateQuestionPayload], [Bool], []),
   "updateSubject": Func([UpdateSubjectPayload], [Bool], [])
 });
@@ -1389,12 +1341,14 @@ const idlFactory = ({ IDL: IDL2 }) => {
   });
   const CreateSubjectPayload2 = IDL2.Record({
     "name": IDL2.Text,
+    "timerMinutes": IDL2.Opt(IDL2.Nat),
     "description": IDL2.Text
   });
   const Subject2 = IDL2.Record({
     "id": SubjectId2,
     "name": IDL2.Text,
     "createdAt": Timestamp2,
+    "timerMinutes": IDL2.Opt(IDL2.Nat),
     "description": IDL2.Text
   });
   const AttemptId2 = IDL2.Nat;
@@ -1409,16 +1363,40 @@ const idlFactory = ({ IDL: IDL2 }) => {
     "scorePercentage": IDL2.Nat,
     "score": IDL2.Nat,
     "totalQuestions": IDL2.Nat,
+    "timeLimitMinutes": IDL2.Opt(IDL2.Nat),
     "subjectId": SubjectId2
   });
   const AttemptDetails2 = IDL2.Record({
     "attempt": QuizAttemptPublic2,
     "correctAnswers": IDL2.Vec(IDL2.Nat)
   });
+  const CertificateId2 = IDL2.Nat;
+  const Certificate2 = IDL2.Record({
+    "id": CertificateId2,
+    "completedAt": Timestamp2,
+    "studentId": UserId2,
+    "studentName": IDL2.Text,
+    "subjectName": IDL2.Text,
+    "score": IDL2.Nat,
+    "totalQuestions": IDL2.Nat,
+    "subjectId": SubjectId2
+  });
+  const LeaderboardEntry2 = IDL2.Record({
+    "principal": UserId2,
+    "displayName": IDL2.Text,
+    "rank": IDL2.Nat,
+    "totalAttempts": IDL2.Nat,
+    "averageScore": IDL2.Nat
+  });
   const StudentProfilePublic2 = IDL2.Record({
     "principal": UserId2,
     "displayName": IDL2.Text,
-    "registeredAt": Timestamp2
+    "section": IDL2.Text,
+    "registerNumber": IDL2.Text,
+    "accentColor": IDL2.Text,
+    "department": IDL2.Text,
+    "registeredAt": Timestamp2,
+    "enrollNumber": IDL2.Text
   });
   const StudentSummary2 = IDL2.Record({
     "principal": UserId2,
@@ -1437,6 +1415,7 @@ const idlFactory = ({ IDL: IDL2 }) => {
     "id": SubjectId2,
     "name": IDL2.Text,
     "createdAt": Timestamp2,
+    "timerMinutes": IDL2.Opt(IDL2.Nat),
     "description": IDL2.Text,
     "questionCount": IDL2.Nat
   });
@@ -1458,6 +1437,7 @@ const idlFactory = ({ IDL: IDL2 }) => {
   const UpdateSubjectPayload2 = IDL2.Record({
     "id": SubjectId2,
     "name": IDL2.Text,
+    "timerMinutes": IDL2.Opt(IDL2.Nat),
     "description": IDL2.Text
   });
   return IDL2.Service({
@@ -1484,8 +1464,15 @@ const idlFactory = ({ IDL: IDL2 }) => {
       ["query"]
     ),
     "getCallerUserRole": IDL2.Func([], [UserRole2], ["query"]),
+    "getCertificates": IDL2.Func([], [IDL2.Vec(Certificate2)], ["query"]),
+    "getLeaderboard": IDL2.Func([], [IDL2.Vec(LeaderboardEntry2)], ["query"]),
     "getMyAttempts": IDL2.Func([], [IDL2.Vec(QuizAttemptPublic2)], ["query"]),
     "getMyProfile": IDL2.Func([], [IDL2.Opt(StudentProfilePublic2)], ["query"]),
+    "getSubjectCertificate": IDL2.Func(
+      [SubjectId2],
+      [IDL2.Opt(Certificate2)],
+      ["query"]
+    ),
     "isCallerAdmin": IDL2.Func([], [IDL2.Bool], ["query"]),
     "listAllStudents": IDL2.Func([], [IDL2.Vec(StudentSummary2)], ["query"]),
     "listQuestionsBySubject": IDL2.Func(
@@ -1506,11 +1493,24 @@ const idlFactory = ({ IDL: IDL2 }) => {
       [SubmitQuizResult2],
       []
     ),
+    "updateMyAccentColor": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
+    "updateMyDepartment": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
     "updateMyDisplayName": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
+    "updateMyEnrollNumber": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
+    "updateMyRegisterNumber": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
+    "updateMySection": IDL2.Func([IDL2.Text], [IDL2.Bool], []),
     "updateQuestion": IDL2.Func([UpdateQuestionPayload2], [IDL2.Bool], []),
     "updateSubject": IDL2.Func([UpdateSubjectPayload2], [IDL2.Bool], [])
   });
 };
+function candid_some(value) {
+  return [
+    value
+  ];
+}
+function candid_none() {
+  return [];
+}
 function record_opt_to_undefined(arg) {
   return arg == null ? void 0 : arg;
 }
@@ -1566,15 +1566,15 @@ class Backend {
   async createSubject(arg0) {
     if (this.processError) {
       try {
-        const result = await this.actor.createSubject(arg0);
-        return result;
+        const result = await this.actor.createSubject(to_candid_CreateSubjectPayload_n3(this._uploadFile, this._downloadFile, arg0));
+        return from_candid_Subject_n5(this._uploadFile, this._downloadFile, result);
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
-      const result = await this.actor.createSubject(arg0);
-      return result;
+      const result = await this.actor.createSubject(to_candid_CreateSubjectPayload_n3(this._uploadFile, this._downloadFile, arg0));
+      return from_candid_Subject_n5(this._uploadFile, this._downloadFile, result);
     }
   }
   async deleteQuestion(arg0) {
@@ -1609,98 +1609,140 @@ class Backend {
     if (this.processError) {
       try {
         const result = await this.actor.getAllAttempts();
-        return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+        return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
       const result = await this.actor.getAllAttempts();
-      return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
+      return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
     }
   }
   async getAttemptDetails(arg0) {
     if (this.processError) {
       try {
         const result = await this.actor.getAttemptDetails(arg0);
-        return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
-      } catch (e) {
-        this.processError(e);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getAttemptDetails(arg0);
-      return from_candid_opt_n7(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async getAttemptsByStudent(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getAttemptsByStudent(arg0);
-        return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
-      } catch (e) {
-        this.processError(e);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getAttemptsByStudent(arg0);
-      return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async getAttemptsBySubject(arg0) {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getAttemptsBySubject(arg0);
-        return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
-      } catch (e) {
-        this.processError(e);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getAttemptsBySubject(arg0);
-      return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async getCallerUserRole() {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getCallerUserRole();
-        return from_candid_UserRole_n10(this._uploadFile, this._downloadFile, result);
-      } catch (e) {
-        this.processError(e);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getCallerUserRole();
-      return from_candid_UserRole_n10(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async getMyAttempts() {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getMyAttempts();
-        return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
-      } catch (e) {
-        this.processError(e);
-        throw new Error("unreachable");
-      }
-    } else {
-      const result = await this.actor.getMyAttempts();
-      return from_candid_vec_n3(this._uploadFile, this._downloadFile, result);
-    }
-  }
-  async getMyProfile() {
-    if (this.processError) {
-      try {
-        const result = await this.actor.getMyProfile();
         return from_candid_opt_n12(this._uploadFile, this._downloadFile, result);
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
-      const result = await this.actor.getMyProfile();
+      const result = await this.actor.getAttemptDetails(arg0);
       return from_candid_opt_n12(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async getAttemptsByStudent(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getAttemptsByStudent(arg0);
+        return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getAttemptsByStudent(arg0);
+      return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async getAttemptsBySubject(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getAttemptsBySubject(arg0);
+        return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getAttemptsBySubject(arg0);
+      return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async getCallerUserRole() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getCallerUserRole();
+        return from_candid_UserRole_n15(this._uploadFile, this._downloadFile, result);
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getCallerUserRole();
+      return from_candid_UserRole_n15(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async getCertificates() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getCertificates();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getCertificates();
+      return result;
+    }
+  }
+  async getLeaderboard() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getLeaderboard();
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getLeaderboard();
+      return result;
+    }
+  }
+  async getMyAttempts() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getMyAttempts();
+        return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getMyAttempts();
+      return from_candid_vec_n8(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async getMyProfile() {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getMyProfile();
+        return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getMyProfile();
+      return from_candid_opt_n17(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async getSubjectCertificate(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.getSubjectCertificate(arg0);
+        return from_candid_opt_n18(this._uploadFile, this._downloadFile, result);
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.getSubjectCertificate(arg0);
+      return from_candid_opt_n18(this._uploadFile, this._downloadFile, result);
     }
   }
   async isCallerAdmin() {
@@ -1763,14 +1805,14 @@ class Backend {
     if (this.processError) {
       try {
         const result = await this.actor.listSubjects();
-        return result;
+        return from_candid_vec_n19(this._uploadFile, this._downloadFile, result);
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
       const result = await this.actor.listSubjects();
-      return result;
+      return from_candid_vec_n19(this._uploadFile, this._downloadFile, result);
     }
   }
   async registerStudent() {
@@ -1791,28 +1833,56 @@ class Backend {
     if (this.processError) {
       try {
         const result = await this.actor.startQuiz(arg0);
-        return from_candid_QuizAttemptPublic_n4(this._uploadFile, this._downloadFile, result);
+        return from_candid_QuizAttemptPublic_n9(this._uploadFile, this._downloadFile, result);
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
       const result = await this.actor.startQuiz(arg0);
-      return from_candid_QuizAttemptPublic_n4(this._uploadFile, this._downloadFile, result);
+      return from_candid_QuizAttemptPublic_n9(this._uploadFile, this._downloadFile, result);
     }
   }
   async submitQuizAnswers(arg0) {
     if (this.processError) {
       try {
         const result = await this.actor.submitQuizAnswers(arg0);
-        return from_candid_SubmitQuizResult_n13(this._uploadFile, this._downloadFile, result);
+        return from_candid_SubmitQuizResult_n22(this._uploadFile, this._downloadFile, result);
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
       const result = await this.actor.submitQuizAnswers(arg0);
-      return from_candid_SubmitQuizResult_n13(this._uploadFile, this._downloadFile, result);
+      return from_candid_SubmitQuizResult_n22(this._uploadFile, this._downloadFile, result);
+    }
+  }
+  async updateMyAccentColor(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.updateMyAccentColor(arg0);
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.updateMyAccentColor(arg0);
+      return result;
+    }
+  }
+  async updateMyDepartment(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.updateMyDepartment(arg0);
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.updateMyDepartment(arg0);
+      return result;
     }
   }
   async updateMyDisplayName(arg0) {
@@ -1826,6 +1896,48 @@ class Backend {
       }
     } else {
       const result = await this.actor.updateMyDisplayName(arg0);
+      return result;
+    }
+  }
+  async updateMyEnrollNumber(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.updateMyEnrollNumber(arg0);
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.updateMyEnrollNumber(arg0);
+      return result;
+    }
+  }
+  async updateMyRegisterNumber(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.updateMyRegisterNumber(arg0);
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.updateMyRegisterNumber(arg0);
+      return result;
+    }
+  }
+  async updateMySection(arg0) {
+    if (this.processError) {
+      try {
+        const result = await this.actor.updateMySection(arg0);
+        return result;
+      } catch (e) {
+        this.processError(e);
+        throw new Error("unreachable");
+      }
+    } else {
+      const result = await this.actor.updateMySection(arg0);
       return result;
     }
   }
@@ -1846,43 +1958,55 @@ class Backend {
   async updateSubject(arg0) {
     if (this.processError) {
       try {
-        const result = await this.actor.updateSubject(arg0);
+        const result = await this.actor.updateSubject(to_candid_UpdateSubjectPayload_n23(this._uploadFile, this._downloadFile, arg0));
         return result;
       } catch (e) {
         this.processError(e);
         throw new Error("unreachable");
       }
     } else {
-      const result = await this.actor.updateSubject(arg0);
+      const result = await this.actor.updateSubject(to_candid_UpdateSubjectPayload_n23(this._uploadFile, this._downloadFile, arg0));
       return result;
     }
   }
 }
-function from_candid_AttemptDetails_n8(_uploadFile, _downloadFile, value) {
-  return from_candid_record_n9(_uploadFile, _downloadFile, value);
+function from_candid_AttemptDetails_n13(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n14(_uploadFile, _downloadFile, value);
 }
-function from_candid_QuizAttemptPublic_n4(_uploadFile, _downloadFile, value) {
-  return from_candid_record_n5(_uploadFile, _downloadFile, value);
+function from_candid_QuizAttemptPublic_n9(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n10(_uploadFile, _downloadFile, value);
 }
-function from_candid_SubmitQuizResult_n13(_uploadFile, _downloadFile, value) {
-  return from_candid_record_n9(_uploadFile, _downloadFile, value);
+function from_candid_SubjectWithStats_n20(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n21(_uploadFile, _downloadFile, value);
 }
-function from_candid_UserRole_n10(_uploadFile, _downloadFile, value) {
-  return from_candid_variant_n11(_uploadFile, _downloadFile, value);
+function from_candid_Subject_n5(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n6(_uploadFile, _downloadFile, value);
 }
-function from_candid_opt_n12(_uploadFile, _downloadFile, value) {
+function from_candid_SubmitQuizResult_n22(_uploadFile, _downloadFile, value) {
+  return from_candid_record_n14(_uploadFile, _downloadFile, value);
+}
+function from_candid_UserRole_n15(_uploadFile, _downloadFile, value) {
+  return from_candid_variant_n16(_uploadFile, _downloadFile, value);
+}
+function from_candid_opt_n11(_uploadFile, _downloadFile, value) {
   return value.length === 0 ? null : value[0];
 }
-function from_candid_opt_n6(_uploadFile, _downloadFile, value) {
+function from_candid_opt_n12(_uploadFile, _downloadFile, value) {
+  return value.length === 0 ? null : from_candid_AttemptDetails_n13(_uploadFile, _downloadFile, value[0]);
+}
+function from_candid_opt_n17(_uploadFile, _downloadFile, value) {
+  return value.length === 0 ? null : value[0];
+}
+function from_candid_opt_n18(_uploadFile, _downloadFile, value) {
   return value.length === 0 ? null : value[0];
 }
 function from_candid_opt_n7(_uploadFile, _downloadFile, value) {
-  return value.length === 0 ? null : from_candid_AttemptDetails_n8(_uploadFile, _downloadFile, value[0]);
+  return value.length === 0 ? null : value[0];
 }
-function from_candid_record_n5(_uploadFile, _downloadFile, value) {
+function from_candid_record_n10(_uploadFile, _downloadFile, value) {
   return {
     id: value.id,
-    completedAt: record_opt_to_undefined(from_candid_opt_n6(_uploadFile, _downloadFile, value.completedAt)),
+    completedAt: record_opt_to_undefined(from_candid_opt_n11(_uploadFile, _downloadFile, value.completedAt)),
     startedAt: value.startedAt,
     answers: value.answers,
     completed: value.completed,
@@ -1890,23 +2014,67 @@ function from_candid_record_n5(_uploadFile, _downloadFile, value) {
     scorePercentage: value.scorePercentage,
     score: value.score,
     totalQuestions: value.totalQuestions,
+    timeLimitMinutes: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.timeLimitMinutes)),
     subjectId: value.subjectId
   };
 }
-function from_candid_record_n9(_uploadFile, _downloadFile, value) {
+function from_candid_record_n14(_uploadFile, _downloadFile, value) {
   return {
-    attempt: from_candid_QuizAttemptPublic_n4(_uploadFile, _downloadFile, value.attempt),
+    attempt: from_candid_QuizAttemptPublic_n9(_uploadFile, _downloadFile, value.attempt),
     correctAnswers: value.correctAnswers
   };
 }
-function from_candid_variant_n11(_uploadFile, _downloadFile, value) {
+function from_candid_record_n21(_uploadFile, _downloadFile, value) {
+  return {
+    id: value.id,
+    name: value.name,
+    createdAt: value.createdAt,
+    timerMinutes: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.timerMinutes)),
+    description: value.description,
+    questionCount: value.questionCount
+  };
+}
+function from_candid_record_n6(_uploadFile, _downloadFile, value) {
+  return {
+    id: value.id,
+    name: value.name,
+    createdAt: value.createdAt,
+    timerMinutes: record_opt_to_undefined(from_candid_opt_n7(_uploadFile, _downloadFile, value.timerMinutes)),
+    description: value.description
+  };
+}
+function from_candid_variant_n16(_uploadFile, _downloadFile, value) {
   return "admin" in value ? "admin" : "user" in value ? "user" : "guest" in value ? "guest" : value;
 }
-function from_candid_vec_n3(_uploadFile, _downloadFile, value) {
-  return value.map((x) => from_candid_QuizAttemptPublic_n4(_uploadFile, _downloadFile, x));
+function from_candid_vec_n19(_uploadFile, _downloadFile, value) {
+  return value.map((x) => from_candid_SubjectWithStats_n20(_uploadFile, _downloadFile, x));
+}
+function from_candid_vec_n8(_uploadFile, _downloadFile, value) {
+  return value.map((x) => from_candid_QuizAttemptPublic_n9(_uploadFile, _downloadFile, x));
+}
+function to_candid_CreateSubjectPayload_n3(_uploadFile, _downloadFile, value) {
+  return to_candid_record_n4(_uploadFile, _downloadFile, value);
+}
+function to_candid_UpdateSubjectPayload_n23(_uploadFile, _downloadFile, value) {
+  return to_candid_record_n24(_uploadFile, _downloadFile, value);
 }
 function to_candid_UserRole_n1(_uploadFile, _downloadFile, value) {
   return to_candid_variant_n2(_uploadFile, _downloadFile, value);
+}
+function to_candid_record_n24(_uploadFile, _downloadFile, value) {
+  return {
+    id: value.id,
+    name: value.name,
+    timerMinutes: value.timerMinutes ? candid_some(value.timerMinutes) : candid_none(),
+    description: value.description
+  };
+}
+function to_candid_record_n4(_uploadFile, _downloadFile, value) {
+  return {
+    name: value.name,
+    timerMinutes: value.timerMinutes ? candid_some(value.timerMinutes) : candid_none(),
+    description: value.description
+  };
 }
 function to_candid_variant_n2(_uploadFile, _downloadFile, value) {
   return value == "admin" ? {
@@ -1931,34 +2099,11 @@ function createActor(canisterId, _uploadFile, _downloadFile, options = {}) {
   });
   return new Backend(actor, _uploadFile, _downloadFile, options.processError);
 }
-function useRole() {
-  const { isAuthenticated } = useAuth();
-  const { actor, isFetching } = useActor(createActor);
-  const { data: isAdmin, isLoading } = useQuery({
-    queryKey: ["callerRole"],
-    queryFn: async () => {
-      if (!actor) return false;
-      return actor.isCallerAdmin();
-    },
-    enabled: !!actor && !isFetching && isAuthenticated,
-    staleTime: 6e4
-  });
-  if (!isAuthenticated) return "unauthenticated";
-  if (isFetching || isLoading || isAdmin === void 0) return "loading";
-  return isAdmin ? "admin" : "student";
-}
 export {
-  Badge as B,
-  Card as C,
+  BookOpen as B,
   GraduationCap as G,
-  useRole as a,
-  BookOpen as b,
-  CardHeader as c,
-  CardTitle as d,
-  CardDescription as e,
-  CardContent as f,
-  useActor as g,
-  useQuery as h,
-  createActor as i,
+  useActor as a,
+  useQuery as b,
+  createActor as c,
   useAuth as u
 };

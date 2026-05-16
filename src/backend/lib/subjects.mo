@@ -3,6 +3,7 @@ import Iter "mo:core/Iter";
 import Time "mo:core/Time";
 import SubjectTypes "../types/subjects";
 import CommonTypes "../types/common";
+import Nat "mo:core/Nat";
 
 module {
   public type Subject = SubjectTypes.Subject;
@@ -20,6 +21,7 @@ module {
       name = payload.name;
       description = payload.description;
       createdAt = Time.now();
+      timerMinutes = payload.timerMinutes;
     };
     subjects.add(id, subject);
     subject;
@@ -47,6 +49,7 @@ module {
           description = s.description;
           createdAt = s.createdAt;
           questionCount = count;
+          timerMinutes = s.timerMinutes;
         };
       },
     ).toArray();
@@ -59,7 +62,7 @@ module {
     switch (subjects.get(payload.id)) {
       case null false;
       case (?existing) {
-        subjects.add(payload.id, { existing with name = payload.name; description = payload.description });
+        subjects.add(payload.id, { existing with name = payload.name; description = payload.description; timerMinutes = payload.timerMinutes });
         true;
       };
     };

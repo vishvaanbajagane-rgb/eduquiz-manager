@@ -1,4 +1,4 @@
-const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/LoginPage-BmfdkPGk.js","assets/useRole-DKmUvK7y.js","assets/SubjectsPage-VxXcb9CW.js","assets/label-BrXp2lZe.js","assets/AdminLayout-C4TKwBUP.js","assets/separator-C0JGTHfA.js","assets/index-1gSpk2TV.js","assets/QuestionsPage-ClqNJfIZ.js","assets/select-BLzaCnGn.js","assets/circle-check-CvYA9p_X.js","assets/ResultsPage-Bw_rwSM3.js","assets/table-B2mMw4ue.js","assets/trophy-CEN2CDc2.js","assets/QuizzesPage-Dfko_S2w.js","assets/StudentLayout-BuIusyAk.js","assets/circle-play-DYhh1UdD.js","assets/QuizPage-a42qMe4k.js","assets/HistoryPage-L0qtM790.js"])))=>i.map(i=>d[i]);
+const __vite__mapDeps=(i,m=__vite__mapDeps,d=(m.f||(m.f=["assets/LoginPage-q7Ezng-6.js","assets/backend-Bub9mio5.js","assets/useRole-DOnT3i7R.js","assets/sparkles-Bf1D91Qa.js","assets/star-CCOhaIKR.js","assets/zap-DNUFb4Rd.js","assets/circle-check-BCDIuKY2.js","assets/SubjectsPage-BNYShYrw.js","assets/badge-EMKhFOLg.js","assets/card-DE0aOoMx.js","assets/label-D546Ix0Z.js","assets/select-D4QHv7pU.js","assets/index-CRtA4pyV.js","assets/AdminLayout-DuNcujI_.js","assets/index-CLu1Ust6.js","assets/clock-BgFzrQq3.js","assets/QuestionsPage-QsHXj6Jk.js","assets/ResultsPage-DDWRv7RK.js","assets/table-CTiXg-on.js","assets/users-BrsFg6AR.js","assets/circle-x-jSkZb9nB.js","assets/QuizzesPage-DFrt0b5X.js","assets/StudentLayout-CFKi020B.js","assets/circle-play-DwKZexl-.js","assets/QuizPage-0IBt53He.js","assets/arrow-left-D8WGkdSb.js","assets/HistoryPage-I7l29gr0.js","assets/award-BLMjWOeL.js","assets/medal-D43nNpm1.js","assets/LeaderboardPage-CII1RV9H.js","assets/CertificatePage-DW3V50Cc.js","assets/StudentProfilePage-BwZDgH1r.js"])))=>i.map(i=>d[i]);
 var __defProp = Object.defineProperty;
 var __typeError = (msg) => {
   throw TypeError(msg);
@@ -75,8 +75,8 @@ function _mergeNamespaces(n, m2) {
     fetch(link.href, fetchOpts);
   }
 })();
-function getDefaultExportFromCjs(x2) {
-  return x2 && x2.__esModule && Object.prototype.hasOwnProperty.call(x2, "default") ? x2["default"] : x2;
+function getDefaultExportFromCjs(x3) {
+  return x3 && x3.__esModule && Object.prototype.hasOwnProperty.call(x3, "default") ? x3["default"] : x3;
 }
 var jsxRuntime = { exports: {} };
 var reactJsxRuntime_production = {};
@@ -2252,7 +2252,7 @@ var IDLTypeIds;
 const magicNumber = "DIDL";
 const toReadableString_max = 400;
 function zipWith(xs, ys, f) {
-  return xs.map((x2, i) => f(x2, ys[i]));
+  return xs.map((x3, i) => f(x3, ys[i]));
 }
 class TypeTable {
   constructor() {
@@ -2411,8 +2411,8 @@ class Type {
   display() {
     return this.name;
   }
-  valueToString(x2) {
-    return toReadableString(x2);
+  valueToString(x3) {
+    return toReadableString(x3);
   }
   /* Implement `T` in the IDL spec, only needed for non-primitive types */
   buildTypeTable(typeTable) {
@@ -2457,8 +2457,8 @@ class EmptyClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitEmpty(this, d2);
   }
-  covariant(x2) {
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+  covariant(x3) {
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
   encodeValue() {
     throw new Error("Empty cannot appear as a function argument");
@@ -2489,8 +2489,8 @@ class UnknownClass extends Type {
   accept(v2, d2) {
     throw v2.visitType(this, d2);
   }
-  covariant(x2) {
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+  covariant(x3) {
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
   encodeValue() {
     throw new Error("Unknown cannot appear as a function argument");
@@ -2537,13 +2537,13 @@ class BoolClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitBool(this, d2);
   }
-  covariant(x2) {
-    if (typeof x2 === "boolean")
+  covariant(x3) {
+    if (typeof x3 === "boolean")
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    return new Uint8Array([x2 ? 1 : 0]);
+  encodeValue(x3) {
+    return new Uint8Array([x3 ? 1 : 0]);
   }
   encodeType() {
     return slebEncode(IDLTypeIds.Bool);
@@ -2573,10 +2573,10 @@ class NullClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitNull(this, d2);
   }
-  covariant(x2) {
-    if (x2 === null)
+  covariant(x3) {
+    if (x3 === null)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
   encodeValue() {
     return new Uint8Array(0);
@@ -2631,13 +2631,13 @@ class TextClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitText(this, d2);
   }
-  covariant(x2) {
-    if (typeof x2 === "string")
+  covariant(x3) {
+    if (typeof x3 === "string")
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    const buf = new TextEncoder().encode(x2);
+  encodeValue(x3) {
+    const buf = new TextEncoder().encode(x3);
     const len = lebEncode(buf.byteLength);
     return concat(len, buf);
   }
@@ -2654,8 +2654,8 @@ class TextClass extends PrimitiveType {
   get name() {
     return "text";
   }
-  valueToString(x2) {
-    return '"' + x2 + '"';
+  valueToString(x3) {
+    return '"' + x3 + '"';
   }
 }
 class IntClass extends PrimitiveType {
@@ -2668,13 +2668,13 @@ class IntClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitInt(this, d2);
   }
-  covariant(x2) {
-    if (typeof x2 === "bigint" || Number.isInteger(x2))
+  covariant(x3) {
+    if (typeof x3 === "bigint" || Number.isInteger(x3))
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    return slebEncode(x2);
+  encodeValue(x3) {
+    return slebEncode(x3);
   }
   encodeType() {
     return slebEncode(IDLTypeIds.Int);
@@ -2686,8 +2686,8 @@ class IntClass extends PrimitiveType {
   get name() {
     return "int";
   }
-  valueToString(x2) {
-    return x2.toString();
+  valueToString(x3) {
+    return x3.toString();
   }
 }
 class NatClass extends PrimitiveType {
@@ -2700,13 +2700,13 @@ class NatClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitNat(this, d2);
   }
-  covariant(x2) {
-    if (typeof x2 === "bigint" && x2 >= BigInt(0) || Number.isInteger(x2) && x2 >= 0)
+  covariant(x3) {
+    if (typeof x3 === "bigint" && x3 >= BigInt(0) || Number.isInteger(x3) && x3 >= 0)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    return lebEncode(x2);
+  encodeValue(x3) {
+    return lebEncode(x3);
   }
   encodeType() {
     return slebEncode(IDLTypeIds.Nat);
@@ -2718,8 +2718,8 @@ class NatClass extends PrimitiveType {
   get name() {
     return "nat";
   }
-  valueToString(x2) {
-    return x2.toString();
+  valueToString(x3) {
+    return x3.toString();
   }
 }
 class FloatClass extends PrimitiveType {
@@ -2739,18 +2739,18 @@ class FloatClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitFloat(this, d2);
   }
-  covariant(x2) {
-    if (typeof x2 === "number" || x2 instanceof Number)
+  covariant(x3) {
+    if (typeof x3 === "number" || x3 instanceof Number)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
+  encodeValue(x3) {
     const buf = new ArrayBuffer(this._bits / 8);
     const view = new DataView(buf);
     if (this._bits === 32) {
-      view.setFloat32(0, x2, true);
+      view.setFloat32(0, x3, true);
     } else {
-      view.setFloat64(0, x2, true);
+      view.setFloat64(0, x3, true);
     }
     return new Uint8Array(buf);
   }
@@ -2771,8 +2771,8 @@ class FloatClass extends PrimitiveType {
   get name() {
     return "float" + this._bits;
   }
-  valueToString(x2) {
-    return x2.toString();
+  valueToString(x3) {
+    return x3.toString();
   }
 }
 class FixedIntClass extends PrimitiveType {
@@ -2789,24 +2789,24 @@ class FixedIntClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitFixedInt(this, d2);
   }
-  covariant(x2) {
+  covariant(x3) {
     const min = iexp2(this._bits - 1) * BigInt(-1);
     const max = iexp2(this._bits - 1) - BigInt(1);
     let ok = false;
-    if (typeof x2 === "bigint") {
-      ok = x2 >= min && x2 <= max;
-    } else if (Number.isInteger(x2)) {
-      const v2 = BigInt(x2);
+    if (typeof x3 === "bigint") {
+      ok = x3 >= min && x3 <= max;
+    } else if (Number.isInteger(x3)) {
+      const v2 = BigInt(x3);
       ok = v2 >= min && v2 <= max;
     } else {
       ok = false;
     }
     if (ok)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    return writeIntLE(x2, this._bits / 8);
+  encodeValue(x3) {
+    return writeIntLE(x3, this._bits / 8);
   }
   encodeType() {
     const offset = Math.log2(this._bits) - 3;
@@ -2824,8 +2824,8 @@ class FixedIntClass extends PrimitiveType {
   get name() {
     return `int${this._bits}`;
   }
-  valueToString(x2) {
-    return x2.toString();
+  valueToString(x3) {
+    return x3.toString();
   }
 }
 class FixedNatClass extends PrimitiveType {
@@ -2842,23 +2842,23 @@ class FixedNatClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitFixedNat(this, d2);
   }
-  covariant(x2) {
+  covariant(x3) {
     const max = iexp2(this._bits);
     let ok = false;
-    if (typeof x2 === "bigint" && x2 >= BigInt(0)) {
-      ok = x2 < max;
-    } else if (Number.isInteger(x2) && x2 >= 0) {
-      const v2 = BigInt(x2);
+    if (typeof x3 === "bigint" && x3 >= BigInt(0)) {
+      ok = x3 < max;
+    } else if (Number.isInteger(x3) && x3 >= 0) {
+      const v2 = BigInt(x3);
       ok = v2 < max;
     } else {
       ok = false;
     }
     if (ok)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    return writeUIntLE(x2, this._bits / 8);
+  encodeValue(x3) {
+    return writeUIntLE(x3, this._bits / 8);
   }
   encodeType() {
     const offset = Math.log2(this._bits) - 3;
@@ -2876,8 +2876,8 @@ class FixedNatClass extends PrimitiveType {
   get name() {
     return `nat${this._bits}`;
   }
-  valueToString(x2) {
-    return x2.toString();
+  valueToString(x3) {
+    return x3.toString();
   }
 }
 class VecClass extends ConstructType {
@@ -2898,9 +2898,9 @@ class VecClass extends ConstructType {
   accept(v2, d2) {
     return v2.visitVec(this, this._type, d2);
   }
-  covariant(x2) {
+  covariant(x3) {
     const bits = this._type instanceof FixedNatClass ? this._type._bits : this._type instanceof FixedIntClass ? this._type._bits : 0;
-    if (ArrayBuffer.isView(x2) && bits == x2.BYTES_PER_ELEMENT * 8 || Array.isArray(x2) && x2.every((v2, idx) => {
+    if (ArrayBuffer.isView(x3) && bits == x3.BYTES_PER_ELEMENT * 8 || Array.isArray(x3) && x3.every((v2, idx) => {
       try {
         return this._type.covariant(v2);
       } catch (e) {
@@ -2910,51 +2910,51 @@ index ${idx} -> ${e.message}`);
       }
     }))
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    const len = lebEncode(x2.length);
+  encodeValue(x3) {
+    const len = lebEncode(x3.length);
     if (this._blobOptimization) {
-      return concat(len, new Uint8Array(x2));
+      return concat(len, new Uint8Array(x3));
     }
-    if (ArrayBuffer.isView(x2)) {
-      if (x2 instanceof Int16Array || x2 instanceof Uint16Array) {
-        const buffer = new DataView(new ArrayBuffer(x2.length * 2));
-        for (let i = 0; i < x2.length; i++) {
-          if (x2 instanceof Int16Array) {
-            buffer.setInt16(i * 2, x2[i], true);
+    if (ArrayBuffer.isView(x3)) {
+      if (x3 instanceof Int16Array || x3 instanceof Uint16Array) {
+        const buffer = new DataView(new ArrayBuffer(x3.length * 2));
+        for (let i = 0; i < x3.length; i++) {
+          if (x3 instanceof Int16Array) {
+            buffer.setInt16(i * 2, x3[i], true);
           } else {
-            buffer.setUint16(i * 2, x2[i], true);
+            buffer.setUint16(i * 2, x3[i], true);
           }
         }
         return concat(len, new Uint8Array(buffer.buffer));
-      } else if (x2 instanceof Int32Array || x2 instanceof Uint32Array) {
-        const buffer = new DataView(new ArrayBuffer(x2.length * 4));
-        for (let i = 0; i < x2.length; i++) {
-          if (x2 instanceof Int32Array) {
-            buffer.setInt32(i * 4, x2[i], true);
+      } else if (x3 instanceof Int32Array || x3 instanceof Uint32Array) {
+        const buffer = new DataView(new ArrayBuffer(x3.length * 4));
+        for (let i = 0; i < x3.length; i++) {
+          if (x3 instanceof Int32Array) {
+            buffer.setInt32(i * 4, x3[i], true);
           } else {
-            buffer.setUint32(i * 4, x2[i], true);
+            buffer.setUint32(i * 4, x3[i], true);
           }
         }
         return concat(len, new Uint8Array(buffer.buffer));
-      } else if (x2 instanceof BigInt64Array || x2 instanceof BigUint64Array) {
-        const buffer = new DataView(new ArrayBuffer(x2.length * 8));
-        for (let i = 0; i < x2.length; i++) {
-          if (x2 instanceof BigInt64Array) {
-            buffer.setBigInt64(i * 8, x2[i], true);
+      } else if (x3 instanceof BigInt64Array || x3 instanceof BigUint64Array) {
+        const buffer = new DataView(new ArrayBuffer(x3.length * 8));
+        for (let i = 0; i < x3.length; i++) {
+          if (x3 instanceof BigInt64Array) {
+            buffer.setBigInt64(i * 8, x3[i], true);
           } else {
-            buffer.setBigUint64(i * 8, x2[i], true);
+            buffer.setBigUint64(i * 8, x3[i], true);
           }
         }
         return concat(len, new Uint8Array(buffer.buffer));
       } else {
-        return concat(len, new Uint8Array(x2.buffer, x2.byteOffset, x2.byteLength));
+        return concat(len, new Uint8Array(x3.buffer, x3.byteOffset, x3.byteLength));
       }
     }
-    const buf = new PipeArrayBuffer(new Uint8Array(len.byteLength + x2.length), 0);
+    const buf = new PipeArrayBuffer(new Uint8Array(len.byteLength + x3.length), 0);
     buf.write(len);
-    for (const d2 of x2) {
+    for (const d2 of x3) {
       const encoded = this._type.encodeValue(d2);
       buf.write(new Uint8Array(encoded));
     }
@@ -3034,8 +3034,8 @@ index ${idx} -> ${e.message}`);
   display() {
     return `vec ${this._type.display()}`;
   }
-  valueToString(x2) {
-    const elements = x2.map((e) => this._type.valueToString(e));
+  valueToString(x3) {
+    const elements = x3.map((e) => this._type.valueToString(e));
     return "vec {" + elements.join("; ") + "}";
   }
 }
@@ -3053,22 +3053,22 @@ class OptClass extends ConstructType {
   accept(v2, d2) {
     return v2.visitOpt(this, this._type, d2);
   }
-  covariant(x2) {
+  covariant(x3) {
     try {
-      if (Array.isArray(x2) && (x2.length === 0 || x2.length === 1 && this._type.covariant(x2[0])))
+      if (Array.isArray(x3) && (x3.length === 0 || x3.length === 1 && this._type.covariant(x3[0])))
         return true;
     } catch (e) {
-      throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)} 
+      throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)} 
 
 -> ${e.message}`);
     }
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    if (x2.length === 0) {
+  encodeValue(x3) {
+    if (x3.length === 0) {
       return new Uint8Array([0]);
     } else {
-      return concat(new Uint8Array([1]), this._type.encodeValue(x2[0]));
+      return concat(new Uint8Array([1]), this._type.encodeValue(x3[0]));
     }
   }
   _buildTypeTableImpl(typeTable) {
@@ -3134,11 +3134,11 @@ class OptClass extends ConstructType {
   display() {
     return `opt ${this._type.display()}`;
   }
-  valueToString(x2) {
-    if (x2.length === 0) {
+  valueToString(x3) {
+    if (x3.length === 0) {
       return "null";
     } else {
-      return `opt ${this._type.valueToString(x2[0])}`;
+      return `opt ${this._type.valueToString(x3[0])}`;
     }
   }
 }
@@ -3167,13 +3167,13 @@ class RecordClass extends ConstructType {
     }
     return res;
   }
-  covariant(x2) {
-    if (typeof x2 === "object" && this._fields.every(([k2, t]) => {
-      if (!x2.hasOwnProperty(k2)) {
+  covariant(x3) {
+    if (typeof x3 === "object" && this._fields.every(([k2, t]) => {
+      if (!x3.hasOwnProperty(k2)) {
         throw new Error(`Record is missing key "${k2}".`);
       }
       try {
-        return t.covariant(x2[k2]);
+        return t.covariant(x3[k2]);
       } catch (e) {
         throw new Error(`Invalid ${this.display()} argument: 
 
@@ -3181,10 +3181,10 @@ field ${k2} -> ${e.message}`);
       }
     }))
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    const values = this._fields.map(([key]) => x2[key]);
+  encodeValue(x3) {
+    const values = this._fields.map(([key]) => x3[key]);
     const bufs = zipWith(this._fields, values, ([, c2], d2) => c2.encodeValue(d2));
     return concat(...bufs);
   }
@@ -3200,7 +3200,7 @@ field ${k2} -> ${e.message}`);
     if (!(record instanceof RecordClass)) {
       throw new Error("Not a record type");
     }
-    const x2 = {};
+    const x3 = {};
     let expectedRecordIdx = 0;
     let actualRecordIdx = 0;
     while (actualRecordIdx < record._fields.length) {
@@ -3214,12 +3214,12 @@ field ${k2} -> ${e.message}`);
       const expectedId = idlLabelToId(this._fields[expectedRecordIdx][0]);
       const actualId = idlLabelToId(hash);
       if (expectedId === actualId) {
-        x2[expectKey] = expectType.decodeValue(b2, type);
+        x3[expectKey] = expectType.decodeValue(b2, type);
         expectedRecordIdx++;
         actualRecordIdx++;
       } else if (actualId > expectedId) {
         if (expectType instanceof OptClass || expectType instanceof ReservedClass) {
-          x2[expectKey] = [];
+          x3[expectKey] = [];
           expectedRecordIdx++;
         } else {
           throw new Error("Cannot find required field " + expectKey);
@@ -3231,12 +3231,12 @@ field ${k2} -> ${e.message}`);
     }
     for (const [expectKey, expectType] of this._fields.slice(expectedRecordIdx)) {
       if (expectType instanceof OptClass || expectType instanceof ReservedClass) {
-        x2[expectKey] = [];
+        x3[expectKey] = [];
       } else {
         throw new Error("Cannot find required field " + expectKey);
       }
     }
-    return x2;
+    return x3;
   }
   get fieldsAsObject() {
     const fields = {};
@@ -3253,8 +3253,8 @@ field ${k2} -> ${e.message}`);
     const fields = this._fields.map(([key, value]) => key + ":" + value.display());
     return `record {${fields.join("; ")}}`;
   }
-  valueToString(x2) {
-    const values = this._fields.map(([key]) => x2[key]);
+  valueToString(x3) {
+    const values = this._fields.map(([key]) => x3[key]);
     const fields = zipWith(this._fields, values, ([k2, c2], d2) => k2 + "=" + c2.valueToString(d2));
     return `record {${fields.join("; ")}}`;
   }
@@ -3267,18 +3267,18 @@ class TupleClass extends RecordClass {
     return instance.typeName === IdlTypeName.TupleClass;
   }
   constructor(_components) {
-    const x2 = {};
-    _components.forEach((e, i) => x2["_" + i + "_"] = e);
-    super(x2);
+    const x3 = {};
+    _components.forEach((e, i) => x3["_" + i + "_"] = e);
+    super(x3);
     this._components = _components;
   }
   accept(v2, d2) {
     return v2.visitTuple(this, this._components, d2);
   }
-  covariant(x2) {
-    if (Array.isArray(x2) && x2.length >= this._fields.length && this._components.every((t, i) => {
+  covariant(x3) {
+    if (Array.isArray(x3) && x3.length >= this._fields.length && this._components.every((t, i) => {
       try {
-        return t.covariant(x2[i]);
+        return t.covariant(x3[i]);
       } catch (e) {
         throw new Error(`Invalid ${this.display()} argument: 
 
@@ -3286,10 +3286,10 @@ index ${i} -> ${e.message}`);
       }
     }))
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    const bufs = zipWith(this._components, x2, (c2, d2) => c2.encodeValue(d2));
+  encodeValue(x3) {
+    const bufs = zipWith(this._components, x3, (c2, d2) => c2.encodeValue(d2));
     return concat(...bufs);
   }
   decodeValue(b2, t) {
@@ -3333,10 +3333,10 @@ class VariantClass extends ConstructType {
   accept(v2, d2) {
     return v2.visitVariant(this, this._fields, d2);
   }
-  covariant(x2) {
-    if (typeof x2 === "object" && Object.entries(x2).length === 1 && this._fields.every(([k2, v2]) => {
+  covariant(x3) {
+    if (typeof x3 === "object" && Object.entries(x3).length === 1 && this._fields.every(([k2, v2]) => {
       try {
-        return !x2.hasOwnProperty(k2) || v2.covariant(x2[k2]);
+        return !x3.hasOwnProperty(k2) || v2.covariant(x3[k2]);
       } catch (e) {
         throw new Error(`Invalid ${this.display()} argument: 
 
@@ -3344,18 +3344,18 @@ variant ${k2} -> ${e.message}`);
       }
     }))
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
+  encodeValue(x3) {
     for (let i = 0; i < this._fields.length; i++) {
       const [name, type] = this._fields[i];
-      if (x2.hasOwnProperty(name)) {
+      if (x3.hasOwnProperty(name)) {
         const idx = lebEncode(i);
-        const buf = type.encodeValue(x2[name]);
+        const buf = type.encodeValue(x3[name]);
         return concat(idx, buf);
       }
     }
-    throw Error("Variant has no data: " + x2);
+    throw Error("Variant has no data: " + x3);
   }
   _buildTypeTableImpl(typeTable) {
     this._fields.forEach(([, type]) => {
@@ -3392,10 +3392,10 @@ variant ${k2} -> ${e.message}`);
     const fields = this._fields.map(([key, type]) => key + (type.name === "null" ? "" : `:${type.display()}`));
     return `variant {${fields.join("; ")}}`;
   }
-  valueToString(x2) {
+  valueToString(x3) {
     for (const [name, type] of this._fields) {
-      if (x2.hasOwnProperty(name)) {
-        const value = type.valueToString(x2[name]);
+      if (x3.hasOwnProperty(name)) {
+        const value = type.valueToString(x3[name]);
         if (value === "null") {
           return `variant {${name}}`;
         } else {
@@ -3403,7 +3403,7 @@ variant ${k2} -> ${e.message}`);
         }
       }
     }
-    throw new Error("Variant has no data: " + x2);
+    throw new Error("Variant has no data: " + x3);
   }
   get alternativesAsObject() {
     const alternatives = {};
@@ -3436,16 +3436,16 @@ const _RecClass = class _RecClass extends ConstructType {
   getType() {
     return this._type;
   }
-  covariant(x2) {
-    if (this._type ? this._type.covariant(x2) : false)
+  covariant(x3) {
+    if (this._type ? this._type.covariant(x3) : false)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
+  encodeValue(x3) {
     if (!this._type) {
       throw Error("Recursive type uninitialized.");
     }
-    return this._type.encodeValue(x2);
+    return this._type.encodeValue(x3);
   }
   _buildTypeTableImpl(typeTable) {
     if (!this._type) {
@@ -3470,18 +3470,18 @@ const _RecClass = class _RecClass extends ConstructType {
     }
     return `μ${this.name}.${this._type.name}`;
   }
-  valueToString(x2) {
+  valueToString(x3) {
     if (!this._type) {
       throw Error("Recursive type uninitialized.");
     }
-    return this._type.valueToString(x2);
+    return this._type.valueToString(x3);
   }
 };
 _RecClass._counter = 0;
 let RecClass = _RecClass;
 function decodePrincipalId(b2) {
-  const x2 = safeReadUint8(b2);
-  if (x2 !== 1) {
+  const x3 = safeReadUint8(b2);
+  if (x3 !== 1) {
     throw new Error("Cannot decode principal");
   }
   const len = Number(lebDecode(b2));
@@ -3497,13 +3497,13 @@ class PrincipalClass extends PrimitiveType {
   accept(v2, d2) {
     return v2.visitPrincipal(this, d2);
   }
-  covariant(x2) {
-    if (x2 && x2._isPrincipal)
+  covariant(x3) {
+    if (x3 && x3._isPrincipal)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    const buf = x2.toUint8Array();
+  encodeValue(x3) {
+    const buf = x3.toUint8Array();
     const len = lebEncode(buf.byteLength);
     return concat(new Uint8Array([1]), len, buf);
   }
@@ -3517,8 +3517,8 @@ class PrincipalClass extends PrimitiveType {
   get name() {
     return "principal";
   }
-  valueToString(x2) {
-    return `${this.name} "${x2.toText()}"`;
+  valueToString(x3) {
+    return `${this.name} "${x3.toText()}"`;
   }
 }
 class FuncClass extends ConstructType {
@@ -3543,10 +3543,10 @@ class FuncClass extends ConstructType {
   accept(v2, d2) {
     return v2.visitFunc(this, d2);
   }
-  covariant(x2) {
-    if (Array.isArray(x2) && x2.length === 2 && x2[0] && x2[0]._isPrincipal && typeof x2[1] === "string")
+  covariant(x3) {
+    if (Array.isArray(x3) && x3.length === 2 && x3[0] && x3[0]._isPrincipal && typeof x3[1] === "string")
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
   encodeValue([principal, methodName]) {
     const buf = principal.toUint8Array();
@@ -3573,8 +3573,8 @@ class FuncClass extends ConstructType {
     if (!subtype(tt2, this)) {
       throw new Error(`Cannot decode function reference at type ${this.display()} from wire type ${tt2.display()}`);
     }
-    const x2 = safeReadUint8(b2);
-    if (x2 !== 1) {
+    const x3 = safeReadUint8(b2);
+    if (x3 !== 1) {
       throw new Error("Cannot decode function reference");
     }
     const canister = decodePrincipalId(b2);
@@ -3633,13 +3633,13 @@ class ServiceClass extends ConstructType {
   accept(v2, d2) {
     return v2.visitService(this, d2);
   }
-  covariant(x2) {
-    if (x2 && x2._isPrincipal)
+  covariant(x3) {
+    if (x3 && x3._isPrincipal)
       return true;
-    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x2)}`);
+    throw new Error(`Invalid ${this.display()} argument: ${toReadableString(x3)}`);
   }
-  encodeValue(x2) {
-    const buf = x2.toUint8Array();
+  encodeValue(x3) {
+    const buf = x3.toUint8Array();
     const len = lebEncode(buf.length);
     return concat(new Uint8Array([1]), len, buf);
   }
@@ -3665,8 +3665,8 @@ class ServiceClass extends ConstructType {
     const fields = this._fields.map(([key, value]) => key + ":" + value.name);
     return `service {${fields.join("; ")}}`;
   }
-  valueToString(x2) {
-    return `service "${x2.toText()}"`;
+  valueToString(x3) {
+    return `service "${x3.toText()}"`;
   }
   fieldsAsObject() {
     const fields = {};
@@ -3676,8 +3676,8 @@ class ServiceClass extends ConstructType {
     return fields;
   }
 }
-function toReadableString(x2) {
-  const str = JSON.stringify(x2, (_key, value) => typeof value === "bigint" ? `BigInt(${value})` : value);
+function toReadableString(x3) {
+  const str = JSON.stringify(x3, (_key, value) => typeof value === "bigint" ? `BigInt(${value})` : value);
   return str && str.length > toReadableString_max ? str.substring(0, toReadableString_max - 3) + "..." : str;
 }
 function encode$2(argTypes, args) {
@@ -3690,14 +3690,14 @@ function encode$2(argTypes, args) {
   const table = typeTable.encode();
   const len = lebEncode(args.length);
   const typs = concat(...argTypes.map((t) => t.encodeType(typeTable)));
-  const vals = concat(...zipWith(argTypes, args, (t, x2) => {
+  const vals = concat(...zipWith(argTypes, args, (t, x3) => {
     try {
-      t.covariant(x2);
+      t.covariant(x3);
     } catch (e) {
       const err = new Error(e.message + "\n\n");
       throw err;
     }
-    return t.encodeValue(x2);
+    return t.encodeValue(x3);
   }));
   return concat(magic, table, len, typs, vals);
 }
@@ -4268,7 +4268,7 @@ function hashOfMap(map) {
   const sorted = traversed.sort(([k1], [k2]) => {
     return compare(k1, k2);
   });
-  const concatenated = concatBytes(...sorted.map((x2) => concatBytes(...x2)));
+  const concatenated = concatBytes(...sorted.map((x3) => concatBytes(...x3)));
   const result = sha256(concatenated);
   return result;
 }
@@ -4323,10 +4323,10 @@ class w extends Error {
 }
 const m = 55799, L = Symbol("CBOR_STOP_CODE");
 var g = /* @__PURE__ */ ((t) => (t[t.False = 20] = "False", t[t.True = 21] = "True", t[t.Null = 22] = "Null", t[t.Undefined = 23] = "Undefined", t[t.Break = 31] = "Break", t))(g || {}), c = /* @__PURE__ */ ((t) => (t[t.UnsignedInteger = 0] = "UnsignedInteger", t[t.NegativeInteger = 1] = "NegativeInteger", t[t.ByteString = 2] = "ByteString", t[t.TextString = 3] = "TextString", t[t.Array = 4] = "Array", t[t.Map = 5] = "Map", t[t.Tag = 6] = "Tag", t[t.Simple = 7] = "Simple", t))(c || {});
-const z = 23, Y = 255, G = 65535, P = 4294967295, H = BigInt("0xffffffffffffffff");
+const z$1 = 23, Y = 255, G = 65535, P = 4294967295, H$1 = BigInt("0xffffffffffffffff");
 var d = /* @__PURE__ */ ((t) => (t[t.Value = 23] = "Value", t[t.OneByte = 24] = "OneByte", t[t.TwoBytes = 25] = "TwoBytes", t[t.FourBytes = 26] = "FourBytes", t[t.EightBytes = 27] = "EightBytes", t[t.Indefinite = 31] = "Indefinite", t))(d || {});
 const h = false;
-function W(t) {
+function W$1(t) {
   return t == null;
 }
 function R(t, n) {
@@ -4347,10 +4347,10 @@ function ut(t, n) {
   return (n == null ? void 0 : n(e)) ?? e;
 }
 function B(t) {
-  const [n, e] = N();
+  const [n, e] = N$1();
   switch (n) {
     case c.UnsignedInteger:
-      return E(e);
+      return E$1(e);
     case c.NegativeInteger:
       return j(e);
     case c.ByteString:
@@ -4358,25 +4358,25 @@ function B(t) {
     case c.TextString:
       return F(e);
     case c.Array:
-      return J(e);
+      return J$1(e);
     case c.Map:
-      return b(e);
+      return b$1(e);
     case c.Tag:
-      return M(e);
+      return M$1(e);
     case c.Simple:
       return Q(e);
   }
   throw new w(`Unsupported major type: ${n}`);
 }
-function N() {
+function N$1() {
   const t = A.at(a);
-  if (W(t))
+  if (W$1(t))
     throw new w("Provided CBOR data is empty");
   const n = Z(t), e = q(t);
   return a++, [n, e];
 }
-function J(t, n) {
-  const e = E(t);
+function J$1(t, n) {
+  const e = E$1(t);
   if (e === 1 / 0) {
     const u = [];
     let f = B();
@@ -4406,26 +4406,26 @@ function Q(t) {
   }
   throw new w(`Unrecognized simple type: ${t.toString(2)}`);
 }
-function b(t, n) {
-  const e = E(t), i = {};
+function b$1(t, n) {
+  const e = E$1(t), i = {};
   if (e === 1 / 0) {
-    let [u, f] = N();
+    let [u, f] = N$1();
     for (; u !== c.Simple && f !== g.Break; ) {
-      const l = F(f), U = B();
-      i[l] = U, [u, f] = N();
+      const l = F(f), U2 = B();
+      i[l] = U2, [u, f] = N$1();
     }
     return i;
   }
   for (let u = 0; u < e; u++) {
-    const [f, l] = N();
+    const [f, l] = N$1();
     if (f !== c.TextString)
       throw new w("Map keys must be text strings");
-    const U = F(l), D = B();
-    i[U] = D;
+    const U2 = F(l), D = B();
+    i[U2] = D;
   }
   return i;
 }
-function E(t) {
+function E$1(t) {
   if (t <= d.Value)
     return t;
   switch (y = new DataView(A.buffer, A.byteOffset + a), t) {
@@ -4444,11 +4444,11 @@ function E(t) {
   }
 }
 function j(t) {
-  const n = E(t);
+  const n = E$1(t);
   return typeof n == "number" ? -1 - n : -1n - n;
 }
 function $(t) {
-  const n = E(t);
+  const n = E$1(t);
   if (n > Number.MAX_SAFE_INTEGER)
     throw new w("Byte length is too large");
   const e = Number(n);
@@ -4458,29 +4458,29 @@ function F(t) {
   const n = $(t);
   return K.decode(n);
 }
-function M(t, n) {
-  const e = E(t);
+function M$1(t, n) {
+  const e = E$1(t);
   if (e === m)
     return B();
   throw new w(`Unsupported tag: ${e}.`);
 }
-class x extends Error {
+let x$1 = class x extends Error {
   constructor(n) {
     super(n), this.name = "SerializationError";
   }
-}
+};
 const p = 2 * 1024, C = 100, v = new TextEncoder();
 function S(t) {
   return t << 5;
 }
-let o = new Uint8Array(p), r$1 = new DataView(o.buffer), s = 0, O = [];
+let o$1 = new Uint8Array(p), r$1 = new DataView(o$1.buffer), s = 0, O$1 = [];
 function dt(t, n) {
   s = 0;
   const e = (n == null ? void 0 : n(t)) ?? t;
-  return it(m, e, n), o.slice(0, s);
+  return it(m, e, n), o$1.slice(0, s);
 }
-function _(t, n) {
-  if (s > o.length - C && (o = R(o, o.length * 2), r$1 = new DataView(o.buffer)), t === false || t === true || t === null || t === void 0) {
+function _$1(t, n) {
+  if (s > o$1.length - C && (o$1 = R(o$1, o$1.length * 2), r$1 = new DataView(o$1.buffer)), t === false || t === true || t === null || t === void 0) {
     et(t);
     return;
   }
@@ -4493,11 +4493,11 @@ function _(t, n) {
     return;
   }
   if (t instanceof Uint8Array) {
-    V(t);
+    V$1(t);
     return;
   }
   if (t instanceof ArrayBuffer) {
-    V(new Uint8Array(t));
+    V$1(new Uint8Array(t));
     return;
   }
   if (Array.isArray(t)) {
@@ -4508,20 +4508,20 @@ function _(t, n) {
     nt(t, n);
     return;
   }
-  throw new x(`Unsupported type: ${typeof t}`);
+  throw new x$1(`Unsupported type: ${typeof t}`);
 }
 function tt(t, n) {
-  I(c.Array, t.length), t.forEach((e, i) => {
-    _((n == null ? void 0 : n(e, i.toString())) ?? e, n);
+  I$1(c.Array, t.length), t.forEach((e, i) => {
+    _$1((n == null ? void 0 : n(e, i.toString())) ?? e, n);
   });
 }
 function nt(t, n) {
-  O = Object.entries(t), I(c.Map, O.length), O.forEach(([e, i]) => {
-    X(e), _((n == null ? void 0 : n(i, e)) ?? i, n);
+  O$1 = Object.entries(t), I$1(c.Map, O$1.length), O$1.forEach(([e, i]) => {
+    X(e), _$1((n == null ? void 0 : n(i, e)) ?? i, n);
   });
 }
-function I(t, n) {
-  if (n <= z) {
+function I$1(t, n) {
+  if (n <= z$1) {
     r$1.setUint8(
       s++,
       S(t) | Number(n)
@@ -4549,17 +4549,17 @@ function I(t, n) {
     ), r$1.setUint32(s, Number(n), h), s += 4;
     return;
   }
-  if (n <= H) {
+  if (n <= H$1) {
     r$1.setUint8(
       s++,
       S(t) | d.EightBytes
     ), r$1.setBigUint64(s, BigInt(n), h), s += 8;
     return;
   }
-  throw new x(`Value too large to encode: ${n}`);
+  throw new x$1(`Value too large to encode: ${n}`);
 }
 function et(t) {
-  I(c.Simple, st(t));
+  I$1(c.Simple, st(t));
 }
 function st(t) {
   if (t === false)
@@ -4570,13 +4570,13 @@ function st(t) {
     return g.Null;
   if (t === void 0)
     return g.Undefined;
-  throw new x(`Unrecognized simple value: ${t.toString()}`);
+  throw new x$1(`Unrecognized simple value: ${t.toString()}`);
 }
 function k(t, n) {
-  I(t, n.length), s > o.length - n.length && (o = R(o, o.length + n.length), r$1 = new DataView(o.buffer)), o.set(n, s), s += n.length;
+  I$1(t, n.length), s > o$1.length - n.length && (o$1 = R(o$1, o$1.length + n.length), r$1 = new DataView(o$1.buffer)), o$1.set(n, s), s += n.length;
 }
 function T(t, n) {
-  I(t, n);
+  I$1(t, n);
 }
 function ct(t) {
   T(c.UnsignedInteger, t);
@@ -4593,11 +4593,11 @@ function ft(t) {
 function X(t) {
   k(c.TextString, v.encode(t));
 }
-function V(t) {
+function V$1(t) {
   k(c.ByteString, t);
 }
 function it(t, n, e) {
-  I(c.Tag, t), _(n, e);
+  I$1(c.Tag, t), _$1(n, e);
 }
 function hasCborValueMethod(value) {
   return typeof value === "object" && value !== null && "toCborValue" in value;
@@ -4878,8 +4878,8 @@ function mod(a2, b2) {
   const result = a2 % b2;
   return result >= _0n$6 ? result : b2 + result;
 }
-function pow2(x2, power, modulo) {
-  let res = x2;
+function pow2(x3, power, modulo) {
+  let res = x3;
   while (power-- > _0n$6) {
     res *= res;
     res %= modulo;
@@ -4893,17 +4893,17 @@ function invert(number, modulo) {
     throw new Error("invert: expected positive modulus, got " + modulo);
   let a2 = mod(number, modulo);
   let b2 = modulo;
-  let x2 = _0n$6, u = _1n$7;
+  let x3 = _0n$6, u = _1n$7;
   while (a2 !== _0n$6) {
     const q2 = b2 / a2;
     const r2 = b2 % a2;
-    const m2 = x2 - u * q2;
-    b2 = a2, a2 = r2, x2 = u, u = m2;
+    const m2 = x3 - u * q2;
+    b2 = a2, a2 = r2, x3 = u, u = m2;
   }
   const gcd = b2;
   if (gcd !== _1n$7)
     throw new Error("invert: does not exist");
-  return mod(x2, modulo);
+  return mod(x3, modulo);
 }
 function assertIsSquare(Fp3, root2, n) {
   if (!Fp3.eql(Fp3.sqr(root2), n))
@@ -5587,12 +5587,12 @@ function hash_to_field(msg, count, options) {
 }
 function isogenyMap(field, map) {
   const coeff = map.map((i) => Array.from(i).reverse());
-  return (x2, y2) => {
-    const [xn, xd, yn, yd] = coeff.map((val) => val.reduce((acc, i) => field.add(field.mul(acc, x2), i)));
+  return (x3, y2) => {
+    const [xn, xd, yn, yd] = coeff.map((val) => val.reduce((acc, i) => field.add(field.mul(acc, x3), i)));
     const [xd_inv, yd_inv] = FpInvertBatch(field, [xd, yd], true);
-    x2 = field.mul(xn, xd_inv);
+    x3 = field.mul(xn, xd_inv);
     y2 = field.mul(y2, field.mul(yn, yd_inv));
-    return { x: x2, y: y2 };
+    return { x: x3, y: y2 };
   };
 }
 const _DST_scalar = utf8ToBytes("HashToScalar-");
@@ -5707,8 +5707,8 @@ function weierstrassN(params, extraOpts = {}) {
       throw new Error("compression is not supported: Field does not have .isOdd()");
   }
   function pointToBytes(_c2, point, isCompressed) {
-    const { x: x2, y: y2 } = point.toAffine();
-    const bx = Fp3.toBytes(x2);
+    const { x: x3, y: y2 } = point.toAffine();
+    const bx = Fp3.toBytes(x3);
     _abool2(isCompressed, "isCompressed");
     if (isCompressed) {
       assertCompressionIsSupported();
@@ -5725,10 +5725,10 @@ function weierstrassN(params, extraOpts = {}) {
     const head = bytes[0];
     const tail = bytes.subarray(1);
     if (length === comp && (head === 2 || head === 3)) {
-      const x2 = Fp3.fromBytes(tail);
-      if (!Fp3.isValid(x2))
+      const x3 = Fp3.fromBytes(tail);
+      if (!Fp3.isValid(x3))
         throw new Error("bad point: is not on curve, wrong x");
-      const y2 = weierstrassEquation(x2);
+      const y2 = weierstrassEquation(x3);
       let y3;
       try {
         y3 = Fp3.sqrt(y2);
@@ -5741,28 +5741,28 @@ function weierstrassN(params, extraOpts = {}) {
       const isHeadOdd = (head & 1) === 1;
       if (isHeadOdd !== isYOdd)
         y3 = Fp3.neg(y3);
-      return { x: x2, y: y3 };
+      return { x: x3, y: y3 };
     } else if (length === uncomp && head === 4) {
       const L2 = Fp3.BYTES;
-      const x2 = Fp3.fromBytes(tail.subarray(0, L2));
+      const x3 = Fp3.fromBytes(tail.subarray(0, L2));
       const y2 = Fp3.fromBytes(tail.subarray(L2, L2 * 2));
-      if (!isValidXY(x2, y2))
+      if (!isValidXY(x3, y2))
         throw new Error("bad point: is not on curve");
-      return { x: x2, y: y2 };
+      return { x: x3, y: y2 };
     } else {
       throw new Error(`bad point: got length ${length}, expected compressed=${comp} or uncompressed=${uncomp}`);
     }
   }
   const encodePoint = extraOpts.toBytes || pointToBytes;
   const decodePoint = extraOpts.fromBytes || pointFromBytes;
-  function weierstrassEquation(x2) {
-    const x22 = Fp3.sqr(x2);
-    const x3 = Fp3.mul(x22, x2);
-    return Fp3.add(Fp3.add(x3, Fp3.mul(x2, CURVE.a)), CURVE.b);
+  function weierstrassEquation(x3) {
+    const x22 = Fp3.sqr(x3);
+    const x32 = Fp3.mul(x22, x3);
+    return Fp3.add(Fp3.add(x32, Fp3.mul(x3, CURVE.a)), CURVE.b);
   }
-  function isValidXY(x2, y2) {
+  function isValidXY(x3, y2) {
     const left = Fp3.sqr(y2);
-    const right = weierstrassEquation(x2);
+    const right = weierstrassEquation(x3);
     return Fp3.eql(left, right);
   }
   if (!isValidXY(CURVE.Gx, CURVE.Gy))
@@ -5792,14 +5792,14 @@ function weierstrassN(params, extraOpts = {}) {
     const is0 = p2.is0();
     if (iz == null)
       iz = is0 ? Fp3.ONE : Fp3.inv(Z2);
-    const x2 = Fp3.mul(X2, iz);
+    const x3 = Fp3.mul(X2, iz);
     const y2 = Fp3.mul(Y2, iz);
     const zz = Fp3.mul(Z2, iz);
     if (is0)
       return { x: Fp3.ZERO, y: Fp3.ZERO };
     if (!Fp3.eql(zz, Fp3.ONE))
       throw new Error("invZ was invalid");
-    return { x: x2, y: y2 };
+    return { x: x3, y: y2 };
   });
   const assertValidMemo = memoized((p2) => {
     if (p2.is0()) {
@@ -5807,10 +5807,10 @@ function weierstrassN(params, extraOpts = {}) {
         return;
       throw new Error("bad point: ZERO");
     }
-    const { x: x2, y: y2 } = p2.toAffine();
-    if (!Fp3.isValid(x2) || !Fp3.isValid(y2))
+    const { x: x3, y: y2 } = p2.toAffine();
+    if (!Fp3.isValid(x3) || !Fp3.isValid(y2))
       throw new Error("bad point: x or y not field elements");
-    if (!isValidXY(x2, y2))
+    if (!isValidXY(x3, y2))
       throw new Error("bad point: equation left != right");
     if (!p2.isTorsionFree())
       throw new Error("bad point: not in prime-order subgroup");
@@ -5835,14 +5835,14 @@ function weierstrassN(params, extraOpts = {}) {
     }
     /** Does NOT validate if the point is valid. Use `.assertValidity()`. */
     static fromAffine(p2) {
-      const { x: x2, y: y2 } = p2 || {};
-      if (!p2 || !Fp3.isValid(x2) || !Fp3.isValid(y2))
+      const { x: x3, y: y2 } = p2 || {};
+      if (!p2 || !Fp3.isValid(x3) || !Fp3.isValid(y2))
         throw new Error("invalid affine point");
       if (p2 instanceof Point)
         throw new Error("projective point not allowed");
-      if (Fp3.is0(x2) && Fp3.is0(y2))
+      if (Fp3.is0(x3) && Fp3.is0(y2))
         return Point.ZERO;
-      return new Point(x2, y2, Fp3.ONE);
+      return new Point(x3, y2, Fp3.ONE);
     }
     static fromBytes(bytes) {
       const P2 = Point.fromAffine(decodePoint(_abytes2(bytes, void 0, "point")));
@@ -6201,7 +6201,7 @@ function mapToCurveSimpleSWU(Fp3, opts) {
   if (!Fp3.isOdd)
     throw new Error("Field does not have .isOdd()");
   return (u) => {
-    let tv1, tv2, tv3, tv4, tv5, tv6, x2, y2;
+    let tv1, tv2, tv3, tv4, tv5, tv6, x3, y2;
     tv1 = Fp3.sqr(u);
     tv1 = Fp3.mul(tv1, Z2);
     tv2 = Fp3.sqr(tv1);
@@ -6218,17 +6218,17 @@ function mapToCurveSimpleSWU(Fp3, opts) {
     tv6 = Fp3.mul(tv6, tv4);
     tv5 = Fp3.mul(tv6, B2);
     tv2 = Fp3.add(tv2, tv5);
-    x2 = Fp3.mul(tv1, tv3);
+    x3 = Fp3.mul(tv1, tv3);
     const { isValid, value } = sqrtRatio(tv2, tv6);
     y2 = Fp3.mul(tv1, u);
     y2 = Fp3.mul(y2, value);
-    x2 = Fp3.cmov(x2, tv3, isValid);
+    x3 = Fp3.cmov(x3, tv3, isValid);
     y2 = Fp3.cmov(y2, value, isValid);
     const e1 = Fp3.isOdd(u) === Fp3.isOdd(y2);
     y2 = Fp3.cmov(Fp3.neg(y2), y2, e1);
     const tv4_inv = FpInvertBatch(Fp3, [tv4], true)[0];
-    x2 = Fp3.mul(x2, tv4_inv);
-    return { x: x2, y: y2 };
+    x3 = Fp3.mul(x3, tv4_inv);
+    return { x: x3, y: y2 };
   };
 }
 function getWLengths(Fp3, Fn) {
@@ -6275,10 +6275,10 @@ function _weierstrass_legacy_opts_to_new(c2) {
   return { CURVE, curveOpts };
 }
 function _legacyHelperEquat(Fp3, a2, b2) {
-  function weierstrassEquation(x2) {
-    const x22 = Fp3.sqr(x2);
-    const x3 = Fp3.mul(x22, x2);
-    return Fp3.add(Fp3.add(x3, Fp3.mul(x2, a2)), b2);
+  function weierstrassEquation(x3) {
+    const x22 = Fp3.sqr(x3);
+    const x32 = Fp3.mul(x22, x3);
+    return Fp3.add(Fp3.add(x32, Fp3.mul(x3, a2)), b2);
   }
   return weierstrassEquation;
 }
@@ -6361,8 +6361,8 @@ function createBlsPairing(fields, G1, G2, params) {
   const ATE_NAF = NAfDecomposition(ateLoopSize);
   const calcPairingPrecomputes = memoized((point) => {
     const p2 = point;
-    const { x: x2, y: y2 } = p2.toAffine();
-    const Qx = x2, Qy = y2, negQy = Fp22.neg(y2);
+    const { x: x3, y: y2 } = p2.toAffine();
+    const Qx = x3, Qy = y2, negQy = Fp22.neg(y2);
     let Rx = Qx, Ry = Qy, Rz = Fp22.ONE;
     const ell = [];
     for (const bit of ATE_NAF) {
@@ -6661,8 +6661,8 @@ function calcFrobeniusCoefficients(Fp3, nonResidue, modulus, degree, num = 1, di
 function psiFrobenius(Fp3, Fp22, base) {
   const PSI_X = Fp22.pow(base, (Fp3.ORDER - _1n$3) / _3n$1);
   const PSI_Y = Fp22.pow(base, (Fp3.ORDER - _1n$3) / _2n$3);
-  function psi(x2, y2) {
-    const x22 = Fp22.mul(Fp22.frobeniusMap(x2, 1), PSI_X);
+  function psi(x3, y2) {
+    const x22 = Fp22.mul(Fp22.frobeniusMap(x3, 1), PSI_X);
     const y22 = Fp22.mul(Fp22.frobeniusMap(y2, 1), PSI_Y);
     return [x22, y22];
   }
@@ -6670,8 +6670,8 @@ function psiFrobenius(Fp3, Fp22, base) {
   const PSI2_Y = Fp22.pow(base, (Fp3.ORDER ** _2n$3 - _1n$3) / _2n$3);
   if (!Fp22.eql(PSI2_Y, Fp22.neg(Fp22.ONE)))
     throw new Error("psiFrobenius: PSI2_Y!==-1");
-  function psi2(x2, y2) {
-    return [Fp22.mul(x2, PSI2_X), Fp22.neg(y2)];
+  function psi2(x3, y2) {
+    return [Fp22.mul(x3, PSI2_X), Fp22.neg(y2)];
   }
   const mapAffine = (fn) => (c2, P2) => {
     const affine = P2.toAffine();
@@ -6813,16 +6813,16 @@ class _Field2 {
     if (!Fp22.eql(Fp22.sqr(candidateSqrt), num))
       throw new Error("Cannot find square root");
     const x1 = candidateSqrt;
-    const x2 = Fp22.neg(x1);
+    const x22 = Fp22.neg(x1);
     const { re: re1, im: im1 } = Fp22.reim(x1);
-    const { re: re2, im: im2 } = Fp22.reim(x2);
+    const { re: re2, im: im2 } = Fp22.reim(x22);
     if (im1 > im2 || im1 === im2 && re1 > re2)
       return x1;
-    return x2;
+    return x22;
   }
   // Same as sgn0_m_eq_2 in RFC 9380
-  isOdd(x2) {
-    const { re: x0, im: x1 } = this.reim(x2);
+  isOdd(x3) {
+    const { re: x0, im: x1 } = this.reim(x3);
     const sign_0 = x0 % _2n$3;
     const zero_0 = x0 === _0n$2;
     const sign_1 = x1 % _2n$3;
@@ -7349,15 +7349,15 @@ const { Fp: Fp$1, Fp2, Fp6, Fp12 } = tower12({
     return { c0: Fp$1.sub(t0, t1), c1: Fp$1.add(t0, t1) };
   },
   Fp12finalExponentiate: (num) => {
-    const x2 = BLS_X;
+    const x3 = BLS_X;
     const t0 = Fp12.div(Fp12.frobeniusMap(num, 6), num);
     const t1 = Fp12.mul(Fp12.frobeniusMap(t0, 2), t0);
-    const t2 = Fp12.conjugate(Fp12._cyclotomicExp(t1, x2));
+    const t2 = Fp12.conjugate(Fp12._cyclotomicExp(t1, x3));
     const t3 = Fp12.mul(Fp12.conjugate(Fp12._cyclotomicSquare(t1)), t2);
-    const t4 = Fp12.conjugate(Fp12._cyclotomicExp(t3, x2));
-    const t5 = Fp12.conjugate(Fp12._cyclotomicExp(t4, x2));
-    const t6 = Fp12.mul(Fp12.conjugate(Fp12._cyclotomicExp(t5, x2)), Fp12._cyclotomicSquare(t2));
-    const t7 = Fp12.conjugate(Fp12._cyclotomicExp(t6, x2));
+    const t4 = Fp12.conjugate(Fp12._cyclotomicExp(t3, x3));
+    const t5 = Fp12.conjugate(Fp12._cyclotomicExp(t4, x3));
+    const t6 = Fp12.mul(Fp12.conjugate(Fp12._cyclotomicExp(t5, x3)), Fp12._cyclotomicSquare(t2));
+    const t7 = Fp12.conjugate(Fp12._cyclotomicExp(t6, x3));
     const t2_t5_pow_q2 = Fp12.frobeniusMap(Fp12.mul(t2, t5), 2);
     const t4_t1_pow_q3 = Fp12.frobeniusMap(Fp12.mul(t4, t1), 3);
     const t6_t1c_pow_q1 = Fp12.frobeniusMap(Fp12.mul(t6, Fp12.conjugate(t1)), 1);
@@ -7414,56 +7414,56 @@ function setMask(bytes, mask) {
 function pointG1ToBytes(_c2, point, isComp) {
   const { BYTES: L2, ORDER: P2 } = Fp$1;
   const is0 = point.is0();
-  const { x: x2, y: y2 } = point.toAffine();
+  const { x: x3, y: y2 } = point.toAffine();
   if (isComp) {
     if (is0)
       return COMPZERO.slice();
     const sort = Boolean(y2 * _2n$2 / P2);
-    return setMask(numberToBytesBE(x2, L2), { compressed: true, sort });
+    return setMask(numberToBytesBE(x3, L2), { compressed: true, sort });
   } else {
     if (is0) {
       return concatBytes(Uint8Array.of(64), new Uint8Array(2 * L2 - 1));
     } else {
-      return concatBytes(numberToBytesBE(x2, L2), numberToBytesBE(y2, L2));
+      return concatBytes(numberToBytesBE(x3, L2), numberToBytesBE(y2, L2));
     }
   }
 }
 function signatureG1ToBytes(point) {
   point.assertValidity();
   const { BYTES: L2, ORDER: P2 } = Fp$1;
-  const { x: x2, y: y2 } = point.toAffine();
+  const { x: x3, y: y2 } = point.toAffine();
   if (point.is0())
     return COMPZERO.slice();
   const sort = Boolean(y2 * _2n$2 / P2);
-  return setMask(numberToBytesBE(x2, L2), { compressed: true, sort });
+  return setMask(numberToBytesBE(x3, L2), { compressed: true, sort });
 }
 function pointG1FromBytes(bytes) {
   const { compressed, infinity, sort, value } = parseMask(bytes);
   const { BYTES: L2, ORDER: P2 } = Fp$1;
   if (value.length === 48 && compressed) {
     const compressedValue = bytesToNumberBE(value);
-    const x2 = Fp$1.create(compressedValue & bitMask(Fp$1.BITS));
+    const x3 = Fp$1.create(compressedValue & bitMask(Fp$1.BITS));
     if (infinity) {
-      if (x2 !== _0n$1)
+      if (x3 !== _0n$1)
         throw new Error("invalid G1 point: non-empty, at infinity, with compression");
       return { x: _0n$1, y: _0n$1 };
     }
-    const right = Fp$1.add(Fp$1.pow(x2, _3n), Fp$1.create(bls12_381_CURVE_G1.b));
+    const right = Fp$1.add(Fp$1.pow(x3, _3n), Fp$1.create(bls12_381_CURVE_G1.b));
     let y2 = Fp$1.sqrt(right);
     if (!y2)
       throw new Error("invalid G1 point: compressed point");
     if (y2 * _2n$2 / P2 !== BigInt(sort))
       y2 = Fp$1.neg(y2);
-    return { x: Fp$1.create(x2), y: Fp$1.create(y2) };
+    return { x: Fp$1.create(x3), y: Fp$1.create(y2) };
   } else if (value.length === 96 && !compressed) {
-    const x2 = bytesToNumberBE(value.subarray(0, L2));
+    const x3 = bytesToNumberBE(value.subarray(0, L2));
     const y2 = bytesToNumberBE(value.subarray(L2));
     if (infinity) {
-      if (x2 !== _0n$1 || y2 !== _0n$1)
+      if (x3 !== _0n$1 || y2 !== _0n$1)
         throw new Error("G1: non-empty point at infinity");
       return bls12_381.G1.Point.ZERO.toAffine();
     }
-    return { x: Fp$1.create(x2), y: Fp$1.create(y2) };
+    return { x: Fp$1.create(x3), y: Fp$1.create(y2) };
   } else {
     throw new Error("invalid G1 point: expected 48/96 bytes");
   }
@@ -7475,31 +7475,31 @@ function signatureG1FromBytes(hex) {
   const compressedValue = bytesToNumberBE(value);
   if (infinity)
     return Point.ZERO;
-  const x2 = Fp$1.create(compressedValue & bitMask(Fp$1.BITS));
-  const right = Fp$1.add(Fp$1.pow(x2, _3n), Fp$1.create(bls12_381_CURVE_G1.b));
+  const x3 = Fp$1.create(compressedValue & bitMask(Fp$1.BITS));
+  const right = Fp$1.add(Fp$1.pow(x3, _3n), Fp$1.create(bls12_381_CURVE_G1.b));
   let y2 = Fp$1.sqrt(right);
   if (!y2)
     throw new Error("invalid G1 point: compressed");
   const aflag = BigInt(sort);
   if (y2 * _2n$2 / P2 !== aflag)
     y2 = Fp$1.neg(y2);
-  const point = Point.fromAffine({ x: x2, y: y2 });
+  const point = Point.fromAffine({ x: x3, y: y2 });
   point.assertValidity();
   return point;
 }
 function pointG2ToBytes(_c2, point, isComp) {
   const { BYTES: L2, ORDER: P2 } = Fp$1;
   const is0 = point.is0();
-  const { x: x2, y: y2 } = point.toAffine();
+  const { x: x3, y: y2 } = point.toAffine();
   if (isComp) {
     if (is0)
       return concatBytes(COMPZERO, numberToBytesBE(_0n$1, L2));
     const flag = Boolean(y2.c1 === _0n$1 ? y2.c0 * _2n$2 / P2 : y2.c1 * _2n$2 / P2);
-    return concatBytes(setMask(numberToBytesBE(x2.c1, L2), { compressed: true, sort: flag }), numberToBytesBE(x2.c0, L2));
+    return concatBytes(setMask(numberToBytesBE(x3.c1, L2), { compressed: true, sort: flag }), numberToBytesBE(x3.c0, L2));
   } else {
     if (is0)
       return concatBytes(Uint8Array.of(64), new Uint8Array(4 * L2 - 1));
-    const { re: x0, im: x1 } = Fp2.reim(x2);
+    const { re: x0, im: x1 } = Fp2.reim(x3);
     const { re: y0, im: y1 } = Fp2.reim(y2);
     return concatBytes(numberToBytesBE(x1, L2), numberToBytesBE(x0, L2), numberToBytesBE(y1, L2), numberToBytesBE(y0, L2));
   }
@@ -7509,8 +7509,8 @@ function signatureG2ToBytes(point) {
   const { BYTES: L2 } = Fp$1;
   if (point.is0())
     return concatBytes(COMPZERO, numberToBytesBE(_0n$1, L2));
-  const { x: x2, y: y2 } = point.toAffine();
-  const { re: x0, im: x1 } = Fp2.reim(x2);
+  const { x: x3, y: y2 } = point.toAffine();
+  const { re: x0, im: x1 } = Fp2.reim(x3);
   const { re: y0, im: y1 } = Fp2.reim(y2);
   const tmp = y1 > _0n$1 ? y1 * _2n$2 : y0 * _2n$2;
   const sort = Boolean(tmp / Fp$1.ORDER & _1n$2);
@@ -7535,12 +7535,12 @@ function pointG2FromBytes(bytes) {
     }
     const x_1 = slc(value, 0, L2);
     const x_0 = slc(value, L2, 2 * L2);
-    const x2 = Fp2.create({ c0: Fp$1.create(x_0), c1: Fp$1.create(x_1) });
-    const right = Fp2.add(Fp2.pow(x2, _3n), bls12_381_CURVE_G2.b);
+    const x3 = Fp2.create({ c0: Fp$1.create(x_0), c1: Fp$1.create(x_1) });
+    const right = Fp2.add(Fp2.pow(x3, _3n), bls12_381_CURVE_G2.b);
     let y2 = Fp2.sqrt(right);
     const Y_bit = y2.c1 === _0n$1 ? y2.c0 * _2n$2 / P2 : y2.c1 * _2n$2 / P2 ? _1n$2 : _0n$1;
     y2 = sort && Y_bit > 0 ? y2 : Fp2.neg(y2);
-    return { x: x2, y: y2 };
+    return { x: x3, y: y2 };
   } else if (value.length === 192 && !compressed) {
     if (infinity) {
       if (value.reduce((p2, c2) => p2 !== 0 ? c2 + 1 : c2, 0) > 0) {
@@ -7569,8 +7569,8 @@ function signatureG2FromBytes(hex) {
   if (infinity)
     return Point.ZERO;
   const x1 = Fp$1.create(z1 & bitMask(Fp$1.BITS));
-  const x2 = Fp$1.create(z2);
-  const x3 = Fp2.create({ c0: x2, c1: x1 });
+  const x22 = Fp$1.create(z2);
+  const x3 = Fp2.create({ c0: x22, c1: x1 });
   const y2 = Fp2.add(Fp2.pow(x3, _3n), bls12_381_CURVE_G2.b);
   let y3 = Fp2.sqrt(y2);
   if (!y3)
@@ -7662,14 +7662,14 @@ const bls12_381 = bls({
     // https://eprint.iacr.org/2017/419.pdf
     // prettier-ignore
     clearCofactor: (c2, P2) => {
-      const x2 = BLS_X;
-      let t1 = P2.multiplyUnsafe(x2).negate();
+      const x3 = BLS_X;
+      let t1 = P2.multiplyUnsafe(x3).negate();
       let t2 = G2psi(c2, P2);
       let t3 = P2.double();
       t3 = G2psi2(c2, t3);
       t3 = t3.subtract(t2);
       t2 = t1.add(t2);
-      t2 = t2.multiplyUnsafe(x2).negate();
+      t2 = t2.multiplyUnsafe(x3).negate();
       t3 = t3.add(t2);
       t3 = t3.subtract(t1);
       const Q2 = t3.subtract(P2);
@@ -7861,12 +7861,12 @@ const G2_SWU = mapToCurveSimpleSWU(Fp2, {
   // Z: -(2 + I)
 });
 function mapToG1(scalars) {
-  const { x: x2, y: y2 } = G1_SWU(Fp$1.create(scalars[0]));
-  return isogenyMapG1(x2, y2);
+  const { x: x3, y: y2 } = G1_SWU(Fp$1.create(scalars[0]));
+  return isogenyMapG1(x3, y2);
 }
 function mapToG2(scalars) {
-  const { x: x2, y: y2 } = G2_SWU(Fp2.fromBigTuple(scalars));
-  return isogenyMapG2(x2, y2);
+  const { x: x3, y: y2 } = G2_SWU(Fp2.fromBigTuple(scalars));
+  return isogenyMapG2(x3, y2);
 }
 function blsVerify(pk, sig, msg) {
   const primaryKey = typeof pk === "string" ? pk : bytesToHex(pk);
@@ -8471,8 +8471,8 @@ const decodeControllers = (buf) => {
 };
 /*! noble-curves - MIT License (c) 2022 Paul Miller (paulmillr.com) */
 const _0n = BigInt(0), _1n$1 = BigInt(1), _2n$1 = BigInt(2), _8n$1 = BigInt(8);
-function isEdValidXY(Fp3, CURVE, x2, y2) {
-  const x22 = Fp3.sqr(x2);
+function isEdValidXY(Fp3, CURVE, x3, y2) {
+  const x22 = Fp3.sqr(x3);
   const y22 = Fp3.sqr(y2);
   const left = Fp3.add(Fp3.mul(CURVE.a, x22), y22);
   const right = Fp3.add(Fp3.ONE, Fp3.mul(CURVE.d, Fp3.mul(x22, y22)));
@@ -8509,14 +8509,14 @@ function edwards(params, extraOpts = {}) {
     const is0 = p2.is0();
     if (iz == null)
       iz = is0 ? _8n$1 : Fp3.inv(Z2);
-    const x2 = modP(X2 * iz);
+    const x3 = modP(X2 * iz);
     const y2 = modP(Y2 * iz);
     const zz = Fp3.mul(Z2, iz);
     if (is0)
       return { x: _0n, y: _1n$1 };
     if (zz !== _1n$1)
       throw new Error("invZ was invalid");
-    return { x: x2, y: y2 };
+    return { x: x3, y: y2 };
   });
   const assertValidMemo = memoized((p2) => {
     const { a: a2, d: d2 } = CURVE;
@@ -8552,10 +8552,10 @@ function edwards(params, extraOpts = {}) {
     static fromAffine(p2) {
       if (p2 instanceof Point)
         throw new Error("extended point not allowed");
-      const { x: x2, y: y2 } = p2 || {};
-      acoord("x", x2);
+      const { x: x3, y: y2 } = p2 || {};
+      acoord("x", x3);
       acoord("y", y2);
-      return new Point(x2, y2, _1n$1, modP(x2 * y2));
+      return new Point(x3, y2, _1n$1, modP(x3 * y2));
     }
     // Uses algo from RFC8032 5.1.3.
     static fromBytes(bytes, zip215 = false) {
@@ -8572,16 +8572,16 @@ function edwards(params, extraOpts = {}) {
       const y22 = modP(y2 * y2);
       const u = modP(y22 - _1n$1);
       const v2 = modP(d2 * y22 - a2);
-      let { isValid, value: x2 } = uvRatio2(u, v2);
+      let { isValid, value: x3 } = uvRatio2(u, v2);
       if (!isValid)
         throw new Error("bad point: invalid y coordinate");
-      const isXOdd = (x2 & _1n$1) === _1n$1;
+      const isXOdd = (x3 & _1n$1) === _1n$1;
       const isLastByteOdd = (lastByte & 128) !== 0;
-      if (!zip215 && x2 === _0n && isLastByteOdd)
+      if (!zip215 && x3 === _0n && isLastByteOdd)
         throw new Error("bad point: x=0 and x_0=1");
       if (isLastByteOdd !== isXOdd)
-        x2 = modP(-x2);
-      return Point.fromAffine({ x: x2, y: y2 });
+        x3 = modP(-x3);
+      return Point.fromAffine({ x: x3, y: y2 });
     }
     static fromHex(bytes, zip215 = false) {
       return Point.fromBytes(ensureBytes("point", bytes), zip215);
@@ -8709,9 +8709,9 @@ function edwards(params, extraOpts = {}) {
       return this.multiplyUnsafe(cofactor);
     }
     toBytes() {
-      const { x: x2, y: y2 } = this.toAffine();
+      const { x: x3, y: y2 } = this.toAffine();
       const bytes = Fp3.toBytes(y2);
-      bytes[bytes.length - 1] |= x2 & _1n$1 ? 128 : 0;
+      bytes[bytes.length - 1] |= x3 & _1n$1 ? 128 : 0;
       return bytes;
     }
     toHex() {
@@ -8963,13 +8963,13 @@ const ed25519_CURVE = /* @__PURE__ */ (() => ({
   Gx: BigInt("0x216936d3cd6e53fec0a4e231fdd6dc5c692cc7609525a7b2c9562d608f25d51a"),
   Gy: BigInt("0x6666666666666666666666666666666666666666666666666666666666666658")
 }))();
-function ed25519_pow_2_252_3(x2) {
+function ed25519_pow_2_252_3(x3) {
   const _10n = BigInt(10), _20n = BigInt(20), _40n = BigInt(40), _80n = BigInt(80);
   const P2 = ed25519_CURVE_p;
-  const x22 = x2 * x2 % P2;
-  const b2 = x22 * x2 % P2;
+  const x22 = x3 * x3 % P2;
+  const b2 = x22 * x3 % P2;
   const b4 = pow2(b2, _2n, P2) * b2 % P2;
-  const b5 = pow2(b4, _1n, P2) * x2 % P2;
+  const b5 = pow2(b4, _1n, P2) * x3 % P2;
   const b10 = pow2(b5, _5n, P2) * b5 % P2;
   const b20 = pow2(b10, _10n, P2) * b10 % P2;
   const b40 = pow2(b20, _20n, P2) * b20 % P2;
@@ -8977,7 +8977,7 @@ function ed25519_pow_2_252_3(x2) {
   const b160 = pow2(b80, _80n, P2) * b80 % P2;
   const b240 = pow2(b160, _80n, P2) * b80 % P2;
   const b250 = pow2(b240, _10n, P2) * b10 % P2;
-  const pow_p_5_8 = pow2(b250, _2n, P2) * x2 % P2;
+  const pow_p_5_8 = pow2(b250, _2n, P2) * x3 % P2;
   return { pow_p_5_8, b2 };
 }
 function adjustScalarBytes(bytes) {
@@ -8992,20 +8992,20 @@ function uvRatio(u, v2) {
   const v3 = mod(v2 * v2 * v2, P2);
   const v7 = mod(v3 * v3 * v2, P2);
   const pow = ed25519_pow_2_252_3(u * v7).pow_p_5_8;
-  let x2 = mod(u * v3 * pow, P2);
-  const vx2 = mod(v2 * x2 * x2, P2);
-  const root1 = x2;
-  const root2 = mod(x2 * ED25519_SQRT_M1, P2);
+  let x3 = mod(u * v3 * pow, P2);
+  const vx2 = mod(v2 * x3 * x3, P2);
+  const root1 = x3;
+  const root2 = mod(x3 * ED25519_SQRT_M1, P2);
   const useRoot1 = vx2 === u;
   const useRoot2 = vx2 === mod(-u, P2);
   const noRoot = vx2 === mod(-u * ED25519_SQRT_M1, P2);
   if (useRoot1)
-    x2 = root1;
+    x3 = root1;
   if (useRoot2 || noRoot)
-    x2 = root2;
-  if (isNegativeLE(x2, P2))
-    x2 = mod(-x2, P2);
-  return { isValid: useRoot1 || useRoot2, value: x2 };
+    x3 = root2;
+  if (isNegativeLE(x3, P2))
+    x3 = mod(-x3, P2);
+  return { isValid: useRoot1 || useRoot2, value: x3 };
 }
 const Fp = /* @__PURE__ */ (() => Field(ed25519_CURVE.p, { isLE: true }))();
 const ed25519Defaults = /* @__PURE__ */ (() => ({
@@ -9700,10 +9700,10 @@ const _HttpAgent = class _HttpAgent {
   }
   addTransform(type, fn, priority = fn.priority || 0) {
     if (type === "update") {
-      const i = __privateGet(this, _updatePipeline).findIndex((x2) => (x2.priority || 0) < priority);
+      const i = __privateGet(this, _updatePipeline).findIndex((x3) => (x3.priority || 0) < priority);
       __privateGet(this, _updatePipeline).splice(i >= 0 ? i : __privateGet(this, _updatePipeline).length, 0, Object.assign(fn, { priority }));
     } else if (type === "query") {
-      const i = __privateGet(this, _queryPipeline).findIndex((x2) => (x2.priority || 0) < priority);
+      const i = __privateGet(this, _queryPipeline).findIndex((x3) => (x3.priority || 0) < priority);
       __privateGet(this, _queryPipeline).splice(i >= 0 ? i : __privateGet(this, _queryPipeline).length, 0, Object.assign(fn, { priority }));
     }
   }
@@ -11617,13 +11617,13 @@ var Query = (_f = class extends Removable {
   }
   onFocus() {
     var _a3;
-    const observer = this.observers.find((x2) => x2.shouldFetchOnWindowFocus());
+    const observer = this.observers.find((x3) => x3.shouldFetchOnWindowFocus());
     observer == null ? void 0 : observer.refetch({ cancelRefetch: false });
     (_a3 = __privateGet(this, _retryer)) == null ? void 0 : _a3.continue();
   }
   onOnline() {
     var _a3;
-    const observer = this.observers.find((x2) => x2.shouldFetchOnReconnect());
+    const observer = this.observers.find((x3) => x3.shouldFetchOnReconnect());
     observer == null ? void 0 : observer.refetch({ cancelRefetch: false });
     (_a3 = __privateGet(this, _retryer)) == null ? void 0 : _a3.continue();
   }
@@ -11636,7 +11636,7 @@ var Query = (_f = class extends Removable {
   }
   removeObserver(observer) {
     if (this.observers.includes(observer)) {
-      this.observers = this.observers.filter((x2) => x2 !== observer);
+      this.observers = this.observers.filter((x3) => x3 !== observer);
       if (!this.observers.length) {
         if (__privateGet(this, _retryer)) {
           if (__privateGet(this, _abortSignalConsumed) || __privateMethod(this, _Query_instances, isInitialPausedFetch_fn).call(this)) {
@@ -11675,7 +11675,7 @@ var Query = (_f = class extends Removable {
       this.setOptions(options);
     }
     if (!this.options.queryFn) {
-      const observer = this.observers.find((x2) => x2.options.queryFn);
+      const observer = this.observers.find((x3) => x3.options.queryFn);
       if (observer) {
         this.setOptions(observer.options);
       }
@@ -12054,7 +12054,7 @@ var Mutation = (_g = class extends Removable {
     }
   }
   removeObserver(observer) {
-    __privateSet(this, _observers, __privateGet(this, _observers).filter((x2) => x2 !== observer));
+    __privateSet(this, _observers, __privateGet(this, _observers).filter((x3) => x3 !== observer));
     this.scheduleGc();
     __privateGet(this, _mutationCache).notify({
       type: "observerRemoved",
@@ -12407,7 +12407,7 @@ var MutationCache = (_h = class extends Subscribable {
     });
   }
   resumePausedMutations() {
-    const pausedMutations = this.getAll().filter((x2) => x2.state.isPaused);
+    const pausedMutations = this.getAll().filter((x3) => x3.state.isPaused);
     return notifyManager.batch(
       () => Promise.all(
         pausedMutations.map((mutation) => mutation.continue().catch(noop$6))
@@ -13234,10 +13234,10 @@ react_production.version = "19.1.5";
   react.exports = react_production;
 }
 var reactExports = react.exports;
-const React2 = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
+const o = /* @__PURE__ */ getDefaultExportFromCjs(reactExports);
 const React$4 = /* @__PURE__ */ _mergeNamespaces({
   __proto__: null,
-  default: React2
+  default: o
 }, [reactExports]);
 var QueryClientContext = reactExports.createContext(
   void 0
@@ -13431,11 +13431,11 @@ const _Ed25519KeyIdentity = class _Ed25519KeyIdentity extends SignIdentity {
    * @returns - true if the signature is valid, false otherwise
    */
   static verify(sig, msg, pk) {
-    const [signature, message, publicKey] = [sig, msg, pk].map((x2) => {
-      if (typeof x2 === "string") {
-        x2 = hexToBytes(x2);
+    const [signature, message, publicKey] = [sig, msg, pk].map((x3) => {
+      if (typeof x3 === "string") {
+        x3 = hexToBytes(x3);
       }
-      return uint8FromBufLike$1(x2);
+      return uint8FromBufLike$1(x3);
     });
     return ed25519.verify(signature, message, publicKey);
   }
@@ -15319,7 +15319,7 @@ function getComponentNameFromType(type) {
         type = type._init;
         try {
           return getComponentNameFromType(type(innerType));
-        } catch (x2) {
+        } catch (x3) {
         }
     }
   return null;
@@ -15394,9 +15394,9 @@ function setIsStrictModeForDevtools(newIsStrictMode) {
     }
 }
 var clz32 = Math.clz32 ? Math.clz32 : clz32Fallback, log = Math.log, LN2 = Math.LN2;
-function clz32Fallback(x2) {
-  x2 >>>= 0;
-  return 0 === x2 ? 32 : 31 - (log(x2) / LN2 | 0) | 0;
+function clz32Fallback(x3) {
+  x3 >>>= 0;
+  return 0 === x3 ? 32 : 31 - (log(x3) / LN2 | 0) | 0;
 }
 var nextTransitionLane = 256, nextRetryLane = 4194304;
 function getHighestPriorityLanes(lanes) {
@@ -15746,10 +15746,10 @@ function describeBuiltInComponentFrame(name) {
   if (void 0 === prefix$1)
     try {
       throw Error();
-    } catch (x2) {
-      var match = x2.stack.trim().match(/\n( *(at )?)/);
+    } catch (x3) {
+      var match = x3.stack.trim().match(/\n( *(at )?)/);
       prefix$1 = match && match[1] || "";
-      suffix = -1 < x2.stack.indexOf("\n    at") ? " (<anonymous>)" : -1 < x2.stack.indexOf("@") ? "@unknown:0:0" : "";
+      suffix = -1 < x3.stack.indexOf("\n    at") ? " (<anonymous>)" : -1 < x3.stack.indexOf("@") ? "@unknown:0:0" : "";
     }
   return "\n" + prefix$1 + name + suffix;
 }
@@ -15775,8 +15775,8 @@ function describeNativeComponentFrame(fn, construct) {
             if ("object" === typeof Reflect && Reflect.construct) {
               try {
                 Reflect.construct(Fake, []);
-              } catch (x2) {
-                var control = x2;
+              } catch (x3) {
+                var control = x3;
               }
               Reflect.construct(fn, [], Fake);
             } else {
@@ -15876,8 +15876,8 @@ function getStackByFiberInDevAndProd(workInProgress2) {
       info += describeFiber(workInProgress2), workInProgress2 = workInProgress2.return;
     while (workInProgress2);
     return info;
-  } catch (x2) {
-    return "\nError generating stack: " + x2.message + "\n" + x2.stack;
+  } catch (x3) {
+    return "\nError generating stack: " + x3.message + "\n" + x3.stack;
   }
 }
 function getToStringValue(value) {
@@ -16654,8 +16654,8 @@ function getTargetInstForInputOrChangeEvent(domEventName, targetInst) {
   if ("input" === domEventName || "change" === domEventName)
     return getInstIfValueChanged(targetInst);
 }
-function is$2(x2, y2) {
-  return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
+function is$2(x3, y2) {
+  return x3 === y2 && (0 !== x3 || 1 / x3 === 1 / y2) || x3 !== x3 && y2 !== y2;
 }
 var objectIs$2 = "function" === typeof Object.is ? Object.is : is$2;
 function shallowEqual(objA, objB) {
@@ -18177,9 +18177,9 @@ function updateActionStateImpl(stateHook, currentStateHook, action) {
   if ("object" === typeof currentStateHook && null !== currentStateHook && "function" === typeof currentStateHook.then)
     try {
       var state = useThenable(currentStateHook);
-    } catch (x2) {
-      if (x2 === SuspenseException) throw SuspenseActionException;
-      throw x2;
+    } catch (x3) {
+      if (x3 === SuspenseException) throw SuspenseActionException;
+      throw x3;
     }
   else state = currentStateHook;
   currentStateHook = updateWorkInProgressHook();
@@ -19267,9 +19267,9 @@ function createChildReconciler(shouldTrackSideEffects) {
       );
       thenableState = null;
       return firstChildFiber;
-    } catch (x2) {
-      if (x2 === SuspenseException || x2 === SuspenseActionException) throw x2;
-      var fiber = createFiberImplClass(29, x2, null, returnFiber.mode);
+    } catch (x3) {
+      if (x3 === SuspenseException || x3 === SuspenseActionException) throw x3;
+      var fiber = createFiberImplClass(29, x3, null, returnFiber.mode);
       fiber.lanes = lanes;
       fiber.return = returnFiber;
       return fiber;
@@ -33067,10 +33067,10 @@ function ErrorComponent({ error }) {
   ] });
 }
 function ClientOnly({ children, fallback = null }) {
-  return useHydrated() ? /* @__PURE__ */ jsxRuntimeExports.jsx(React2.Fragment, { children }) : /* @__PURE__ */ jsxRuntimeExports.jsx(React2.Fragment, { children: fallback });
+  return useHydrated() ? /* @__PURE__ */ jsxRuntimeExports.jsx(o.Fragment, { children }) : /* @__PURE__ */ jsxRuntimeExports.jsx(o.Fragment, { children: fallback });
 }
 function useHydrated() {
-  return React2.useSyncExternalStore(
+  return o.useSyncExternalStore(
     subscribe,
     () => true,
     () => false
@@ -33094,8 +33094,8 @@ var useSyncExternalStoreShim_production = {};
  * LICENSE file in the root directory of this source tree.
  */
 var React$1 = reactExports;
-function is$1(x2, y2) {
-  return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
+function is$1(x3, y2) {
+  return x3 === y2 && (0 !== x3 || 1 / x3 === 1 / y2) || x3 !== x3 && y2 !== y2;
 }
 var objectIs$1 = "function" === typeof Object.is ? Object.is : is$1, useState = React$1.useState, useEffect$1 = React$1.useEffect, useLayoutEffect$1 = React$1.useLayoutEffect, useDebugValue$1 = React$1.useDebugValue;
 function useSyncExternalStore$2(subscribe2, getSnapshot) {
@@ -33149,8 +33149,8 @@ var shimExports = shim$2.exports;
  * LICENSE file in the root directory of this source tree.
  */
 var React = reactExports, shim = shimExports;
-function is(x2, y2) {
-  return x2 === y2 && (0 !== x2 || 1 / x2 === 1 / y2) || x2 !== x2 && y2 !== y2;
+function is(x3, y2) {
+  return x3 === y2 && (0 !== x3 || 1 / x3 === 1 / y2) || x3 !== x3 && y2 !== y2;
 }
 var objectIs = "function" === typeof Object.is ? Object.is : is, useSyncExternalStore = shim.useSyncExternalStore, useRef = React.useRef, useEffect = React.useEffect, useMemo = React.useMemo, useDebugValue = React.useDebugValue;
 withSelector_production.useSyncExternalStoreWithSelector = function(subscribe2, getSnapshot, getServerSnapshot, selector, isEqual) {
@@ -33754,7 +33754,7 @@ class Route extends BaseRoute {
     this.useNavigate = () => {
       return useNavigate({ from: this.fullPath });
     };
-    this.Link = React2.forwardRef(
+    this.Link = o.forwardRef(
       (props, ref) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { ref, from: this.fullPath, ...props });
       }
@@ -33808,7 +33808,7 @@ class RootRoute extends BaseRootRoute {
     this.useNavigate = () => {
       return useNavigate({ from: this.fullPath });
     };
-    this.Link = React2.forwardRef(
+    this.Link = o.forwardRef(
       (props, ref) => {
         return /* @__PURE__ */ jsxRuntimeExports.jsx(Link, { ref, from: this.fullPath, ...props });
       }
@@ -34363,13 +34363,20 @@ function RouterContextProvider({
 function RouterProvider({ router: router2, ...rest }) {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(RouterContextProvider, { router: router2, ...rest, children: /* @__PURE__ */ jsxRuntimeExports.jsx(Matches, {}) });
 }
-const LoginPage = reactExports.lazy(() => __vitePreload(() => import("./LoginPage-BmfdkPGk.js"), true ? __vite__mapDeps([0,1]) : void 0));
-const AdminSubjectsPage = reactExports.lazy(() => __vitePreload(() => import("./SubjectsPage-VxXcb9CW.js"), true ? __vite__mapDeps([2,1,3,4,5,6]) : void 0));
-const AdminQuestionsPage = reactExports.lazy(() => __vitePreload(() => import("./QuestionsPage-ClqNJfIZ.js"), true ? __vite__mapDeps([7,1,3,4,5,8,6,9]) : void 0));
-const AdminResultsPage = reactExports.lazy(() => __vitePreload(() => import("./ResultsPage-Bw_rwSM3.js"), true ? __vite__mapDeps([10,1,4,5,8,11,12,9]) : void 0));
-const StudentQuizzesPage = reactExports.lazy(() => __vitePreload(() => import("./QuizzesPage-Dfko_S2w.js"), true ? __vite__mapDeps([13,1,14,5,6,9,15]) : void 0));
-const StudentQuizPage = reactExports.lazy(() => __vitePreload(() => import("./QuizPage-a42qMe4k.js"), true ? __vite__mapDeps([16,1,5,14,6,12,9]) : void 0));
-const StudentHistoryPage = reactExports.lazy(() => __vitePreload(() => import("./HistoryPage-L0qtM790.js"), true ? __vite__mapDeps([17,1,11,14,5,15]) : void 0));
+const LoginPage = reactExports.lazy(() => __vitePreload(() => import("./LoginPage-q7Ezng-6.js"), true ? __vite__mapDeps([0,1,2,3,4,5,6]) : void 0));
+const AdminSubjectsPage = reactExports.lazy(() => __vitePreload(() => import("./SubjectsPage-BNYShYrw.js"), true ? __vite__mapDeps([7,1,8,9,10,11,12,2,13,14,15]) : void 0));
+const AdminQuestionsPage = reactExports.lazy(() => __vitePreload(() => import("./QuestionsPage-QsHXj6Jk.js"), true ? __vite__mapDeps([16,1,9,10,11,12,2,13,8,14,6]) : void 0));
+const AdminResultsPage = reactExports.lazy(() => __vitePreload(() => import("./ResultsPage-DDWRv7RK.js"), true ? __vite__mapDeps([17,1,9,11,18,2,13,8,19,20,6]) : void 0));
+const StudentQuizzesPage = reactExports.lazy(() => __vitePreload(() => import("./QuizzesPage-DFrt0b5X.js"), true ? __vite__mapDeps([21,1,8,9,2,22,3,14,5,6,23]) : void 0));
+const StudentQuizPage = reactExports.lazy(() => __vitePreload(() => import("./QuizPage-0IBt53He.js"), true ? __vite__mapDeps([24,1,8,9,12,2,22,3,14,25,6,20,15]) : void 0));
+const StudentHistoryPage = reactExports.lazy(() => __vitePreload(() => import("./HistoryPage-I7l29gr0.js"), true ? __vite__mapDeps([26,1,8,9,18,2,22,3,27,4,28,23]) : void 0));
+const LeaderboardPage = reactExports.lazy(() => __vitePreload(() => import("./LeaderboardPage-CII1RV9H.js"), true ? __vite__mapDeps([29,1,2,13,8,22,3,19,28]) : void 0));
+const CertificatePage = reactExports.lazy(() => __vitePreload(() => import("./CertificatePage-DW3V50Cc.js"), true ? __vite__mapDeps([30,1,2,22,8,3,25,27,4]) : void 0));
+const StudentProfilePage = reactExports.lazy(
+  () => __vitePreload(() => import("./StudentProfilePage-BwZDgH1r.js"), true ? __vite__mapDeps([31,1,22,8,3,14,6]) : void 0).then((m2) => ({
+    default: m2.StudentProfilePage
+  }))
+);
 const rootRoute = createRootRoute();
 const indexRoute = createRoute({
   getParentRoute: () => rootRoute,
@@ -34413,6 +34420,21 @@ const studentHistoryRoute = createRoute({
   path: "/student/history",
   component: () => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingSpinner, { fullScreen: true }), children: /* @__PURE__ */ jsxRuntimeExports.jsx(StudentHistoryPage, {}) })
 });
+const leaderboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/leaderboard",
+  component: () => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingSpinner, { fullScreen: true }), children: /* @__PURE__ */ jsxRuntimeExports.jsx(LeaderboardPage, {}) })
+});
+const studentCertificateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/student/certificate/$subjectId",
+  component: () => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingSpinner, { fullScreen: true }), children: /* @__PURE__ */ jsxRuntimeExports.jsx(CertificatePage, {}) })
+});
+const studentProfileRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/student/profile",
+  component: () => /* @__PURE__ */ jsxRuntimeExports.jsx(reactExports.Suspense, { fallback: /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingSpinner, { fullScreen: true }), children: /* @__PURE__ */ jsxRuntimeExports.jsx(StudentProfilePage, {}) })
+});
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -34421,97 +34443,190 @@ const routeTree = rootRoute.addChildren([
   adminResultsRoute,
   studentQuizzesRoute,
   studentQuizRoute,
-  studentHistoryRoute
+  studentHistoryRoute,
+  studentCertificateRoute,
+  studentProfileRoute,
+  leaderboardRoute
 ]);
 const router = createRouter({ routeTree });
 function App() {
   return /* @__PURE__ */ jsxRuntimeExports.jsx(ErrorBoundary, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(RouterProvider, { router }) });
 }
+var M = (e, i, s2, u, m2, a2, l, h2) => {
+  let d2 = document.documentElement, w2 = ["light", "dark"];
+  function p2(n) {
+    (Array.isArray(e) ? e : [e]).forEach((y2) => {
+      let k2 = y2 === "class", S2 = k2 && a2 ? m2.map((f) => a2[f] || f) : m2;
+      k2 ? (d2.classList.remove(...S2), d2.classList.add(a2 && a2[n] ? a2[n] : n)) : d2.setAttribute(y2, n);
+    }), R2(n);
+  }
+  function R2(n) {
+    h2 && w2.includes(n) && (d2.style.colorScheme = n);
+  }
+  function c2() {
+    return window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+  }
+  if (u) p2(u);
+  else try {
+    let n = localStorage.getItem(i) || s2, y2 = l && n === "system" ? c2() : n;
+    p2(y2);
+  } catch (n) {
+  }
+};
+var b = ["light", "dark"], I = "(prefers-color-scheme: dark)", O = typeof window == "undefined", x2 = reactExports.createContext(void 0), U = { setTheme: (e) => {
+}, themes: [] }, z = () => {
+  var e;
+  return (e = reactExports.useContext(x2)) != null ? e : U;
+}, J = (e) => reactExports.useContext(x2) ? reactExports.createElement(reactExports.Fragment, null, e.children) : reactExports.createElement(V, { ...e }), N = ["light", "dark"], V = ({ forcedTheme: e, disableTransitionOnChange: i = false, enableSystem: s2 = true, enableColorScheme: u = true, storageKey: m2 = "theme", themes: a2 = N, defaultTheme: l = s2 ? "system" : "light", attribute: h2 = "data-theme", value: d2, children: w2, nonce: p2, scriptProps: R2 }) => {
+  let [c2, n] = reactExports.useState(() => H(m2, l)), [T2, y2] = reactExports.useState(() => c2 === "system" ? E() : c2), k2 = d2 ? Object.values(d2) : a2, S2 = reactExports.useCallback((o2) => {
+    let r2 = o2;
+    if (!r2) return;
+    o2 === "system" && s2 && (r2 = E());
+    let v2 = d2 ? d2[r2] : r2, C2 = i ? W(p2) : null, P2 = document.documentElement, L2 = (g2) => {
+      g2 === "class" ? (P2.classList.remove(...k2), v2 && P2.classList.add(v2)) : g2.startsWith("data-") && (v2 ? P2.setAttribute(g2, v2) : P2.removeAttribute(g2));
+    };
+    if (Array.isArray(h2) ? h2.forEach(L2) : L2(h2), u) {
+      let g2 = b.includes(l) ? l : null, D = b.includes(r2) ? r2 : g2;
+      P2.style.colorScheme = D;
+    }
+    C2 == null || C2();
+  }, [p2]), f = reactExports.useCallback((o2) => {
+    let r2 = typeof o2 == "function" ? o2(c2) : o2;
+    n(r2);
+    try {
+      localStorage.setItem(m2, r2);
+    } catch (v2) {
+    }
+  }, [c2]), A2 = reactExports.useCallback((o2) => {
+    let r2 = E(o2);
+    y2(r2), c2 === "system" && s2 && !e && S2("system");
+  }, [c2, e]);
+  reactExports.useEffect(() => {
+    let o2 = window.matchMedia(I);
+    return o2.addListener(A2), A2(o2), () => o2.removeListener(A2);
+  }, [A2]), reactExports.useEffect(() => {
+    let o2 = (r2) => {
+      r2.key === m2 && (r2.newValue ? n(r2.newValue) : f(l));
+    };
+    return window.addEventListener("storage", o2), () => window.removeEventListener("storage", o2);
+  }, [f]), reactExports.useEffect(() => {
+    S2(e != null ? e : c2);
+  }, [e, c2]);
+  let Q2 = reactExports.useMemo(() => ({ theme: c2, setTheme: f, forcedTheme: e, resolvedTheme: c2 === "system" ? T2 : c2, themes: s2 ? [...a2, "system"] : a2, systemTheme: s2 ? T2 : void 0 }), [c2, f, e, T2, s2, a2]);
+  return reactExports.createElement(x2.Provider, { value: Q2 }, reactExports.createElement(_, { forcedTheme: e, storageKey: m2, attribute: h2, enableSystem: s2, enableColorScheme: u, defaultTheme: l, value: d2, themes: a2, nonce: p2, scriptProps: R2 }), w2);
+}, _ = reactExports.memo(({ forcedTheme: e, storageKey: i, attribute: s2, enableSystem: u, enableColorScheme: m2, defaultTheme: a2, value: l, themes: h2, nonce: d2, scriptProps: w2 }) => {
+  let p2 = JSON.stringify([s2, i, a2, e, h2, l, u, m2]).slice(1, -1);
+  return reactExports.createElement("script", { ...w2, suppressHydrationWarning: true, nonce: typeof window == "undefined" ? d2 : "", dangerouslySetInnerHTML: { __html: `(${M.toString()})(${p2})` } });
+}), H = (e, i) => {
+  if (O) return;
+  let s2;
+  try {
+    s2 = localStorage.getItem(e) || void 0;
+  } catch (u) {
+  }
+  return s2 || i;
+}, W = (e) => {
+  let i = document.createElement("style");
+  return e && i.setAttribute("nonce", e), i.appendChild(document.createTextNode("*,*::before,*::after{-webkit-transition:none!important;-moz-transition:none!important;-o-transition:none!important;-ms-transition:none!important;transition:none!important}")), document.head.appendChild(i), () => {
+    window.getComputedStyle(document.body), setTimeout(() => {
+      document.head.removeChild(i);
+    }, 1);
+  };
+}, E = (e) => (e || (e = window.matchMedia(I)), e.matches ? "dark" : "light");
 BigInt.prototype.toJSON = function() {
   return this.toString();
 };
 const queryClient = new QueryClient();
 ReactDOM.createRoot(document.getElementById("root")).render(
-  /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(InternetIdentityProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) })
+  /* @__PURE__ */ jsxRuntimeExports.jsx(
+    J,
+    {
+      attribute: "class",
+      defaultTheme: "light",
+      storageKey: "eduquiz-theme",
+      children: /* @__PURE__ */ jsxRuntimeExports.jsx(QueryClientProvider, { client: queryClient, children: /* @__PURE__ */ jsxRuntimeExports.jsx(InternetIdentityProvider, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(App, {}) }) })
+    }
+  )
 );
 export {
-  pendingThenable as $,
-  CertifiedRejectErrorCode as A,
+  UncertifiedRejectUpdateErrorCode as $,
+  RequestStatusResponseStatus as A,
   Button as B,
   Certificate as C,
-  UNREACHABLE_ERROR as D,
+  RequestStatusDoneNoReplyErrorCode as D,
   ExternalError as E,
-  InvalidReadStateRequestErrorCode as F,
-  ReadRequestType as G,
-  Principal$1 as H,
+  RejectError as F,
+  CertifiedRejectErrorCode as G,
+  UNREACHABLE_ERROR as H,
   InputError as I,
-  IDL as J,
-  MissingCanisterIdErrorCode as K,
+  InvalidReadStateRequestErrorCode as J,
+  ReadRequestType as K,
   LoadingSpinner as L,
   MissingRootKeyErrorCode as M,
-  HttpAgent as N,
-  encode$2 as O,
+  Principal$1 as N,
+  IDL as O,
   ProtocolError as P,
-  QueryResponseStatus as Q,
-  React2 as R,
+  MissingCanisterIdErrorCode as Q,
+  React$4 as R,
   Subscribable as S,
   TimeoutWaitingForResponseErrorCode as T,
   UnknownError as U,
-  UncertifiedRejectErrorCode as V,
-  isV3ResponseBody as W,
-  isV2ResponseBody as X,
-  UncertifiedRejectUpdateErrorCode as Y,
-  UnexpectedErrorCode as Z,
-  decode$2 as _,
+  HttpAgent as V,
+  encode$2 as W,
+  QueryResponseStatus as X,
+  UncertifiedRejectErrorCode as Y,
+  isV3ResponseBody as Z,
+  isV2ResponseBody as _,
   cn as a,
-  resolveEnabled as a0,
-  resolveStaleTime as a1,
-  environmentManager as a2,
-  isValidTimeout as a3,
-  timeUntilStale as a4,
-  timeoutManager as a5,
-  focusManager as a6,
-  fetchState as a7,
-  replaceData as a8,
-  useInternetIdentity as a9,
-  createActorWithConfig as aa,
-  Slot as ab,
-  cva as ac,
-  Variant as ad,
-  Record as ae,
-  Vec as af,
-  Opt as ag,
-  Service as ah,
-  Func as ai,
-  Nat as aj,
-  Principal2 as ak,
-  Null as al,
-  Text as am,
-  Int as an,
-  Bool as ao,
+  UnexpectedErrorCode as a0,
+  decode$2 as a1,
+  pendingThenable as a2,
+  resolveEnabled as a3,
+  resolveStaleTime as a4,
+  environmentManager as a5,
+  isValidTimeout as a6,
+  timeUntilStale as a7,
+  timeoutManager as a8,
+  focusManager as a9,
+  fetchState as aa,
+  replaceData as ab,
+  useInternetIdentity as ac,
+  createActorWithConfig as ad,
+  Variant as ae,
+  Record as af,
+  Vec as ag,
+  Opt as ah,
+  Service as ai,
+  Func as aj,
+  Nat as ak,
+  Principal2 as al,
+  Null as am,
+  Text as an,
+  Int as ao,
+  Bool as ap,
   useQueryClient as b,
   createLucideIcon as c,
   useComposedRefs as d,
-  reactDomExports as e,
-  React$4 as f,
-  composeRefs as g,
-  useRouterState as h,
-  Link as i,
+  composeRefs as e,
+  reactDomExports as f,
+  useParams as g,
+  createSlot as h,
+  useRouterState as i,
   jsxRuntimeExports as j,
-  useParams as k,
+  Link as k,
   hashKey as l,
   getDefaultState as m,
   notifyManager as n,
-  noop$6 as o,
-  shouldThrowError as p,
-  createSlot as q,
+  o,
+  noop$6 as p,
+  shouldThrowError as q,
   reactExports as r,
   shallowEqualObjects as s,
-  utf8ToBytes as t,
+  Slot as t,
   useNavigate as u,
   vt as v,
-  lookupResultToBuffer as w,
-  RequestStatusResponseStatus as x,
-  RequestStatusDoneNoReplyErrorCode as y,
-  RejectError as z
+  cva as w,
+  utf8ToBytes as x,
+  lookupResultToBuffer as y,
+  z
 };

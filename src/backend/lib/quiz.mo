@@ -6,6 +6,7 @@ import QuizTypes "../types/quiz";
 import QuestionTypes "../types/questions";
 import CommonTypes "../types/common";
 import Array "mo:core/Array";
+import Nat "mo:core/Nat";
 
 module {
   public type QuizAttempt = QuizTypes.QuizAttempt;
@@ -26,6 +27,7 @@ module {
       totalQuestions = attempt.totalQuestions;
       startedAt = attempt.startedAt;
       completedAt = attempt.completedAt;
+      timeLimitMinutes = attempt.timeLimitMinutes;
     };
   };
 
@@ -36,6 +38,7 @@ module {
     studentPrincipal : CommonTypes.UserId,
     subjectId : CommonTypes.SubjectId,
     totalQuestions : Nat,
+    timeLimitMinutes : ?Nat,
   ) : QuizAttemptPublic {
     let id = state.nextAttemptId;
     state.nextAttemptId += 1;
@@ -49,6 +52,7 @@ module {
       totalQuestions;
       startedAt = Time.now();
       var completedAt = null;
+      timeLimitMinutes;
     };
     attempts.add(id, attempt);
     toPublic(attempt);

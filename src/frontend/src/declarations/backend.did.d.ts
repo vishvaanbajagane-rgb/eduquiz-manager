@@ -15,6 +15,17 @@ export interface AttemptDetails {
   'correctAnswers' : Array<bigint>,
 }
 export type AttemptId = bigint;
+export interface Certificate {
+  'id' : CertificateId,
+  'completedAt' : Timestamp,
+  'studentId' : UserId,
+  'studentName' : string,
+  'subjectName' : string,
+  'score' : bigint,
+  'totalQuestions' : bigint,
+  'subjectId' : SubjectId,
+}
+export type CertificateId = bigint;
 export interface CreateQuestionPayload {
   'text' : string,
   'subjectId' : SubjectId,
@@ -23,7 +34,15 @@ export interface CreateQuestionPayload {
 }
 export interface CreateSubjectPayload {
   'name' : string,
+  'timerMinutes' : [] | [bigint],
   'description' : string,
+}
+export interface LeaderboardEntry {
+  'principal' : UserId,
+  'displayName' : string,
+  'rank' : bigint,
+  'totalAttempts' : bigint,
+  'averageScore' : bigint,
 }
 export interface Question {
   'id' : QuestionId,
@@ -51,12 +70,18 @@ export interface QuizAttemptPublic {
   'scorePercentage' : bigint,
   'score' : bigint,
   'totalQuestions' : bigint,
+  'timeLimitMinutes' : [] | [bigint],
   'subjectId' : SubjectId,
 }
 export interface StudentProfilePublic {
   'principal' : UserId,
   'displayName' : string,
+  'section' : string,
+  'registerNumber' : string,
+  'accentColor' : string,
+  'department' : string,
   'registeredAt' : Timestamp,
+  'enrollNumber' : string,
 }
 export interface StudentSummary {
   'principal' : UserId,
@@ -68,6 +93,7 @@ export interface Subject {
   'id' : SubjectId,
   'name' : string,
   'createdAt' : Timestamp,
+  'timerMinutes' : [] | [bigint],
   'description' : string,
 }
 export type SubjectId = bigint;
@@ -75,6 +101,7 @@ export interface SubjectWithStats {
   'id' : SubjectId,
   'name' : string,
   'createdAt' : Timestamp,
+  'timerMinutes' : [] | [bigint],
   'description' : string,
   'questionCount' : bigint,
 }
@@ -97,6 +124,7 @@ export interface UpdateQuestionPayload {
 export interface UpdateSubjectPayload {
   'id' : SubjectId,
   'name' : string,
+  'timerMinutes' : [] | [bigint],
   'description' : string,
 }
 export type UserId = Principal;
@@ -115,8 +143,11 @@ export interface _SERVICE {
   'getAttemptsByStudent' : ActorMethod<[UserId], Array<QuizAttemptPublic>>,
   'getAttemptsBySubject' : ActorMethod<[SubjectId], Array<QuizAttemptPublic>>,
   'getCallerUserRole' : ActorMethod<[], UserRole>,
+  'getCertificates' : ActorMethod<[], Array<Certificate>>,
+  'getLeaderboard' : ActorMethod<[], Array<LeaderboardEntry>>,
   'getMyAttempts' : ActorMethod<[], Array<QuizAttemptPublic>>,
   'getMyProfile' : ActorMethod<[], [] | [StudentProfilePublic]>,
+  'getSubjectCertificate' : ActorMethod<[SubjectId], [] | [Certificate]>,
   'isCallerAdmin' : ActorMethod<[], boolean>,
   'listAllStudents' : ActorMethod<[], Array<StudentSummary>>,
   'listQuestionsBySubject' : ActorMethod<[SubjectId], Array<QuestionPublic>>,
@@ -125,7 +156,12 @@ export interface _SERVICE {
   'registerStudent' : ActorMethod<[], StudentProfilePublic>,
   'startQuiz' : ActorMethod<[SubjectId], QuizAttemptPublic>,
   'submitQuizAnswers' : ActorMethod<[SubmitAnswersPayload], SubmitQuizResult>,
+  'updateMyAccentColor' : ActorMethod<[string], boolean>,
+  'updateMyDepartment' : ActorMethod<[string], boolean>,
   'updateMyDisplayName' : ActorMethod<[string], boolean>,
+  'updateMyEnrollNumber' : ActorMethod<[string], boolean>,
+  'updateMyRegisterNumber' : ActorMethod<[string], boolean>,
+  'updateMySection' : ActorMethod<[string], boolean>,
   'updateQuestion' : ActorMethod<[UpdateQuestionPayload], boolean>,
   'updateSubject' : ActorMethod<[UpdateSubjectPayload], boolean>,
 }

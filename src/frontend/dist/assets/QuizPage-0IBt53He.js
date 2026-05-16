@@ -1,10 +1,24 @@
-import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports, a as cn, u as useNavigate, k as useParams, b as useQueryClient, L as LoadingSpinner, B as Button } from "./index-BtG-7keB.js";
-import { u as useAuth, a as useRole, g as useActor, h as useQuery, C as Card, c as CardHeader, d as CardTitle, f as CardContent, B as Badge, i as createActor } from "./useRole-DKmUvK7y.js";
-import { P as Primitive } from "./separator-C0JGTHfA.js";
-import { S as StudentLayout } from "./StudentLayout-BuIusyAk.js";
-import { u as useMutation, a as ue } from "./index-1gSpk2TV.js";
-import { T as Trophy, a as CircleX, C as ChevronRight } from "./trophy-CEN2CDc2.js";
-import { C as CircleCheck } from "./circle-check-CvYA9p_X.js";
+import { c as createLucideIcon, r as reactExports, j as jsxRuntimeExports, a as cn, u as useNavigate, g as useParams, b as useQueryClient, L as LoadingSpinner, B as Button } from "./index-Hh1gENll.js";
+import { u as useAuth, a as useActor, b as useQuery, c as createActor } from "./backend-Bub9mio5.js";
+import { T as Trophy, B as Badge } from "./badge-EMKhFOLg.js";
+import { C as Card, b as CardHeader, c as CardTitle, a as CardContent } from "./card-DE0aOoMx.js";
+import { P as Primitive } from "./index-CRtA4pyV.js";
+import { u as useRole } from "./useRole-DOnT3i7R.js";
+import { S as StudentLayout } from "./StudentLayout-CFKi020B.js";
+import { u as useMutation, a as ue } from "./index-CLu1Ust6.js";
+import { A as ArrowLeft } from "./arrow-left-D8WGkdSb.js";
+import { C as CircleCheck } from "./circle-check-BCDIuKY2.js";
+import { a as CircleX, C as ChevronRight } from "./circle-x-jSkZb9nB.js";
+import { C as Clock } from "./clock-BgFzrQq3.js";
+import "./sparkles-Bf1D91Qa.js";
+/**
+ * @license lucide-react v0.511.0 - ISC
+ *
+ * This source code is licensed under the ISC license.
+ * See the LICENSE file in the root directory of this source tree.
+ */
+const __iconNode$2 = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
+const ChevronLeft = createLucideIcon("chevron-left", __iconNode$2);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
@@ -12,18 +26,27 @@ import { C as CircleCheck } from "./circle-check-CvYA9p_X.js";
  * See the LICENSE file in the root directory of this source tree.
  */
 const __iconNode$1 = [
-  ["path", { d: "m12 19-7-7 7-7", key: "1l729n" }],
-  ["path", { d: "M19 12H5", key: "x3x0zl" }]
+  [
+    "path",
+    {
+      d: "M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z",
+      key: "96xj49"
+    }
+  ]
 ];
-const ArrowLeft = createLucideIcon("arrow-left", __iconNode$1);
+const Flame = createLucideIcon("flame", __iconNode$1);
 /**
  * @license lucide-react v0.511.0 - ISC
  *
  * This source code is licensed under the ISC license.
  * See the LICENSE file in the root directory of this source tree.
  */
-const __iconNode = [["path", { d: "m15 18-6-6 6-6", key: "1wnfg3" }]];
-const ChevronLeft = createLucideIcon("chevron-left", __iconNode);
+const __iconNode = [
+  ["line", { x1: "10", x2: "14", y1: "2", y2: "2", key: "14vaq8" }],
+  ["line", { x1: "12", x2: "15", y1: "14", y2: "11", key: "17fdiu" }],
+  ["circle", { cx: "12", cy: "14", r: "8", key: "1e1u0o" }]
+];
+const Timer = createLucideIcon("timer", __iconNode);
 function createContextScope(scopeName, createContextScopeDeps = []) {
   let defaultContexts = [];
   function createContext3(rootComponentName, defaultContext) {
@@ -208,6 +231,7 @@ function QuizPage() {
   const [answers, setAnswers] = reactExports.useState([]);
   const [quizResult, setQuizResult] = reactExports.useState(null);
   const [correctAnswers, setCorrectAnswers] = reactExports.useState([]);
+  const [timeLeft, setTimeLeft] = reactExports.useState(null);
   reactExports.useEffect(() => {
     if (!isAuthenticated) navigate({ to: "/login" });
     if (role === "admin") navigate({ to: "/admin/subjects" });
@@ -232,6 +256,13 @@ function QuizPage() {
       setQuestions(qs);
       setCurrentIdx(0);
       setAnswers(new Array(qs.length).fill(void 0));
+      if (data.timeLimitMinutes !== void 0 && data.timeLimitMinutes !== null) {
+        const totalSeconds = Number(data.timeLimitMinutes) * 60;
+        const elapsedSeconds = (Date.now() * 1e6 - Number(data.startedAt)) / 1e9;
+        setTimeLeft(Math.max(0, Math.round(totalSeconds - elapsedSeconds)));
+      } else {
+        setTimeLeft(null);
+      }
     },
     onError: () => ue.error("Failed to start quiz")
   });
@@ -246,10 +277,35 @@ function QuizPage() {
     onSuccess: (data) => {
       setQuizResult(data.attempt);
       setCorrectAnswers(data.correctAnswers.map(Number));
+      setTimeLeft(null);
       queryClient.invalidateQueries({ queryKey: ["myAttempts"] });
     },
     onError: () => ue.error("Failed to submit quiz")
   });
+  const submitMutate = submitMutation.mutate;
+  reactExports.useEffect(() => {
+    if (timeLeft === null || quizResult !== null) return;
+    if (timeLeft <= 0) {
+      ue.warning("Time's up! Submitting your quiz...");
+      submitMutate(answers);
+      return;
+    }
+    const interval = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev === null || prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1e3);
+    return () => clearInterval(interval);
+  }, [timeLeft, quizResult, answers, submitMutate]);
+  const formatTime = (seconds) => {
+    const m = Math.floor(seconds / 60);
+    const s = seconds % 60;
+    return `${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
+  };
   if (role === "loading" || loadingQuestions)
     return /* @__PURE__ */ jsxRuntimeExports.jsx(LoadingSpinner, { fullScreen: true });
   const handleStart = () => startMutation.mutate();
@@ -264,60 +320,59 @@ function QuizPage() {
     if (currentIdx > 0) setCurrentIdx((i) => i - 1);
   };
   const handleNext = () => {
-    if (currentIdx + 1 < questions.length) {
-      setCurrentIdx((i) => i + 1);
-    } else {
-      submitMutation.mutate(answers);
-    }
+    if (currentIdx + 1 < questions.length) setCurrentIdx((i) => i + 1);
+    else submitMutation.mutate(answers);
   };
   if (quizResult) {
     const pct = Math.round(
       Number(quizResult.score) / Math.max(1, Number(quizResult.totalQuestions)) * 100
     );
     const isGood = pct >= 70;
+    const isMid = pct >= 40 && pct < 70;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(StudentLayout, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-2xl mx-auto", "data-ocid": "student.quiz.result.page", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "text-center py-10", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           "div",
           {
-            className: `h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-4 ${isGood ? "bg-primary/10" : "bg-muted"}`,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(
-              Trophy,
-              {
-                className: `h-10 w-10 ${isGood ? "text-primary" : "text-muted-foreground"}`
-              }
-            )
+            className: `h-24 w-24 rounded-full flex items-center justify-center mx-auto mb-4 shadow-2xl ${isGood ? "bg-gradient-to-br from-amber-400 to-yellow-500 shadow-amber-500/40" : isMid ? "bg-gradient-to-br from-blue-500 to-indigo-600 shadow-blue-500/40" : "bg-gradient-to-br from-rose-400 to-pink-500 shadow-rose-500/30"}`,
+            children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { className: "h-12 w-12 text-white" })
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-3xl font-bold text-foreground mb-1", children: "Quiz Complete!" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground mb-6", children: "Here's how you did" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "inline-flex flex-col items-center bg-card border border-border rounded-xl px-10 py-6 mb-8 card-elevated", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(
-            "p",
-            {
-              className: `text-6xl font-display font-bold mb-1 ${isGood ? "text-primary" : "text-muted-foreground"}`,
-              children: [
-                pct,
-                "%"
-              ]
-            }
-          ),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground text-sm", children: [
-            quizResult.score.toString(),
-            " out of",
-            " ",
-            quizResult.totalQuestions.toString(),
-            " correct"
-          ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { value: pct, className: "mt-4 w-48" })
-        ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center gap-3 mb-10", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-4xl font-bold text-foreground mb-1", children: "Quiz Complete!" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-muted-foreground mb-6 text-lg", children: isGood ? "🎉 Excellent work!" : isMid ? "💪 Good effort!" : "📚 Keep practicing!" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs(
+          "div",
+          {
+            className: `inline-flex flex-col items-center rounded-2xl px-12 py-8 mb-8 shadow-xl ${isGood ? "bg-gradient-to-br from-amber-50 to-yellow-50 dark:from-amber-950/20 dark:to-yellow-950/20 border-2 border-amber-300 dark:border-amber-700" : isMid ? "bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 border-2 border-blue-300 dark:border-blue-700" : "bg-gradient-to-br from-rose-50 to-pink-50 dark:from-rose-950/20 dark:to-pink-950/20 border-2 border-rose-300 dark:border-rose-700"}`,
+            children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs(
+                "p",
+                {
+                  className: `text-7xl font-display font-bold mb-2 ${isGood ? "bg-gradient-to-r from-amber-500 to-yellow-500 bg-clip-text text-transparent" : isMid ? "bg-gradient-to-r from-blue-500 to-indigo-600 bg-clip-text text-transparent" : "bg-gradient-to-r from-rose-500 to-pink-600 bg-clip-text text-transparent"}`,
+                  children: [
+                    pct,
+                    "%"
+                  ]
+                }
+              ),
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground text-sm font-medium", children: [
+                quizResult.score.toString(),
+                " out of",
+                " ",
+                quizResult.totalQuestions.toString(),
+                " correct"
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-4 w-48", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { value: pct, className: "h-3 rounded-full" }) })
+            ]
+          }
+        ),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center gap-3 mb-10 flex-wrap", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsxs(
             Button,
             {
               type: "button",
               variant: "outline",
-              className: "gap-2",
+              className: "gap-2 hover:-translate-y-0.5 transition-transform",
               onClick: () => navigate({ to: "/student/quizzes" }),
               "data-ocid": "student.quiz.result.back_button",
               children: [
@@ -340,6 +395,7 @@ function QuizPage() {
             Button,
             {
               type: "button",
+              className: "gap-2 bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white shadow-md hover:-translate-y-0.5 transition-transform",
               onClick: () => {
                 setAttempt(null);
                 setQuizResult(null);
@@ -350,7 +406,10 @@ function QuizPage() {
           )
         ] })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-display text-lg font-semibold text-foreground mb-4", children: "Question Review" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("h2", { className: "font-display text-xl font-bold text-foreground mb-4 flex items-center gap-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-6 w-1.5 rounded-full bg-gradient-to-b from-violet-500 to-purple-600 inline-block" }),
+        "Question Review"
+      ] }),
       /* @__PURE__ */ jsxRuntimeExports.jsx(
         "div",
         {
@@ -363,11 +422,17 @@ function QuizPage() {
             return /* @__PURE__ */ jsxRuntimeExports.jsxs(
               Card,
               {
-                className: `border-l-4 ${isCorrect ? "border-l-primary" : "border-l-destructive"}`,
+                className: `overflow-hidden border-2 ${isCorrect ? "border-emerald-300 dark:border-emerald-700" : "border-rose-300 dark:border-rose-700"}`,
                 "data-ocid": `student.quiz.result.review.item.${qi + 1}`,
                 children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "div",
+                    {
+                      className: `h-1.5 w-full ${isCorrect ? "bg-gradient-to-r from-emerald-400 to-green-500" : "bg-gradient-to-r from-rose-400 to-red-500"}`
+                    }
+                  ),
                   /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { className: "pb-2", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
-                    isCorrect ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-5 w-5 text-primary shrink-0 mt-0.5" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "h-5 w-5 text-destructive shrink-0 mt-0.5" }),
+                    isCorrect ? /* @__PURE__ */ jsxRuntimeExports.jsx(CircleCheck, { className: "h-5 w-5 text-emerald-500 shrink-0 mt-0.5" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(CircleX, { className: "h-5 w-5 text-rose-500 shrink-0 mt-0.5" }),
                     /* @__PURE__ */ jsxRuntimeExports.jsxs(CardTitle, { className: "text-sm font-medium leading-relaxed", children: [
                       /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-muted-foreground text-xs mr-2", children: [
                         "Q",
@@ -383,15 +448,14 @@ function QuizPage() {
                     return /* @__PURE__ */ jsxRuntimeExports.jsxs(
                       "div",
                       {
-                        className: `flex items-center gap-2 px-3 py-2 rounded-md text-sm ${wasChosen && isCorrect ? "bg-primary/10 border border-primary/30 text-primary" : wasChosen && !isCorrect ? "bg-destructive/10 border border-destructive/30 text-destructive" : isTheCorrect ? "bg-primary/10 border border-primary/30 text-primary" : "text-muted-foreground"}`,
+                        className: `flex items-center gap-2 px-3 py-2 rounded-xl text-sm border-2 ${wasChosen && isCorrect ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300" : wasChosen && !isCorrect ? "bg-rose-50 dark:bg-rose-950/20 border-rose-300 dark:border-rose-700 text-rose-700 dark:text-rose-300" : isTheCorrect ? "bg-emerald-50 dark:bg-emerald-950/20 border-emerald-300 dark:border-emerald-700 text-emerald-700 dark:text-emerald-300" : "border-border/50 text-muted-foreground"}`,
                         children: [
-                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-5 w-5 rounded-full border border-current flex items-center justify-center text-xs shrink-0", children: String.fromCharCode(65 + oi) }),
+                          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-5 w-5 rounded-full border-2 border-current flex items-center justify-center text-xs shrink-0 font-bold", children: String.fromCharCode(65 + oi) }),
                           /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "flex-1", children: opt }),
                           wasChosen && /* @__PURE__ */ jsxRuntimeExports.jsx(
                             Badge,
                             {
-                              variant: isCorrect ? "default" : "destructive",
-                              className: "text-xs",
+                              className: `text-xs font-bold border-0 ${isCorrect ? "bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700" : "bg-rose-100 dark:bg-rose-900/40 text-rose-700"}`,
                               children: "Your answer"
                             }
                           )
@@ -414,46 +478,89 @@ function QuizPage() {
     const selectedAnswer = answers[currentIdx];
     const progress = (currentIdx + 1) / questions.length * 100;
     const isLast = currentIdx + 1 === questions.length;
+    const timerIsRed = timeLeft !== null && timeLeft < 60;
+    const timerIsYellow = timeLeft !== null && timeLeft >= 60 && timeLeft < 180;
     return /* @__PURE__ */ jsxRuntimeExports.jsx(StudentLayout, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-xl mx-auto", "data-ocid": "student.quiz.active.page", children: [
+      timeLeft !== null && /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        "div",
+        {
+          className: `flex items-center justify-center gap-3 mb-6 px-6 py-3 rounded-2xl font-mono font-bold text-xl shadow-lg transition-all duration-500 ${timerIsRed ? "bg-gradient-to-r from-rose-500 to-red-600 text-white shadow-rose-500/40 animate-pulse" : timerIsYellow ? "bg-gradient-to-r from-amber-400 to-yellow-500 text-white shadow-amber-500/30" : "bg-gradient-to-r from-violet-600 to-purple-600 text-white shadow-violet-500/30"}`,
+          "data-ocid": "student.quiz.timer",
+          children: [
+            timerIsRed ? /* @__PURE__ */ jsxRuntimeExports.jsx(Flame, { className: "h-6 w-6 shrink-0 animate-bounce" }) : /* @__PURE__ */ jsxRuntimeExports.jsx(Timer, { className: "h-6 w-6 shrink-0" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "tabular-nums tracking-wider", children: formatTime(timeLeft) }),
+            timerIsRed && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-sm font-sans font-bold opacity-90", children: "Hurry!" })
+          ]
+        }
+      ),
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "mb-6", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-between mb-2", children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm text-muted-foreground", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-sm font-semibold text-muted-foreground", children: [
             "Question ",
             currentIdx + 1,
-            " of ",
-            questions.length
+            " ",
+            /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "text-muted-foreground/60", children: [
+              "of ",
+              questions.length
+            ] })
           ] }),
-          /* @__PURE__ */ jsxRuntimeExports.jsxs(Badge, { variant: "secondary", children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(Badge, { className: "bg-gradient-to-r from-violet-500 to-purple-600 text-white border-0 font-bold", children: [
             Math.round(progress),
             "% done"
           ] })
         ] }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(Progress, { value: progress, className: "h-2" })
-      ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(Card, { className: "zone-section", "data-ocid": "student.quiz.question.card", children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "font-display text-lg leading-relaxed", children: q.text }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "space-y-3", children: q.options.map((opt, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
-          "button",
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-3 rounded-full bg-muted overflow-hidden", children: /* @__PURE__ */ jsxRuntimeExports.jsx(
+          "div",
           {
-            type: "button",
-            className: `w-full text-left px-4 py-3 rounded-lg border text-sm transition-smooth ${selectedAnswer === idx ? "border-primary bg-primary/10 text-primary font-medium" : "border-border bg-card hover:bg-muted text-foreground"}`,
-            onClick: () => handleSelectAnswer(idx),
-            "data-ocid": `student.quiz.option.${idx + 1}`,
-            children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "inline-flex items-center gap-2", children: [
-              /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-5 w-5 rounded-full border border-current flex items-center justify-center text-xs shrink-0", children: String.fromCharCode(65 + idx) }),
-              opt
-            ] })
-          },
-          `opt-${currentIdx}-${idx}-${opt}`
-        )) })
+            className: "h-full rounded-full bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-600 transition-all duration-500",
+            style: { width: `${progress}%` }
+          }
+        ) })
       ] }),
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-4", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+        Card,
+        {
+          className: "border-0 shadow-xl overflow-hidden",
+          "data-ocid": "student.quiz.question.card",
+          children: [
+            /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-2 w-full bg-gradient-to-r from-violet-500 via-purple-500 to-indigo-600" }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CardHeader, { children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-start gap-3", children: [
+              /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "inline-flex items-center justify-center h-8 w-10 rounded-xl bg-gradient-to-r from-violet-500 to-purple-600 text-white text-sm font-bold shrink-0", children: [
+                "Q",
+                currentIdx + 1
+              ] }),
+              /* @__PURE__ */ jsxRuntimeExports.jsx(CardTitle, { className: "font-display text-lg leading-relaxed text-foreground", children: q.text })
+            ] }) }),
+            /* @__PURE__ */ jsxRuntimeExports.jsx(CardContent, { className: "space-y-3 pb-6", children: q.options.map((opt, idx) => /* @__PURE__ */ jsxRuntimeExports.jsx(
+              "button",
+              {
+                type: "button",
+                className: `w-full text-left px-5 py-4 rounded-2xl border-2 text-sm font-medium transition-all duration-200 hover:-translate-y-0.5 ${selectedAnswer === idx ? "border-violet-400 bg-gradient-to-r from-violet-500/10 to-purple-500/10 text-violet-700 dark:text-violet-300 shadow-md shadow-violet-500/10" : "border-border/60 bg-card hover:bg-muted/50 text-foreground hover:border-violet-200 dark:hover:border-violet-700"}`,
+                onClick: () => handleSelectAnswer(idx),
+                "data-ocid": `student.quiz.option.${idx + 1}`,
+                children: /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "inline-flex items-center gap-3", children: [
+                  /* @__PURE__ */ jsxRuntimeExports.jsx(
+                    "span",
+                    {
+                      className: `h-7 w-7 rounded-full border-2 flex items-center justify-center text-xs font-bold shrink-0 ${selectedAnswer === idx ? "border-violet-500 bg-gradient-to-br from-violet-500 to-purple-600 text-white" : "border-muted-foreground/30 text-muted-foreground"}`,
+                      children: String.fromCharCode(65 + idx)
+                    }
+                  ),
+                  opt
+                ] })
+              },
+              `opt-${currentIdx}-${idx}-${opt}`
+            )) })
+          ]
+        }
+      ),
+      /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-between mt-6", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs(
           Button,
           {
             type: "button",
             variant: "ghost",
-            className: "gap-2",
+            className: "gap-2 hover:bg-muted",
             disabled: currentIdx === 0,
             onClick: handlePrev,
             "data-ocid": "student.quiz.prev_button",
@@ -467,7 +574,7 @@ function QuizPage() {
           Button,
           {
             type: "button",
-            className: "gap-2",
+            className: `gap-2 font-bold transition-all duration-200 hover:-translate-y-0.5 ${isLast ? "bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white shadow-md shadow-emerald-500/30" : "bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white shadow-md shadow-violet-500/30"}`,
             disabled: selectedAnswer === void 0 || submitMutation.isPending,
             onClick: handleNext,
             "data-ocid": "student.quiz.next_button",
@@ -486,11 +593,11 @@ function QuizPage() {
       className: "max-w-xl mx-auto text-center py-16",
       "data-ocid": "student.quiz.start.page",
       children: [
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { className: "h-8 w-8 text-primary" }) }),
-        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-2xl font-bold text-foreground mb-2", children: "Ready to start?" }),
-        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground mb-2", children: [
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "h-24 w-24 rounded-full bg-gradient-to-br from-amber-400 to-yellow-500 flex items-center justify-center mx-auto mb-6 shadow-2xl shadow-amber-500/40", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Trophy, { className: "h-12 w-12 text-white" }) }),
+        /* @__PURE__ */ jsxRuntimeExports.jsx("h1", { className: "font-display text-3xl font-bold bg-gradient-to-r from-amber-500 to-orange-600 bg-clip-text text-transparent mb-3", children: "Ready for the challenge?" }),
+        /* @__PURE__ */ jsxRuntimeExports.jsxs("p", { className: "text-muted-foreground mb-2 text-lg", children: [
           (questionsData == null ? void 0 : questionsData.length) ?? 0,
-          " questions in this subject quiz."
+          " questions await you!"
         ] }),
         /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-sm text-muted-foreground mb-8", children: "Answer all questions and see your score at the end." }),
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex justify-center gap-3", children: [
@@ -508,16 +615,19 @@ function QuizPage() {
               ]
             }
           ),
-          /* @__PURE__ */ jsxRuntimeExports.jsx(
+          /* @__PURE__ */ jsxRuntimeExports.jsxs(
             Button,
             {
               type: "button",
               size: "lg",
-              className: "gap-2",
+              className: "gap-2 font-bold bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-600 hover:to-orange-700 text-white shadow-xl shadow-amber-500/30 hover:-translate-y-0.5 transition-all duration-200",
               onClick: handleStart,
               disabled: startMutation.isPending,
               "data-ocid": "student.quiz.start_button",
-              children: "Start Quiz"
+              children: [
+                /* @__PURE__ */ jsxRuntimeExports.jsx(Clock, { className: "h-5 w-5" }),
+                " Start Quiz"
+              ]
             }
           )
         ] })

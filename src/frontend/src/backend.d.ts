@@ -13,13 +13,34 @@ export interface CreateQuestionPayload {
     correctOptionIndex: bigint;
     options: Array<string>;
 }
+export interface LeaderboardEntry {
+    principal: UserId;
+    displayName: string;
+    rank: bigint;
+    totalAttempts: bigint;
+    averageScore: bigint;
+}
 export type Timestamp = bigint;
 export interface StudentProfilePublic {
     principal: UserId;
     displayName: string;
+    section: string;
+    registerNumber: string;
+    accentColor: string;
+    department: string;
     registeredAt: Timestamp;
+    enrollNumber: string;
 }
-export type AttemptId = bigint;
+export interface Certificate {
+    id: CertificateId;
+    completedAt: Timestamp;
+    studentId: UserId;
+    studentName: string;
+    subjectName: string;
+    score: bigint;
+    totalQuestions: bigint;
+    subjectId: SubjectId;
+}
 export interface UpdateQuestionPayload {
     id: QuestionId;
     text: string;
@@ -27,6 +48,7 @@ export interface UpdateQuestionPayload {
     correctOptionIndex: bigint;
     options: Array<string>;
 }
+export type AttemptId = bigint;
 export interface QuestionPublic {
     id: QuestionId;
     createdAt: Timestamp;
@@ -37,8 +59,10 @@ export interface QuestionPublic {
 export type QuestionId = bigint;
 export interface CreateSubjectPayload {
     name: string;
+    timerMinutes?: bigint;
     description: string;
 }
+export type CertificateId = bigint;
 export interface SubmitAnswersPayload {
     attemptId: AttemptId;
     answers: Array<bigint>;
@@ -51,12 +75,14 @@ export type UserId = Principal;
 export interface UpdateSubjectPayload {
     id: SubjectId;
     name: string;
+    timerMinutes?: bigint;
     description: string;
 }
 export interface SubjectWithStats {
     id: SubjectId;
     name: string;
     createdAt: Timestamp;
+    timerMinutes?: bigint;
     description: string;
     questionCount: bigint;
 }
@@ -70,6 +96,7 @@ export interface QuizAttemptPublic {
     scorePercentage: bigint;
     score: bigint;
     totalQuestions: bigint;
+    timeLimitMinutes?: bigint;
     subjectId: SubjectId;
 }
 export interface SubmitQuizResult {
@@ -89,6 +116,7 @@ export interface Subject {
     id: SubjectId;
     name: string;
     createdAt: Timestamp;
+    timerMinutes?: bigint;
     description: string;
 }
 export interface StudentSummary {
@@ -113,8 +141,11 @@ export interface backendInterface {
     getAttemptsByStudent(studentId: UserId): Promise<Array<QuizAttemptPublic>>;
     getAttemptsBySubject(subjectId: SubjectId): Promise<Array<QuizAttemptPublic>>;
     getCallerUserRole(): Promise<UserRole>;
+    getCertificates(): Promise<Array<Certificate>>;
+    getLeaderboard(): Promise<Array<LeaderboardEntry>>;
     getMyAttempts(): Promise<Array<QuizAttemptPublic>>;
     getMyProfile(): Promise<StudentProfilePublic | null>;
+    getSubjectCertificate(subjectId: SubjectId): Promise<Certificate | null>;
     isCallerAdmin(): Promise<boolean>;
     listAllStudents(): Promise<Array<StudentSummary>>;
     listQuestionsBySubject(subjectId: SubjectId): Promise<Array<QuestionPublic>>;
@@ -123,7 +154,12 @@ export interface backendInterface {
     registerStudent(): Promise<StudentProfilePublic>;
     startQuiz(subjectId: SubjectId): Promise<QuizAttemptPublic>;
     submitQuizAnswers(payload: SubmitAnswersPayload): Promise<SubmitQuizResult>;
+    updateMyAccentColor(color: string): Promise<boolean>;
+    updateMyDepartment(value: string): Promise<boolean>;
     updateMyDisplayName(name: string): Promise<boolean>;
+    updateMyEnrollNumber(value: string): Promise<boolean>;
+    updateMyRegisterNumber(value: string): Promise<boolean>;
+    updateMySection(value: string): Promise<boolean>;
     updateQuestion(payload: UpdateQuestionPayload): Promise<boolean>;
     updateSubject(payload: UpdateSubjectPayload): Promise<boolean>;
 }

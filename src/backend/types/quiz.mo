@@ -11,6 +11,7 @@ module {
     totalQuestions : Nat;
     startedAt : Types.Timestamp;
     var completedAt : ?Types.Timestamp;
+    timeLimitMinutes : ?Nat;
   };
 
   public type QuizAttemptPublic = {
@@ -24,6 +25,7 @@ module {
     totalQuestions : Nat;
     startedAt : Types.Timestamp;
     completedAt : ?Types.Timestamp;
+    timeLimitMinutes : ?Nat;
   };
 
   public type AttemptDetails = {

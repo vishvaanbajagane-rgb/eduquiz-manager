@@ -17,6 +17,13 @@ const AdminResultsPage = lazy(() => import("@/pages/admin/ResultsPage"));
 const StudentQuizzesPage = lazy(() => import("@/pages/student/QuizzesPage"));
 const StudentQuizPage = lazy(() => import("@/pages/student/QuizPage"));
 const StudentHistoryPage = lazy(() => import("@/pages/student/HistoryPage"));
+const LeaderboardPage = lazy(() => import("@/pages/LeaderboardPage"));
+const CertificatePage = lazy(() => import("@/pages/student/CertificatePage"));
+const StudentProfilePage = lazy(() =>
+  import("@/pages/student/StudentProfilePage").then((m) => ({
+    default: m.StudentProfilePage,
+  })),
+);
 
 const rootRoute = createRootRoute();
 
@@ -100,15 +107,49 @@ const studentHistoryRoute = createRoute({
   ),
 });
 
+const leaderboardRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/leaderboard",
+  component: () => (
+    <Suspense fallback={<LoadingSpinner fullScreen />}>
+      <LeaderboardPage />
+    </Suspense>
+  ),
+});
+
+const studentCertificateRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/student/certificate/$subjectId",
+  component: () => (
+    <Suspense fallback={<LoadingSpinner fullScreen />}>
+      <CertificatePage />
+    </Suspense>
+  ),
+});
+
+const studentProfileRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "/student/profile",
+  component: () => (
+    <Suspense fallback={<LoadingSpinner fullScreen />}>
+      <StudentProfilePage />
+    </Suspense>
+  ),
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
   adminSubjectsRoute,
   adminQuestionsRoute,
   adminResultsRoute,
+
   studentQuizzesRoute,
   studentQuizRoute,
   studentHistoryRoute,
+  studentCertificateRoute,
+  studentProfileRoute,
+  leaderboardRoute,
 ]);
 
 const router = createRouter({ routeTree });

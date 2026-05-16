@@ -6,6 +6,7 @@ import SubjectTypes "../types/subjects";
 import CommonTypes "../types/common";
 import SubjectsLib "../lib/subjects";
 import QuestionsLib "../lib/questions";
+import Nat "mo:core/Nat";
 
 mixin (
   accessControlState : AccessControl.AccessControlState,

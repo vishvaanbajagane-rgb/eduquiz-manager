@@ -30,5 +30,5 @@ args = [
 ]
 
 [dependencies]
-core = "2.2.0"
+core = "2.4.0"
 caffeineai-authorization = "0.1.1"

@@ -1,6 +1,5 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import { useAuth } from "@/hooks/useAuth";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
@@ -9,7 +8,11 @@ import {
   GraduationCap,
   HelpCircle,
   LogOut,
+  Moon,
+  Sun,
+  Trophy,
 } from "lucide-react";
+import { useTheme } from "next-themes";
 import type { ReactNode } from "react";
 
 interface AdminLayoutProps {
@@ -20,53 +23,72 @@ const NAV_ITEMS = [
   { label: "Subjects", path: "/admin/subjects", icon: BookOpen },
   { label: "Questions", path: "/admin/questions", icon: HelpCircle },
   { label: "Results", path: "/admin/results", icon: BarChart3 },
+  { label: "Leaderboard", path: "/leaderboard", icon: Trophy },
 ];
 
 export function AdminLayout({ children }: AdminLayoutProps) {
   const { logout } = useAuth();
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="min-h-screen flex bg-background">
       {/* Sidebar */}
-      <aside className="w-64 bg-card border-r border-border flex flex-col shrink-0">
+      <aside className="w-64 gradient-sidebar-admin flex flex-col shrink-0 shadow-xl">
         {/* Brand */}
-        <div className="px-6 py-5 border-b border-border">
+        <div className="px-5 py-5 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="h-8 w-8 rounded-lg bg-primary flex items-center justify-center">
-              <GraduationCap className="h-5 w-5 text-primary-foreground" />
+            {/* Logo */}
+            <div className="h-10 w-10 rounded-xl gradient-primary flex items-center justify-center shadow-glow shrink-0">
+              <GraduationCap className="h-6 w-6 text-white" />
             </div>
-            <div className="min-w-0">
-              <p className="font-display font-semibold text-sm text-foreground truncate">
-                EduManage
+            <div className="min-w-0 flex-1">
+              <p className="font-display font-bold text-base text-white truncate tracking-tight">
+                EduQuiz
               </p>
               <Badge
                 variant="secondary"
-                className="text-xs px-1.5 py-0 h-4 mt-0.5"
+                className="text-xs px-2 py-0.5 h-5 mt-0.5 bg-white/15 text-white/90 border-0 hover:bg-white/15"
               >
                 Admin
               </Badge>
             </div>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 shrink-0 text-white/60 hover:text-white hover:bg-white/10 rounded-lg"
+              onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
+              aria-label="Toggle theme"
+              data-ocid="admin.theme_toggle"
+            >
+              {theme === "dark" ? (
+                <Sun className="h-4 w-4" />
+              ) : (
+                <Moon className="h-4 w-4" />
+              )}
+            </Button>
           </div>
         </div>
 
         {/* Nav */}
         <nav
-          className="flex-1 px-3 py-4 space-y-1"
+          className="flex-1 px-3 py-5 space-y-1"
           aria-label="Admin navigation"
         >
-          {NAV_ITEMS.map((item) => {
+          {NAV_ITEMS.map((item, i) => {
             const Icon = item.icon;
             const isActive = currentPath.startsWith(item.path);
             return (
               <Link
                 key={item.path}
                 to={item.path}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-smooth ${
+                style={{ animationDelay: `${i * 60}ms` }}
+                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold animate-fade-in-up nav-item-hover ${
                   isActive
-                    ? "bg-primary text-primary-foreground shadow-sm"
-                    : "text-muted-foreground hover:text-foreground hover:bg-muted"
+                    ? "nav-item-active"
+                    : "text-white/65 hover:text-white"
                 }`}
                 data-ocid={`admin.nav.${item.label.toLowerCase()}_link`}
               >
@@ -77,14 +99,15 @@ export function AdminLayout({ children }: AdminLayoutProps) {
           })}
         </nav>
 
-        <Separator />
+        {/* Divider */}
+        <div className="mx-4 h-px bg-white/10 mb-1" />
 
         {/* Logout */}
         <div className="px-3 py-4">
           <Button
             type="button"
             variant="ghost"
-            className="w-full justify-start gap-3 text-muted-foreground hover:text-destructive hover:bg-destructive/10 text-sm"
+            className="w-full justify-start gap-3 text-white/55 hover:text-red-300 hover:bg-red-500/15 text-sm font-medium rounded-xl"
             onClick={logout}
             data-ocid="admin.logout_button"
           >

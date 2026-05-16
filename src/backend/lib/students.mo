@@ -3,6 +3,7 @@ import Time "mo:core/Time";
 import StudentTypes "../types/students";
 import QuizTypes "../types/quiz";
 import CommonTypes "../types/common";
+import Principal "mo:core/Principal";
 
 module {
   public type StudentProfile = StudentTypes.StudentProfile;
@@ -13,6 +14,11 @@ module {
     {
       principal = profile.principal;
       displayName = profile.displayName;
+      accentColor = profile.accentColor;
+      department = profile.department;
+      registerNumber = profile.registerNumber;
+      enrollNumber = profile.enrollNumber;
+      section = profile.section;
       registeredAt = profile.registeredAt;
     };
   };
@@ -27,6 +33,11 @@ module {
         let profile : StudentProfile = {
           principal;
           var displayName = principal.toText();
+          var accentColor = "";
+          var department = "";
+          var registerNumber = "";
+          var enrollNumber = "";
+          var section = "";
           registeredAt = Time.now();
         };
         students.add(principal, profile);
@@ -54,6 +65,76 @@ module {
       case null false;
       case (?profile) {
         profile.displayName := name;
+        true;
+      };
+    };
+  };
+
+  public func updateAccentColor(
+    students : Map.Map<CommonTypes.UserId, StudentProfile>,
+    principal : CommonTypes.UserId,
+    color : Text,
+  ) : Bool {
+    switch (students.get(principal)) {
+      case null false;
+      case (?profile) {
+        profile.accentColor := color;
+        true;
+      };
+    };
+  };
+
+  public func updateDepartment(
+    students : Map.Map<CommonTypes.UserId, StudentProfile>,
+    principal : CommonTypes.UserId,
+    value : Text,
+  ) : Bool {
+    switch (students.get(principal)) {
+      case null false;
+      case (?profile) {
+        profile.department := value;
+        true;
+      };
+    };
+  };
+
+  public func updateRegisterNumber(
+    students : Map.Map<CommonTypes.UserId, StudentProfile>,
+    principal : CommonTypes.UserId,
+    value : Text,
+  ) : Bool {
+    switch (students.get(principal)) {
+      case null false;
+      case (?profile) {
+        profile.registerNumber := value;
+        true;
+      };
+    };
+  };
+
+  public func updateEnrollNumber(
+    students : Map.Map<CommonTypes.UserId, StudentProfile>,
+    principal : CommonTypes.UserId,
+    value : Text,
+  ) : Bool {
+    switch (students.get(principal)) {
+      case null false;
+      case (?profile) {
+        profile.enrollNumber := value;
+        true;
+      };
+    };
+  };
+
+  public func updateSection(
+    students : Map.Map<CommonTypes.UserId, StudentProfile>,
+    principal : CommonTypes.UserId,
+    value : Text,
+  ) : Bool {
+    switch (students.get(principal)) {
+      case null false;
+      case (?profile) {
+        profile.section := value;
         true;
       };
     };
