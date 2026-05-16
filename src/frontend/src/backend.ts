@@ -181,6 +181,10 @@ export interface QuizAttemptPublic {
     timeLimitMinutes?: bigint;
     subjectId: SubjectId;
 }
+export interface StudentNameEntry {
+    principal: UserId;
+    name: string;
+}
 export interface SubmitQuizResult {
     attempt: QuizAttemptPublic;
     correctAnswers: Array<bigint>;
@@ -221,6 +225,7 @@ export interface backendInterface {
     deleteSubject(id: SubjectId): Promise<boolean>;
     generateCertificateShareToken(subjectId: SubjectId): Promise<string | null>;
     getAllAttempts(): Promise<Array<QuizAttemptPublic>>;
+    getAllStudentNames(): Promise<Array<StudentNameEntry>>;
     getAttemptDetails(attemptId: AttemptId): Promise<AttemptDetails | null>;
     getAttemptsByStudent(studentId: UserId): Promise<Array<QuizAttemptPublic>>;
     getAttemptsBySubject(subjectId: SubjectId): Promise<Array<QuizAttemptPublic>>;
@@ -361,6 +366,20 @@ export class Backend implements backendInterface {
         } else {
             const result = await this.actor.getAllAttempts();
             return from_candid_vec_n9(this._uploadFile, this._downloadFile, result);
+        }
+    }
+    async getAllStudentNames(): Promise<Array<StudentNameEntry>> {
+        if (this.processError) {
+            try {
+                const result = await this.actor.getAllStudentNames();
+                return result;
+            } catch (e) {
+                this.processError(e);
+                throw new Error("unreachable");
+            }
+        } else {
+            const result = await this.actor.getAllStudentNames();
+            return result;
         }
     }
     async getAttemptDetails(arg0: AttemptId): Promise<AttemptDetails | null> {

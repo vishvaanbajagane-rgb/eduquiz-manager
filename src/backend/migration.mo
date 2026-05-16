@@ -4,6 +4,7 @@ module {
     var nextQuestionId : Nat;
     var nextAttemptId : Nat;
     var nextCertificateId : Nat;
+    var nextTokenCounter : Nat;
   };
 
   type NewState = {
@@ -29,7 +30,7 @@ module {
         var nextQuestionId = old.state.nextQuestionId;
         var nextAttemptId = old.state.nextAttemptId;
         var nextCertificateId = old.state.nextCertificateId;
-        var nextTokenCounter = 0;
+        var nextTokenCounter = old.state.nextTokenCounter;
       };
     };
   };

@@ -73,6 +73,7 @@ export interface QuizAttemptPublic {
   'timeLimitMinutes' : [] | [bigint],
   'subjectId' : SubjectId,
 }
+export interface StudentNameEntry { 'principal' : UserId, 'name' : string }
 export interface StudentProfilePublic {
   'principal' : UserId,
   'displayName' : string,
@@ -140,6 +141,7 @@ export interface _SERVICE {
   'deleteSubject' : ActorMethod<[SubjectId], boolean>,
   'generateCertificateShareToken' : ActorMethod<[SubjectId], [] | [string]>,
   'getAllAttempts' : ActorMethod<[], Array<QuizAttemptPublic>>,
+  'getAllStudentNames' : ActorMethod<[], Array<StudentNameEntry>>,
   'getAttemptDetails' : ActorMethod<[AttemptId], [] | [AttemptDetails]>,
   'getAttemptsByStudent' : ActorMethod<[UserId], Array<QuizAttemptPublic>>,
   'getAttemptsBySubject' : ActorMethod<[SubjectId], Array<QuizAttemptPublic>>,

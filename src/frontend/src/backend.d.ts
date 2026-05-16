@@ -99,6 +99,10 @@ export interface QuizAttemptPublic {
     timeLimitMinutes?: bigint;
     subjectId: SubjectId;
 }
+export interface StudentNameEntry {
+    principal: UserId;
+    name: string;
+}
 export interface SubmitQuizResult {
     attempt: QuizAttemptPublic;
     correctAnswers: Array<bigint>;
@@ -138,6 +142,7 @@ export interface backendInterface {
     deleteSubject(id: SubjectId): Promise<boolean>;
     generateCertificateShareToken(subjectId: SubjectId): Promise<string | null>;
     getAllAttempts(): Promise<Array<QuizAttemptPublic>>;
+    getAllStudentNames(): Promise<Array<StudentNameEntry>>;
     getAttemptDetails(attemptId: AttemptId): Promise<AttemptDetails | null>;
     getAttemptsByStudent(studentId: UserId): Promise<Array<QuizAttemptPublic>>;
     getAttemptsBySubject(subjectId: SubjectId): Promise<Array<QuizAttemptPublic>>;

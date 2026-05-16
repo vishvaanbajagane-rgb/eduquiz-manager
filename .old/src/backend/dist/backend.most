@@ -30,7 +30,8 @@ type OldState__853343916 =
     var nextAttemptId : Nat;
     var nextCertificateId : Nat;
     var nextQuestionId : Nat;
-    var nextSubjectId : Nat
+    var nextSubjectId : Nat;
+    var nextTokenCounter : Nat
   };
 type QuestionId__77764146 = Nat;
 type Question__290945081 =

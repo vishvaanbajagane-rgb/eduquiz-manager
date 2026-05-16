@@ -30,6 +30,11 @@ module {
     averageScore : Nat;
   };
 
+  public type StudentNameEntry = {
+    principal : Types.UserId;
+    name : Text;
+  };
+
   public type LeaderboardEntry = {
     rank : Nat;
     principal : Types.UserId;

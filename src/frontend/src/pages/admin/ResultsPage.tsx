@@ -25,6 +25,7 @@ import { AdminLayout } from "@/layouts/AdminLayout";
 import type {
   AttemptDetails,
   QuizAttemptPublic,
+  StudentSummary,
   SubjectWithStats,
 } from "@/types";
 import { useActor } from "@caffeineai/core-infrastructure";
@@ -157,12 +158,14 @@ function AnswerBreakdown({
 function AttemptRow({
   attempt,
   subjectMap,
+  nameMap,
   actor,
   isFetchingActor,
   rowIndex,
 }: {
   attempt: QuizAttemptPublic;
   subjectMap: Map<string, string>;
+  nameMap: Map<string, string>;
   actor: ReturnType<typeof createActor> | null;
   isFetchingActor: boolean;
   rowIndex: number;
@@ -182,6 +185,7 @@ function AttemptRow({
   const pct = Number(attempt.scorePercentage);
   const principal = attempt.studentPrincipal.toString();
   const truncatedPrincipal = `${principal.slice(0, 6)}…${principal.slice(-4)}`;
+  const studentName = nameMap.get(principal) ?? truncatedPrincipal;
   const subjectName =
     subjectMap.get(attempt.subjectId.toString()) ?? "Unknown Subject";
   const date = attempt.completedAt
@@ -208,9 +212,14 @@ function AttemptRow({
           )}
         </TableCell>
         <TableCell>
-          <code className="text-xs bg-muted/60 border border-border px-2 py-1 rounded-lg font-mono text-muted-foreground">
-            {truncatedPrincipal}
-          </code>
+          <span className="text-sm font-medium text-foreground">
+            {studentName}
+          </span>
+          {nameMap.get(principal) && (
+            <code className="block text-xs text-muted-foreground/60 font-mono mt-0.5">
+              {truncatedPrincipal}
+            </code>
+          )}
         </TableCell>
         <TableCell className="text-sm text-foreground font-semibold">
           {subjectName}
@@ -254,6 +263,23 @@ export default function ResultsPage() {
   const { actor, isFetching } = useActor(createActor);
   const [search, setSearch] = useState("");
   const [filterSubjectId, setFilterSubjectId] = useState<string>("all");
+
+  const { data: allStudents } = useQuery<StudentSummary[]>({
+    queryKey: ["allStudents"],
+    queryFn: async () => {
+      if (!actor) return [];
+      return actor.listAllStudents();
+    },
+    enabled: !!actor && !isFetching,
+  });
+
+  const nameMap = useMemo(
+    () =>
+      new Map(
+        (allStudents ?? []).map((s) => [s.principal.toString(), s.displayName]),
+      ),
+    [allStudents],
+  );
 
   useEffect(() => {
     if (!isAuthenticated) navigate({ to: "/login" });
@@ -312,13 +338,17 @@ export default function ResultsPage() {
       list = list.filter((a) => a.subjectId.toString() === filterSubjectId);
     const q = search.trim().toLowerCase();
     if (q)
-      list = list.filter((a) =>
-        a.studentPrincipal.toString().toLowerCase().includes(q),
-      );
+      list = list.filter((a) => {
+        const p = a.studentPrincipal.toString().toLowerCase();
+        const name = (
+          nameMap.get(a.studentPrincipal.toString()) ?? ""
+        ).toLowerCase();
+        return p.includes(q) || name.includes(q);
+      });
     return list
       .slice()
       .sort((a, b) => Number((b.completedAt ?? 0n) - (a.completedAt ?? 0n)));
-  }, [completedAttempts, filterSubjectId, search]);
+  }, [completedAttempts, filterSubjectId, search, nameMap]);
 
   if (role === "loading" || loadingAttempts || loadingSubjects)
     return <LoadingSpinner fullScreen />;
@@ -426,7 +456,7 @@ export default function ResultsPage() {
                   <Input
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}
-                    placeholder="Search principal…"
+                    placeholder="Search by name…"
                     className="pl-8 h-8 text-sm w-48"
                     data-ocid="admin.results.search_input"
                   />
@@ -496,6 +526,7 @@ export default function ResultsPage() {
                       key={`${attempt.id.toString()}-${attempt.studentPrincipal.toString()}`}
                       attempt={attempt}
                       subjectMap={subjectMap}
+                      nameMap={nameMap}
                       actor={actor}
                       isFetchingActor={isFetching}
                       rowIndex={idx + 1}

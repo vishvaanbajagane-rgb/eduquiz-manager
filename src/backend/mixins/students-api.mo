@@ -68,6 +68,13 @@ mixin (
     StudentsLib.updateSection(students, caller, value);
   };
 
+  public query ({ caller }) func getAllStudentNames() : async [StudentTypes.StudentNameEntry] {
+    if (not AccessControl.isAdmin(accessControlState, caller)) {
+      Runtime.trap("Unauthorized: only admins can view student names");
+    };
+    StudentsLib.getAllNames(students);
+  };
+
   public query ({ caller }) func listAllStudents() : async [StudentTypes.StudentSummary] {
     if (not AccessControl.isAdmin(accessControlState, caller)) {
       Runtime.trap("Unauthorized: only admins can view all students");

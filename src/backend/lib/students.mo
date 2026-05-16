@@ -140,6 +140,14 @@ module {
     };
   };
 
+  public func getAllNames(
+    students : Map.Map<CommonTypes.UserId, StudentProfile>,
+  ) : [StudentTypes.StudentNameEntry] {
+    students.values().map<StudentProfile, StudentTypes.StudentNameEntry>(
+      func(p) { { principal = p.principal; name = p.displayName } }
+    ).toArray();
+  };
+
   public func listAll(
     students : Map.Map<CommonTypes.UserId, StudentProfile>,
   ) : [StudentProfilePublic] {

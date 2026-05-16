@@ -57,6 +57,10 @@ export const QuizAttemptPublic = IDL.Record({
   'timeLimitMinutes' : IDL.Opt(IDL.Nat),
   'subjectId' : SubjectId,
 });
+export const StudentNameEntry = IDL.Record({
+  'principal' : UserId,
+  'name' : IDL.Text,
+});
 export const AttemptDetails = IDL.Record({
   'attempt' : QuizAttemptPublic,
   'correctAnswers' : IDL.Vec(IDL.Nat),
@@ -145,6 +149,7 @@ export const idlService = IDL.Service({
       [],
     ),
   'getAllAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
+  'getAllStudentNames' : IDL.Func([], [IDL.Vec(StudentNameEntry)], ['query']),
   'getAttemptDetails' : IDL.Func(
       [AttemptId],
       [IDL.Opt(AttemptDetails)],
@@ -257,6 +262,10 @@ export const idlFactory = ({ IDL }) => {
     'timeLimitMinutes' : IDL.Opt(IDL.Nat),
     'subjectId' : SubjectId,
   });
+  const StudentNameEntry = IDL.Record({
+    'principal' : UserId,
+    'name' : IDL.Text,
+  });
   const AttemptDetails = IDL.Record({
     'attempt' : QuizAttemptPublic,
     'correctAnswers' : IDL.Vec(IDL.Nat),
@@ -345,6 +354,7 @@ export const idlFactory = ({ IDL }) => {
         [],
       ),
     'getAllAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
+    'getAllStudentNames' : IDL.Func([], [IDL.Vec(StudentNameEntry)], ['query']),
     'getAttemptDetails' : IDL.Func(
         [AttemptId],
         [IDL.Opt(AttemptDetails)],

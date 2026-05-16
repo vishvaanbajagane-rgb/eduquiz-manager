@@ -1,26 +1,29 @@
 {
-  "overview": "A full-featured student management system with admin and student roles. Admins manage subjects, questions, and view student results. Students take timed quizzes, see a global leaderboard, ask an AI assistant for help, and earn completion certificates.",
+  "overview": "EduQuiz Manager is a full-stack student management system with admin and student roles. Admins manage subjects, questions, and timers; students take multiple-choice quizzes, earn certificates, and track progress on a live leaderboard.",
   "features": [
-    "Admin subject and question management",
+    "Admin and student logins via Internet Identity",
+    "Subject and question management with quiz timers",
     "Multiple-choice quizzes grouped by subject",
-    "Quiz countdown timer (admin-configurable per subject)",
-    "Global leaderboard ranked by average score",
-    "AI-powered doubt assistant chatbot for students",
-    "Admin OpenAI API key configuration",
-    "Completion certificates with print/PDF support",
-    "Admin student results and score tracking",
-    "Role-based access (admin vs student)"
+    "Student scores and results visible to admin",
+    "Live leaderboard updating every 10 seconds",
+    "Completion certificates with shareable links",
+    "Student profile with photo, department, register number, enroll number, section",
+    "Welcome banner with top score badge, streak counter, and department",
+    "Best score badge on each subject card",
+    "Profile completion prompts and nudges",
+    "Dark mode / light mode toggle",
+    "Animated confetti on certificate",
+    "Streak counter and daily progress tracking"
   ],
   "category": "education",
   "tags": [
-    "student-management",
-    "quiz",
-    "leaderboard",
-    "ai-assistant",
-    "certificates",
     "education",
+    "quiz",
+    "student-management",
+    "leaderboard",
+    "certificates",
     "admin",
-    "multiple-choice"
+    "dark-mode"
   ],
-  "last_updated": "2026-05-15T16:55:15.882Z"
+  "last_updated": "2026-05-16T11:35:43.084Z"
 }

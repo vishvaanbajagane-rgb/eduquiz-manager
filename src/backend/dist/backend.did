@@ -67,6 +67,11 @@ type StudentProfilePublic =
    registeredAt: Timestamp;
    section: text;
  };
+type StudentNameEntry = 
+ record {
+   name: text;
+   "principal": UserId;
+ };
 type QuizAttemptPublic = 
  record {
    answers: vec nat;
@@ -147,6 +152,7 @@ service : {
   deleteSubject: (id: SubjectId) -> (bool);
   generateCertificateShareToken: (subjectId: SubjectId) -> (opt text);
   getAllAttempts: () -> (vec QuizAttemptPublic) query;
+  getAllStudentNames: () -> (vec StudentNameEntry) query;
   getAttemptDetails: (attemptId: AttemptId) -> (opt AttemptDetails) query;
   getAttemptsByStudent: (studentId: UserId) -> (vec QuizAttemptPublic) query;
   getAttemptsBySubject: (subjectId: SubjectId) ->
