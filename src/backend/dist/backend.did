@@ -145,16 +145,18 @@ service : {
   createSubject: (payload: CreateSubjectPayload) -> (Subject);
   deleteQuestion: (id: QuestionId) -> (bool);
   deleteSubject: (id: SubjectId) -> (bool);
+  generateCertificateShareToken: (subjectId: SubjectId) -> (opt text);
   getAllAttempts: () -> (vec QuizAttemptPublic) query;
   getAttemptDetails: (attemptId: AttemptId) -> (opt AttemptDetails) query;
   getAttemptsByStudent: (studentId: UserId) -> (vec QuizAttemptPublic) query;
   getAttemptsBySubject: (subjectId: SubjectId) ->
    (vec QuizAttemptPublic) query;
   getCallerUserRole: () -> (UserRole) query;
+  getCertificateByToken: (token: text) -> (opt Certificate) query;
   getCertificates: () -> (vec Certificate) query;
   getLeaderboard: () -> (vec LeaderboardEntry) query;
   getMyAttempts: () -> (vec QuizAttemptPublic) query;
-  getMyProfile: () -> (opt StudentProfilePublic) query;
+  getMyProfile: () -> (StudentProfilePublic);
   getSubjectCertificate: (subjectId: SubjectId) -> (opt Certificate) query;
   isCallerAdmin: () -> (bool) query;
   listAllStudents: () -> (vec StudentSummary) query;

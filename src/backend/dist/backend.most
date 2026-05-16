@@ -1,4 +1,4 @@
-// Version: 1.0.0
+// Version: 3.0.0
 type AttemptId__173561908 = Nat;
 type CertificateId__417577722 = Nat;
 type Certificate__111188169 = Certificate__592097419;
@@ -25,6 +25,13 @@ type Nat__369452189 = Nat__920180692;
 type Nat__920180692 = Nat;
 type Node__462531142<K, V> =
   {#internal : Internal__112456046<K, V>; #leaf : Leaf__57387986<K, V>};
+type OldState__853343916 =
+  {
+    var nextAttemptId : Nat;
+    var nextCertificateId : Nat;
+    var nextQuestionId : Nat;
+    var nextSubjectId : Nat
+  };
 type QuestionId__77764146 = Nat;
 type Question__290945081 =
   {
@@ -75,7 +82,7 @@ type Subject__947334269 = Subject__69355533;
 type Timestamp__301639476 = Int;
 type UserId__158757552 = Principal;
 type UserRole__1073662873 = {#admin; #guest; #user};
-actor {
+actor ({
   stable accessControlState :
     {
       var adminAssigned : Bool;
@@ -86,16 +93,70 @@ actor {
       var root : Node__462531142<AttemptId__173561908, QuizAttempt__431857804>;
       var size : Nat__369452189
     };
+  stable certIdToToken :
+    {
+      var root : Node__462531142<CertificateId__417577722, Text>;
+      var size : Nat__369452189
+    };
   stable certificates :
     {
       var root :
         Node__462531142<CertificateId__417577722, Certificate__111188169>;
       var size : Nat__369452189
     };
-  stable var openAIApiKey : {var value : ?Text};
+  stable openAIApiKey : {var value : ?Text};
   stable questions :
     {
       var root : Node__462531142<QuestionId__77764146, Question__836207852>;
+      var size : Nat__369452189
+    };
+  stable shareTokens :
+    {
+      var root : Node__462531142<Text, CertificateId__417577722>;
+      var size : Nat__369452189
+    };
+  in state : OldState__853343916;
+  stable students :
+    {
+      var root : Node__462531142<UserId__158757552, StudentProfile__388526123>;
+      var size : Nat__369452189
+    };
+  stable subjects :
+    {
+      var root : Node__462531142<SubjectId__402408784, Subject__947334269>;
+      var size : Nat__369452189
+    }
+}, {
+  stable accessControlState :
+    {
+      var adminAssigned : Bool;
+      userRoles : Map__148053270<Principal, UserRole__1073662873>
+    };
+  stable attempts :
+    {
+      var root : Node__462531142<AttemptId__173561908, QuizAttempt__431857804>;
+      var size : Nat__369452189
+    };
+  stable certIdToToken :
+    {
+      var root : Node__462531142<CertificateId__417577722, Text>;
+      var size : Nat__369452189
+    };
+  stable certificates :
+    {
+      var root :
+        Node__462531142<CertificateId__417577722, Certificate__111188169>;
+      var size : Nat__369452189
+    };
+  stable openAIApiKey : {var value : ?Text};
+  stable questions :
+    {
+      var root : Node__462531142<QuestionId__77764146, Question__836207852>;
+      var size : Nat__369452189
+    };
+  stable shareTokens :
+    {
+      var root : Node__462531142<Text, CertificateId__417577722>;
       var size : Nat__369452189
     };
   stable state :
@@ -103,7 +164,8 @@ actor {
       var nextAttemptId : Nat;
       var nextCertificateId : Nat;
       var nextQuestionId : Nat;
-      var nextSubjectId : Nat
+      var nextSubjectId : Nat;
+      var nextTokenCounter : Nat
     };
   stable students :
     {
@@ -115,4 +177,4 @@ actor {
       var root : Node__462531142<SubjectId__402408784, Subject__947334269>;
       var size : Nat__369452189
     }
-};
+});

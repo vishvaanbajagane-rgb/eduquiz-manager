@@ -1,7 +1,8 @@
 // route: /student/certificate/$subjectId
-import { createActor } from "@/backend";
+import { type StudentProfilePublic, createActor } from "@/backend";
 import type { Certificate } from "@/backend";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useRole } from "@/hooks/useRole";
@@ -13,21 +14,91 @@ import confetti from "canvas-confetti";
 import {
   ArrowLeft,
   Award,
+  Check,
   Download,
   Printer,
+  Share2,
   Sparkles,
   Star,
+  UserCircle,
 } from "lucide-react";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function CertificatePage() {
-  const { isAuthenticated } = useAuth();
+  const { isAuthenticated, principal } = useAuth();
   const role = useRole();
   const navigate = useNavigate();
   const { subjectId } = useParams({ strict: false }) as { subjectId?: string };
   const { actor, isFetching } = useActor(createActor);
   const printRef = useRef<HTMLDivElement>(null);
   const confettiFiredRef = useRef(false);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const [isSharing, setIsSharing] = useState(false);
+  const [shareCopied, setShareCopied] = useState(false);
+
+  // Detects ICP Internet Identity principal strings — they are base32-like segments
+  // separated by hyphens (5+ groups of 5 chars, or a very long single token).
+  // Human names never look like this.
+  const isPrincipalId = (s: string): boolean => {
+    if (!s) return false;
+    // Standard short principal: "xxxxx-xxxxx-xxxxx-xxxxx-xxx" (4×5 + 1×3)
+    if (/^[a-z0-9]{5}(-[a-z0-9]{5}){3}-[a-z0-9]{3}$/.test(s)) return true;
+    // Long principal (self-authenticating): 5 or more hyphen-separated segments of 5+ chars
+    if (/^[a-z2-7]{5,}(-[a-z2-7]{5,}){4,}$/.test(s)) return true;
+    // Any string with 4+ hyphens that is all-lowercase-alphanum (no spaces, no uppercase)
+    if (
+      s.length > 20 &&
+      (s.match(/-/g) ?? []).length >= 4 &&
+      /^[a-z0-9-]+$/.test(s)
+    )
+      return true;
+    return false;
+  };
+
+  // Resolve display name with strict priority:
+  //   1. profile.displayName — if set, non-empty, and not a principal
+  //   2. cert.studentName    — only if not a principal
+  //   3. 'Student'           — final safe fallback
+  const resolveStudentName = (
+    profileName: string | undefined,
+    certName: string | undefined,
+  ): string => {
+    const pName = profileName?.trim() ?? "";
+    if (pName && !isPrincipalId(pName)) return pName;
+    const cName = certName?.trim() ?? "";
+    if (cName && !isPrincipalId(cName)) return cName;
+    return "Student";
+  };
+
+  const { data: profile, isLoading: isProfileLoading } =
+    useQuery<StudentProfilePublic | null>({
+      queryKey: ["myProfile"],
+      queryFn: async () => {
+        if (!actor) return null;
+        // getMyProfile() returns StudentProfilePublic directly
+        const result = await actor.getMyProfile();
+        return result ?? null;
+      },
+      enabled: !!actor && !isFetching,
+      staleTime: 0,
+      refetchOnMount: true,
+    });
+
+  // Load student profile photo from localStorage — must be after profile query
+  useEffect(() => {
+    if (profile?.principal) {
+      const key = `student-photo-${profile.principal.toText ? profile.principal.toText() : String(profile.principal)}`;
+      const stored = localStorage.getItem(key);
+      if (stored) {
+        setPhotoUrl(stored);
+        return;
+      }
+    }
+    if (!principal) return;
+    const key = `student-photo-${principal.toText()}`;
+    const stored = localStorage.getItem(key);
+    if (stored) setPhotoUrl(stored);
+  }, [principal, profile]);
 
   const { data: cert, isLoading } = useQuery<Certificate | null>({
     queryKey: ["subjectCertificate", subjectId],
@@ -64,12 +135,38 @@ export default function CertificatePage() {
     return () => clearTimeout(t1);
   }, [cert]);
 
-  if (role === "loading" || isLoading) return <LoadingSpinner fullScreen />;
+  if (role === "loading" || isLoading || isProfileLoading)
+    return <LoadingSpinner fullScreen />;
+
+  // Strict resolution: profile name > cert name > 'Student'. Never expose a principal.
+  const studentDisplayName = resolveStudentName(
+    profile?.displayName,
+    cert?.studentName,
+  );
 
   const handlePrint = () => window.print();
   const handleDownloadPDF = () => {
     // Use print dialog — user can choose "Save as PDF" from the print destination
     window.print();
+  };
+
+  const handleShare = async () => {
+    if (!actor || !subjectId || isSharing) return;
+    setIsSharing(true);
+    try {
+      const token = await actor.generateCertificateShareToken(
+        BigInt(subjectId),
+      );
+      if (!token) throw new Error("No token returned");
+      const url = `${window.location.origin}/certificate/${token}`;
+      await navigator.clipboard.writeText(url);
+      setShareCopied(true);
+      setTimeout(() => setShareCopied(false), 2000);
+    } catch {
+      // silently fail — share is non-critical
+    } finally {
+      setIsSharing(false);
+    }
   };
 
   const formatDate = (ts: bigint) =>
@@ -137,9 +234,60 @@ export default function CertificatePage() {
               >
                 <Download className="h-4 w-4" /> Download PDF
               </Button>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="gap-2 hover:-translate-y-0.5 transition-transform"
+                onClick={handleShare}
+                disabled={isSharing}
+                data-ocid="certificate.share_button"
+              >
+                {shareCopied ? (
+                  <>
+                    <Check className="h-4 w-4 text-green-500" /> Link Copied!
+                  </>
+                ) : isSharing ? (
+                  <>
+                    <Share2 className="h-4 w-4 animate-pulse" /> Sharing…
+                  </>
+                ) : (
+                  <>
+                    <Share2 className="h-4 w-4" /> Share
+                  </>
+                )}
+              </Button>
             </div>
           )}
         </div>
+
+        {/* Missing name banner */}
+        {cert && studentDisplayName === "Student" && (
+          <Alert
+            className="no-print mb-6 border-amber-400/60 bg-amber-50 text-amber-900 dark:bg-amber-950/40 dark:border-amber-500/40 dark:text-amber-200"
+            data-ocid="certificate.missing_name_banner"
+          >
+            <UserCircle className="h-4 w-4 text-amber-600 dark:text-amber-400" />
+            <AlertTitle className="text-amber-800 dark:text-amber-300 font-semibold">
+              Your name is not set on this certificate
+            </AlertTitle>
+            <AlertDescription className="text-amber-700 dark:text-amber-400">
+              Your certificate currently shows &ldquo;Student&rdquo; because you
+              haven&apos;t added your display name yet.{" "}
+              <Button
+                type="button"
+                variant="link"
+                size="sm"
+                className="h-auto p-0 font-semibold text-amber-800 dark:text-amber-300 underline underline-offset-2 hover:text-amber-600 dark:hover:text-amber-200"
+                onClick={() => navigate({ to: "/student/profile" })}
+                data-ocid="certificate.go_to_profile_button"
+              >
+                Go to your profile to add your name
+              </Button>{" "}
+              — then come back here and your certificate will show it correctly.
+            </AlertDescription>
+          </Alert>
+        )}
 
         {!cert ? (
           <div
@@ -212,8 +360,40 @@ export default function CertificatePage() {
                     <p className="text-muted-foreground text-sm mb-3 uppercase tracking-widest text-xs">
                       This is to certify that
                     </p>
-                    <p className="font-display text-5xl font-black bg-gradient-to-r from-violet-600 to-purple-700 bg-clip-text text-transparent leading-tight mb-2">
-                      {cert.studentName}
+
+                    {/* Student photo — visible on screen and in print */}
+                    <div
+                      className="flex justify-center mb-4"
+                      data-ocid="certificate.student_photo"
+                    >
+                      {photoUrl ? (
+                        <img
+                          src={photoUrl}
+                          alt={studentDisplayName}
+                          className="h-24 w-24 rounded-full object-cover border-4 border-amber-400 shadow-xl shadow-amber-500/30 ring-4 ring-amber-200 dark:ring-amber-700"
+                          style={{ display: "block" }}
+                        />
+                      ) : (
+                        <div
+                          className="h-24 w-24 rounded-full border-4 border-amber-400 shadow-xl shadow-amber-500/30 ring-4 ring-amber-200 dark:ring-amber-700 bg-gradient-to-br from-violet-400 to-purple-600 flex items-center justify-center"
+                          aria-label="Student avatar placeholder"
+                        >
+                          {studentDisplayName !== "Student" ? (
+                            <span className="text-white font-display font-black text-3xl select-none">
+                              {studentDisplayName.charAt(0).toUpperCase()}
+                            </span>
+                          ) : (
+                            <UserCircle className="h-12 w-12 text-white/80" />
+                          )}
+                        </div>
+                      )}
+                    </div>
+
+                    <p
+                      className="font-display text-5xl font-black bg-gradient-to-r from-violet-600 to-purple-700 bg-clip-text text-transparent leading-tight mb-2"
+                      data-ocid="certificate.student_name"
+                    >
+                      {studentDisplayName}
                     </p>
                     <p className="text-muted-foreground text-sm mt-3">
                       has successfully completed the subject

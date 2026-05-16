@@ -137,7 +137,8 @@ function LeaderboardContent() {
       return actor.getLeaderboard();
     },
     enabled: !!actor && !isFetching,
-    staleTime: 30_000,
+    staleTime: 10_000,
+    refetchInterval: 10_000,
   });
 
   if (isLoading || isFetching) {
@@ -237,9 +238,19 @@ export default function LeaderboardPage() {
         <div className="inline-flex items-center justify-center h-16 w-16 rounded-2xl gradient-primary shadow-glow mx-auto mb-4 animate-float">
           <Trophy className="h-8 w-8 text-white" />
         </div>
-        <h1 className="font-display text-3xl font-extrabold text-foreground gradient-text">
-          Global Leaderboard
-        </h1>
+        <div className="flex items-center justify-center gap-3">
+          <h1 className="font-display text-3xl font-extrabold text-foreground gradient-text">
+            Global Leaderboard
+          </h1>
+          <span
+            className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-500/15 border border-emerald-500/30 text-emerald-600 dark:text-emerald-400 text-xs font-semibold"
+            data-ocid="leaderboard.live_badge"
+            aria-label="Updates every 10 seconds"
+          >
+            <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+            Live
+          </span>
+        </div>
         <p className="text-muted-foreground text-sm mt-1.5">
           Top students ranked by average quiz score
         </p>

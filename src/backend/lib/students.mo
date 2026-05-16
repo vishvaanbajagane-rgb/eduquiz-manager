@@ -32,7 +32,7 @@ module {
       case null {
         let profile : StudentProfile = {
           principal;
-          var displayName = principal.toText();
+          var displayName = "";
           var accentColor = "";
           var department = "";
           var registerNumber = "";

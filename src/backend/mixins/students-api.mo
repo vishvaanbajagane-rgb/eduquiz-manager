@@ -19,11 +19,11 @@ mixin (
     StudentsLib.ensureRegistered(students, caller);
   };
 
-  public query ({ caller }) func getMyProfile() : async ?StudentTypes.StudentProfilePublic {
+  public shared ({ caller }) func getMyProfile() : async StudentTypes.StudentProfilePublic {
     if (not AccessControl.hasPermission(accessControlState, caller, #user)) {
       Runtime.trap("Unauthorized: must be logged in");
     };
-    StudentsLib.getProfile(students, caller);
+    StudentsLib.ensureRegistered(students, caller);
   };
 
   public shared ({ caller }) func updateMyDisplayName(name : Text) : async Bool {

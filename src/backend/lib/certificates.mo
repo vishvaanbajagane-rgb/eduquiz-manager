@@ -2,6 +2,8 @@ import Map "mo:core/Map";
 import CommonTypes "../types/common";
 import CertTypes "../types/certificates";
 import Nat "mo:core/Nat";
+import Text "mo:core/Text";
+import Int "mo:core/Int";
 
 module {
   public type Certificate = CertTypes.Certificate;
@@ -60,5 +62,37 @@ module {
     subjectId : CommonTypes.SubjectId,
   ) : Bool {
     getForStudentSubject(certificates, studentId, subjectId) != null;
+  };
+
+  /// Generate a stable share token for a certificate.
+  /// Returns the existing token if one already exists, otherwise creates a new one.
+  public func getOrCreateShareToken(
+    shareTokens : Map.Map<Text, CommonTypes.CertificateId>,
+    certIdToToken : Map.Map<CommonTypes.CertificateId, Text>,
+    cert : Certificate,
+    state : { var nextTokenCounter : Nat },
+  ) : Text {
+    switch (certIdToToken.get(cert.id)) {
+      case (?existing) { existing };
+      case null {
+        let token = cert.id.toText() # "-" # cert.completedAt.toText() # "-" # state.nextTokenCounter.toText();
+        state.nextTokenCounter += 1;
+        shareTokens.add(token, cert.id);
+        certIdToToken.add(cert.id, token);
+        token;
+      };
+    };
+  };
+
+  /// Look up a certificate by share token.
+  public func getByToken(
+    shareTokens : Map.Map<Text, CommonTypes.CertificateId>,
+    certificates : Map.Map<CommonTypes.CertificateId, Certificate>,
+    token : Text,
+  ) : ?Certificate {
+    switch (shareTokens.get(token)) {
+      case (?certId) { certificates.get(certId) };
+      case null { null };
+    };
   };
 };

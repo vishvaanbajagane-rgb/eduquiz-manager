@@ -1,5 +1,13 @@
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { useAuth } from "@/hooks/useAuth";
 import { Link, useRouterState } from "@tanstack/react-router";
 import {
@@ -14,6 +22,7 @@ import {
   User,
 } from "lucide-react";
 import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 import type { ReactNode } from "react";
 
 interface StudentLayoutProps {
@@ -28,13 +37,71 @@ const NAV_ITEMS = [
 ];
 
 export function StudentLayout({ children }: StudentLayoutProps) {
-  const { logout } = useAuth();
+  const { logout, principal } = useAuth();
   const routerState = useRouterState();
   const currentPath = routerState.location.pathname;
   const { theme, setTheme } = useTheme();
 
+  const [showWelcome, setShowWelcome] = useState(false);
+
+  useEffect(() => {
+    if (!principal) return;
+    const key = `eduquiz_profile_nudge_shown_${principal.toString()}`;
+    if (!localStorage.getItem(key)) {
+      setShowWelcome(true);
+    }
+  }, [principal]);
+
+  const dismissWelcome = () => {
+    if (principal) {
+      localStorage.setItem(
+        `eduquiz_profile_nudge_shown_${principal.toString()}`,
+        "1",
+      );
+    }
+    setShowWelcome(false);
+  };
+
   return (
     <div className="min-h-screen flex bg-background">
+      {/* First-login welcome modal */}
+      <Dialog
+        open={showWelcome}
+        onOpenChange={(open) => {
+          if (!open) dismissWelcome();
+        }}
+      >
+        <DialogContent className="max-w-sm" data-ocid="student.welcome_dialog">
+          <DialogHeader>
+            <DialogTitle className="font-display text-xl flex items-center gap-2">
+              🎉 Welcome to EduQuiz!
+            </DialogTitle>
+            <DialogDescription className="text-sm text-muted-foreground mt-1">
+              Complete your profile to personalize your certificates and
+              results. Adding your name only takes a second!
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="flex-col sm:flex-row gap-2 pt-2">
+            <Button
+              type="button"
+              variant="outline"
+              className="w-full sm:w-auto"
+              onClick={dismissWelcome}
+              data-ocid="student.welcome_dialog.cancel_button"
+            >
+              Maybe later
+            </Button>
+            <Link
+              to="/student/profile"
+              className="inline-flex items-center justify-center gap-1.5 h-9 px-4 rounded-md text-sm font-medium bg-gradient-to-r from-violet-600 to-purple-600 hover:from-violet-700 hover:to-purple-700 text-white shadow-sm transition-all hover:-translate-y-px w-full sm:w-auto"
+              onClick={dismissWelcome}
+              data-ocid="student.welcome_dialog.profile_link"
+            >
+              Set up my profile →
+            </Link>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
       {/* Sidebar */}
       <aside className="w-64 gradient-sidebar-student flex flex-col shrink-0 shadow-xl">
         {/* Brand */}

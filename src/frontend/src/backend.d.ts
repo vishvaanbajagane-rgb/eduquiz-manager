@@ -136,15 +136,17 @@ export interface backendInterface {
     createSubject(payload: CreateSubjectPayload): Promise<Subject>;
     deleteQuestion(id: QuestionId): Promise<boolean>;
     deleteSubject(id: SubjectId): Promise<boolean>;
+    generateCertificateShareToken(subjectId: SubjectId): Promise<string | null>;
     getAllAttempts(): Promise<Array<QuizAttemptPublic>>;
     getAttemptDetails(attemptId: AttemptId): Promise<AttemptDetails | null>;
     getAttemptsByStudent(studentId: UserId): Promise<Array<QuizAttemptPublic>>;
     getAttemptsBySubject(subjectId: SubjectId): Promise<Array<QuizAttemptPublic>>;
     getCallerUserRole(): Promise<UserRole>;
+    getCertificateByToken(token: string): Promise<Certificate | null>;
     getCertificates(): Promise<Array<Certificate>>;
     getLeaderboard(): Promise<Array<LeaderboardEntry>>;
     getMyAttempts(): Promise<Array<QuizAttemptPublic>>;
-    getMyProfile(): Promise<StudentProfilePublic | null>;
+    getMyProfile(): Promise<StudentProfilePublic>;
     getSubjectCertificate(subjectId: SubjectId): Promise<Certificate | null>;
     isCallerAdmin(): Promise<boolean>;
     listAllStudents(): Promise<Array<StudentSummary>>;

@@ -139,6 +139,11 @@ export const idlService = IDL.Service({
   'createSubject' : IDL.Func([CreateSubjectPayload], [Subject], []),
   'deleteQuestion' : IDL.Func([QuestionId], [IDL.Bool], []),
   'deleteSubject' : IDL.Func([SubjectId], [IDL.Bool], []),
+  'generateCertificateShareToken' : IDL.Func(
+      [SubjectId],
+      [IDL.Opt(IDL.Text)],
+      [],
+    ),
   'getAllAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
   'getAttemptDetails' : IDL.Func(
       [AttemptId],
@@ -156,10 +161,15 @@ export const idlService = IDL.Service({
       ['query'],
     ),
   'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+  'getCertificateByToken' : IDL.Func(
+      [IDL.Text],
+      [IDL.Opt(Certificate)],
+      ['query'],
+    ),
   'getCertificates' : IDL.Func([], [IDL.Vec(Certificate)], ['query']),
   'getLeaderboard' : IDL.Func([], [IDL.Vec(LeaderboardEntry)], ['query']),
   'getMyAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
-  'getMyProfile' : IDL.Func([], [IDL.Opt(StudentProfilePublic)], ['query']),
+  'getMyProfile' : IDL.Func([], [StudentProfilePublic], []),
   'getSubjectCertificate' : IDL.Func(
       [SubjectId],
       [IDL.Opt(Certificate)],
@@ -329,6 +339,11 @@ export const idlFactory = ({ IDL }) => {
     'createSubject' : IDL.Func([CreateSubjectPayload], [Subject], []),
     'deleteQuestion' : IDL.Func([QuestionId], [IDL.Bool], []),
     'deleteSubject' : IDL.Func([SubjectId], [IDL.Bool], []),
+    'generateCertificateShareToken' : IDL.Func(
+        [SubjectId],
+        [IDL.Opt(IDL.Text)],
+        [],
+      ),
     'getAllAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
     'getAttemptDetails' : IDL.Func(
         [AttemptId],
@@ -346,10 +361,15 @@ export const idlFactory = ({ IDL }) => {
         ['query'],
       ),
     'getCallerUserRole' : IDL.Func([], [UserRole], ['query']),
+    'getCertificateByToken' : IDL.Func(
+        [IDL.Text],
+        [IDL.Opt(Certificate)],
+        ['query'],
+      ),
     'getCertificates' : IDL.Func([], [IDL.Vec(Certificate)], ['query']),
     'getLeaderboard' : IDL.Func([], [IDL.Vec(LeaderboardEntry)], ['query']),
     'getMyAttempts' : IDL.Func([], [IDL.Vec(QuizAttemptPublic)], ['query']),
-    'getMyProfile' : IDL.Func([], [IDL.Opt(StudentProfilePublic)], ['query']),
+    'getMyProfile' : IDL.Func([], [StudentProfilePublic], []),
     'getSubjectCertificate' : IDL.Func(
         [SubjectId],
         [IDL.Opt(Certificate)],

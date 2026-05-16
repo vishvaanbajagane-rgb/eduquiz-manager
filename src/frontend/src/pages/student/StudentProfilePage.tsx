@@ -2,9 +2,33 @@ import { useBackend } from "@/hooks/useBackend";
 import { StudentLayout } from "@/layouts/StudentLayout";
 import type { StudentProfilePublic } from "@/types";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Camera, CheckCircle2, User } from "lucide-react";
+import { Award, Camera, CheckCircle2, User } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { toast } from "sonner";
+
+// Detects ICP Internet Identity principal strings.
+// Human names never look like this.
+function isPrincipalId(s: string): boolean {
+  if (!s) return false;
+  // Standard short principal: "xxxxx-xxxxx-xxxxx-xxxxx-xxx"
+  if (/^[a-z0-9]{5}(-[a-z0-9]{5}){3}-[a-z0-9]{3}$/.test(s)) return true;
+  // Long principal (self-authenticating): 5 or more hyphen-separated segments
+  if (/^[a-z2-7]{5,}(-[a-z2-7]{5,}){4,}$/.test(s)) return true;
+  // Any all-lowercase-alphanum string with 4+ hyphens and length > 20
+  if (
+    s.length > 20 &&
+    (s.match(/-/g) ?? []).length >= 4 &&
+    /^[a-z0-9-]+$/.test(s)
+  )
+    return true;
+  return false;
+}
+
+// Returns empty string if the value looks like a principal ID
+function sanitizeName(raw: string | undefined): string {
+  const s = raw?.trim() ?? "";
+  return isPrincipalId(s) ? "" : s;
+}
 
 const ACCENT_SWATCHES = [
   { label: "Default", value: "", display: "oklch(0.65 0.005 265)" },
@@ -51,13 +75,21 @@ export function StudentProfilePage() {
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { data: profile, isLoading } = useQuery<StudentProfilePublic | null>({
+  const {
+    data: profile,
+    isLoading,
+    isFetched,
+  } = useQuery<StudentProfilePublic | null>({
     queryKey: ["myProfile"],
     queryFn: async () => {
       if (!actor) return null;
-      return actor.getMyProfile();
+      // getMyProfile() returns StudentProfilePublic directly (not Option/array)
+      const result = await actor.getMyProfile();
+      return result ?? null;
     },
     enabled: !!actor && !isFetching,
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   const [displayName, setDisplayName] = useState("");
@@ -67,23 +99,29 @@ export function StudentProfilePage() {
   const [enrollNumber, setEnrollNumber] = useState("");
   const [section, setSection] = useState("");
   const [profilePhoto, setProfilePhoto] = useState<string>("");
+  const [photoViewOpen, setPhotoViewOpen] = useState(false);
+  // Track whether we've initialized form from profile (prevents re-init on mutation invalidation)
+  const [initialized, setInitialized] = useState(false);
 
   useEffect(() => {
-    if (profile) {
-      setDisplayName(profile.displayName ?? "");
+    if (profile && isFetched) {
+      setDisplayName(sanitizeName(profile.displayName));
       const saved = localStorage.getItem(LS_KEY) ?? "";
       setSelectedColor(profile.accentColor ?? saved ?? "");
       setDepartment(profile.department ?? "");
       setRegisterNumber(profile.registerNumber ?? "");
       setEnrollNumber(profile.enrollNumber ?? "");
       setSection(profile.section ?? "");
-      // Load saved photo keyed by principal string
-      const principalStr = profile.principal?.toString() ?? "default";
+      // Load saved photo — key uses toText() for consistency with CertificatePage
+      const principalStr = profile.principal?.toText
+        ? profile.principal.toText()
+        : String(profile.principal);
       const savedPhoto =
         localStorage.getItem(`${PHOTO_LS_KEY_PREFIX}${principalStr}`) ?? "";
       setProfilePhoto(savedPhoto);
+      setInitialized(true);
     }
-  }, [profile]);
+  }, [profile, isFetched]);
 
   const handlePhotoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -99,7 +137,9 @@ export function StudentProfilePage() {
     const reader = new FileReader();
     reader.onload = (ev) => {
       const dataUrl = ev.target?.result as string;
-      const principalStr = profile?.principal?.toString() ?? "default";
+      const principalStr = profile?.principal?.toText
+        ? profile.principal.toText()
+        : String(profile?.principal ?? "default");
       localStorage.setItem(`${PHOTO_LS_KEY_PREFIX}${principalStr}`, dataUrl);
       setProfilePhoto(dataUrl);
       toast.success("Profile photo updated!");
@@ -108,7 +148,9 @@ export function StudentProfilePage() {
   };
 
   const handleRemovePhoto = () => {
-    const principalStr = profile?.principal?.toString() ?? "default";
+    const principalStr = profile?.principal?.toText
+      ? profile.principal.toText()
+      : String(profile?.principal ?? "default");
     localStorage.removeItem(`${PHOTO_LS_KEY_PREFIX}${principalStr}`);
     setProfilePhoto("");
     toast.success("Profile photo removed.");
@@ -119,7 +161,8 @@ export function StudentProfilePage() {
       if (!actor) throw new Error("Not connected");
       await actor.updateMyDisplayName(name);
     },
-    onSuccess: () => {
+    onSuccess: (_data, name) => {
+      setDisplayName(name);
       queryClient.invalidateQueries({ queryKey: ["myProfile"] });
       toast.success("Display name updated!");
     },
@@ -131,7 +174,8 @@ export function StudentProfilePage() {
       if (!actor) throw new Error("Not connected");
       await actor.updateMyDepartment(value);
     },
-    onSuccess: () => {
+    onSuccess: (_data, value) => {
+      setDepartment(value);
       queryClient.invalidateQueries({ queryKey: ["myProfile"] });
       toast.success("Department updated!");
     },
@@ -143,7 +187,8 @@ export function StudentProfilePage() {
       if (!actor) throw new Error("Not connected");
       await actor.updateMyRegisterNumber(value);
     },
-    onSuccess: () => {
+    onSuccess: (_data, value) => {
+      setRegisterNumber(value);
       queryClient.invalidateQueries({ queryKey: ["myProfile"] });
       toast.success("Register number updated!");
     },
@@ -155,7 +200,8 @@ export function StudentProfilePage() {
       if (!actor) throw new Error("Not connected");
       await actor.updateMyEnrollNumber(value);
     },
-    onSuccess: () => {
+    onSuccess: (_data, value) => {
+      setEnrollNumber(value);
       queryClient.invalidateQueries({ queryKey: ["myProfile"] });
       toast.success("Enroll number updated!");
     },
@@ -167,7 +213,8 @@ export function StudentProfilePage() {
       if (!actor) throw new Error("Not connected");
       await actor.updateMySection(value);
     },
-    onSuccess: () => {
+    onSuccess: (_data, value) => {
+      setSection(value);
       queryClient.invalidateQueries({ queryKey: ["myProfile"] });
       toast.success("Section updated!");
     },
@@ -191,6 +238,10 @@ export function StudentProfilePage() {
   const currentAccent = selectedColor || (profile?.accentColor ?? "");
   const headerGradient = getHeaderGradient(currentAccent);
 
+  // Show skeleton while loading OR while actor is being fetched
+  const showSkeleton =
+    isLoading || (isFetching && !isFetched) || (!initialized && !isFetched);
+
   return (
     <StudentLayout>
       <div
@@ -203,15 +254,16 @@ export function StudentProfilePage() {
             My Profile
           </h1>
           <p className="text-muted-foreground mt-1 text-sm">
-            Personalize your name and accent color.
+            Personalize your name, academic details, and accent color.
           </p>
         </div>
 
-        {isLoading ? (
-          <div
-            className="rounded-2xl bg-card border border-border animate-pulse h-64"
-            data-ocid="student_profile.loading_state"
-          />
+        {showSkeleton ? (
+          <div className="space-y-4" data-ocid="student_profile.loading_state">
+            <div className="rounded-2xl bg-card border border-border animate-pulse h-32" />
+            <div className="rounded-2xl bg-card border border-border animate-pulse h-48" />
+            <div className="rounded-2xl bg-card border border-border animate-pulse h-24" />
+          </div>
         ) : (
           <div
             className="rounded-2xl overflow-hidden border border-border shadow-lg bg-card"
@@ -223,13 +275,22 @@ export function StudentProfilePage() {
               style={{ background: headerGradient }}
             >
               <div className="relative group">
-                <div
-                  className="h-20 w-20 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg border-2 border-white/30 overflow-hidden"
+                <button
+                  type="button"
+                  className="h-20 w-20 rounded-2xl flex items-center justify-center text-white text-2xl font-bold shadow-lg border-2 border-white/30 overflow-hidden cursor-pointer"
                   style={{
                     background: profilePhoto
                       ? undefined
                       : "rgba(255,255,255,0.18)",
                   }}
+                  onClick={() => {
+                    if (profilePhoto) setPhotoViewOpen(true);
+                    else fileInputRef.current?.click();
+                  }}
+                  aria-label={
+                    profilePhoto ? "View profile photo" : "Upload profile photo"
+                  }
+                  data-ocid="student_profile.photo_viewer"
                 >
                   {profilePhoto ? (
                     <img
@@ -240,16 +301,17 @@ export function StudentProfilePage() {
                   ) : (
                     <span>{(displayName || "?").charAt(0).toUpperCase()}</span>
                   )}
+                </button>
+                <div className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity pointer-events-none">
+                  <Camera className="h-6 w-6 text-white" />
                 </div>
                 <button
                   type="button"
                   onClick={() => fileInputRef.current?.click()}
-                  className="absolute inset-0 rounded-2xl bg-black/40 opacity-0 group-hover:opacity-100 flex items-center justify-center transition-opacity cursor-pointer"
+                  className="sr-only"
                   aria-label="Upload profile photo"
                   data-ocid="student_profile.upload_button"
-                >
-                  <Camera className="h-6 w-6 text-white" />
-                </button>
+                />
                 <input
                   ref={fileInputRef}
                   type="file"
@@ -275,15 +337,57 @@ export function StudentProfilePage() {
               {/* Photo hint */}
               <p className="text-xs text-muted-foreground flex items-center gap-1.5">
                 <User className="h-3.5 w-3.5" />
-                Hover over your avatar to upload a profile photo (stored locally
-                on this device).
+                Click your avatar to upload or change your profile photo (stored
+                locally on this device). Tap to view full size.
               </p>
+
+              {/* Profile Photo Full View */}
+              {profilePhoto && (
+                <div
+                  className="flex items-center gap-4 p-4 rounded-xl bg-muted/30 border border-border"
+                  data-ocid="student_profile.photo_preview"
+                >
+                  <button
+                    type="button"
+                    onClick={() => setPhotoViewOpen(true)}
+                    className="shrink-0 rounded-xl focus:outline-none focus:ring-2 focus:ring-ring"
+                    aria-label="View full size profile photo"
+                  >
+                    <img
+                      src={profilePhoto}
+                      alt="Profile avatar"
+                      className="h-16 w-16 rounded-xl object-cover border-2 border-border shadow hover:scale-105 transition-transform"
+                    />
+                  </button>
+                  <div>
+                    <p className="text-sm font-semibold text-foreground">
+                      {displayName || "Your Name"}
+                    </p>
+                    <p className="text-xs text-muted-foreground mt-0.5">
+                      Click photo to view full size
+                    </p>
+                    <button
+                      type="button"
+                      onClick={() => fileInputRef.current?.click()}
+                      className="mt-1.5 text-xs text-primary underline underline-offset-2 hover:opacity-80 transition-opacity"
+                      data-ocid="student_profile.change_photo_button"
+                    >
+                      Change photo
+                    </button>
+                  </div>
+                </div>
+              )}
 
               {/* Display Name */}
               <section data-ocid="student_profile.name_section">
-                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-3">
+                <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-widest mb-1">
                   Display Name
                 </h2>
+                <p className="text-xs text-muted-foreground mb-3 flex items-center gap-1">
+                  <Award className="h-3 w-3 text-amber-500" />
+                  This name will appear on your certificates — make sure it's
+                  your real name.
+                </p>
                 <div className="flex gap-3">
                   <input
                     type="text"
@@ -519,6 +623,55 @@ export function StudentProfilePage() {
           </div>
         )}
       </div>
+      {/* Full-screen photo viewer modal */}
+      {photoViewOpen && profilePhoto && (
+        <div
+          className="fixed inset-0 z-[9999] bg-black/90 flex flex-col items-center justify-center cursor-zoom-out"
+          role="presentation"
+          onClick={() => setPhotoViewOpen(false)}
+          onKeyDown={(e) => e.key === "Escape" && setPhotoViewOpen(false)}
+          data-ocid="student_profile.photo_modal"
+        >
+          <dialog
+            aria-label="Profile photo full view"
+            className="relative flex flex-col items-center bg-transparent border-0 p-0 open:flex"
+            onClick={(e) => e.stopPropagation()}
+            onKeyDown={(e) => e.key === "Escape" && setPhotoViewOpen(false)}
+            tabIndex={-1}
+            open
+          >
+            <img
+              src={profilePhoto}
+              alt={displayName || "Profile photo"}
+              className="max-w-[90vw] max-h-[75vh] rounded-2xl object-contain shadow-2xl"
+            />
+            <p className="mt-3 text-white/60 text-xs">
+              Tap outside or press Esc to close
+            </p>
+            <div className="mt-4 flex items-center justify-center gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setPhotoViewOpen(false);
+                  setTimeout(() => fileInputRef.current?.click(), 100);
+                }}
+                className="px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors"
+                data-ocid="student_profile.photo_modal_change_button"
+              >
+                Change Photo
+              </button>
+              <button
+                type="button"
+                onClick={() => setPhotoViewOpen(false)}
+                className="px-4 py-2 rounded-xl text-sm font-semibold bg-white/10 hover:bg-white/20 text-white border border-white/20 transition-colors"
+                data-ocid="student_profile.photo_modal_close_button"
+              >
+                Close
+              </button>
+            </div>
+          </dialog>
+        </div>
+      )}
     </StudentLayout>
   );
 }

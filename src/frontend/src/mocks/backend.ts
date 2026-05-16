@@ -331,4 +331,8 @@ export const mockBackend: backendInterface = {
 
   updateSubject: async () => true,
 
+  generateCertificateShareToken: async () => null,
+
+  getCertificateByToken: async () => null,
+
 };

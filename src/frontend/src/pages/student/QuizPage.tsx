@@ -1,16 +1,19 @@
 import { createActor } from "@/backend";
 import { LoadingSpinner } from "@/components/LoadingSpinner";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/hooks/useAuth";
+import { useBackend } from "@/hooks/useBackend";
 import { useRole } from "@/hooks/useRole";
 import { StudentLayout } from "@/layouts/StudentLayout";
+import type { StudentProfilePublic } from "@/types";
 import type { QuestionPublic, QuizAttemptPublic } from "@/types";
 import { useActor } from "@caffeineai/core-infrastructure";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useNavigate, useParams } from "@tanstack/react-router";
+import { Link, useNavigate, useParams } from "@tanstack/react-router";
 import {
   ArrowLeft,
   CheckCircle2,
@@ -31,6 +34,7 @@ export default function QuizPage() {
   const navigate = useNavigate();
   const params = useParams({ from: "/student/quiz/$subjectId" });
   const { actor, isFetching } = useActor(createActor);
+  const { actor: profileActor, isFetching: profileFetching } = useBackend();
   const queryClient = useQueryClient();
 
   const [attempt, setAttempt] = useState<QuizAttemptPublic | null>(null);
@@ -40,6 +44,32 @@ export default function QuizPage() {
   const [quizResult, setQuizResult] = useState<QuizAttemptPublic | null>(null);
   const [correctAnswers, setCorrectAnswers] = useState<number[]>([]);
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
+  const [nudgeDismissed, setNudgeDismissed] = useState(false);
+
+  const { data: myProfile } = useQuery<StudentProfilePublic | null>({
+    queryKey: ["myProfile"],
+    queryFn: async () => {
+      if (!profileActor) return null;
+      return profileActor.getMyProfile();
+    },
+    enabled: !!profileActor && !profileFetching,
+    staleTime: 0,
+    refetchOnMount: true,
+  });
+
+  // A name is considered "missing" if it's empty, the fallback word "Student",
+  // or an ICP principal (63+ char alphanumeric+dash string)
+  const isPrincipalLike = (s: string) =>
+    s.length >= 20 && /^[a-z0-9-]+$/.test(s);
+
+  const hasName = !!(
+    myProfile?.displayName &&
+    myProfile.displayName.trim().length > 0 &&
+    myProfile.displayName.trim() !== "Student" &&
+    !isPrincipalLike(myProfile.displayName.trim())
+  );
+
+  const showNudge = !hasName && !nudgeDismissed;
 
   useEffect(() => {
     if (!isAuthenticated) navigate({ to: "/login" });
@@ -161,6 +191,36 @@ export default function QuizPage() {
     return (
       <StudentLayout>
         <div className="max-w-2xl mx-auto" data-ocid="student.quiz.result.page">
+          {/* Profile name nudge — only shown if displayName is missing/principal/fallback */}
+          {showNudge && (
+            <Alert
+              className="mb-6 border-amber-500/50 bg-amber-500/10 text-amber-700 dark:text-amber-400"
+              data-ocid="student.quiz.result.profile_nudge"
+            >
+              <AlertDescription className="flex flex-wrap items-center justify-between gap-2 text-sm">
+                <span className="flex flex-wrap items-center gap-2">
+                  ✏️ Your profile name isn't set — add your name so it appears on
+                  your certificate.
+                  <Link
+                    to="/student/profile"
+                    className="font-semibold underline underline-offset-2 hover:no-underline shrink-0"
+                    data-ocid="student.quiz.result.profile_nudge_link"
+                  >
+                    Set your name →
+                  </Link>
+                </span>
+                <button
+                  type="button"
+                  aria-label="Dismiss profile nudge"
+                  className="shrink-0 opacity-60 hover:opacity-100 transition-opacity text-base leading-none"
+                  onClick={() => setNudgeDismissed(true)}
+                  data-ocid="student.quiz.result.profile_nudge_dismiss"
+                >
+                  ✕
+                </button>
+              </AlertDescription>
+            </Alert>
+          )}
           <div className="text-center py-10">
             {/* Trophy */}
             <div

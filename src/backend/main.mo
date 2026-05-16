@@ -18,8 +18,8 @@ import Time "mo:core/Time";
 import _CertificatesTypes "types/certificates";
 import CertificatesLib "lib/certificates";
 import CertificatesMixin "mixins/certificates-api";
+import Migration "migration";
 import LeaderboardMixin "mixins/leaderboard-api";
-import Nat "mo:core/Nat";
 
 
 
@@ -27,8 +27,9 @@ import Nat "mo:core/Nat";
 
 
 
+(with migration = Migration.run)
 actor {
-  stable var openAIApiKey : { var value : ?Text } = { var value = null };
+  let openAIApiKey : { var value : ?Text } = { var value = null };
   let accessControlState = AccessControl.initState();
   include MixinAuthorization(accessControlState);
 
@@ -38,12 +39,15 @@ actor {
   let students = Map.empty<CommonTypes.UserId, StudentsLib.StudentProfile>();
 
   let certificates = Map.empty<CommonTypes.CertificateId, CertificatesLib.Certificate>();
+  let shareTokens = Map.empty<Text, CommonTypes.CertificateId>();
+  let certIdToToken = Map.empty<CommonTypes.CertificateId, Text>();
 
   let state = {
     var nextSubjectId : Nat = 0;
     var nextQuestionId : Nat = 0;
     var nextAttemptId : Nat = 0;
     var nextCertificateId : Nat = 0;
+    var nextTokenCounter : Nat = 0;
   };
 
   // Pre-populate programming language subjects on first deploy
@@ -66,6 +70,6 @@ actor {
   include QuestionsMixin(accessControlState, questions, state);
   include QuizMixin(accessControlState, attempts, questions, subjects, certificates, students, state);
   include StudentsMixin(accessControlState, students, attempts);
-  include CertificatesMixin(accessControlState, certificates);
+  include CertificatesMixin(accessControlState, certificates, shareTokens, certIdToToken, state);
   include LeaderboardMixin(accessControlState, students, attempts);
 };

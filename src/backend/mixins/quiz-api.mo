@@ -58,8 +58,11 @@ mixin (
         case null "";
       };
       let studentName = switch (students.get(caller)) {
-        case (?p) p.displayName;
-        case null caller.toText();
+        case (?p) {
+          let n = p.displayName;
+          if (n == "" or n == caller.toText()) "" else n;
+        };
+        case null "";
       };
       ignore CertsLib.issue(
         certificates,
