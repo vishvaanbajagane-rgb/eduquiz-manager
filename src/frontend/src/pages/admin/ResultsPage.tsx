@@ -184,8 +184,8 @@ function AttemptRow({
 
   const pct = Number(attempt.scorePercentage);
   const principal = attempt.studentPrincipal.toString();
-  const truncatedPrincipal = `${principal.slice(0, 6)}…${principal.slice(-4)}`;
-  const studentName = nameMap.get(principal) ?? truncatedPrincipal;
+
+  const studentName = nameMap.get(principal) ?? "Unknown Student";
   const subjectName =
     subjectMap.get(attempt.subjectId.toString()) ?? "Unknown Subject";
   const date = attempt.completedAt
@@ -215,11 +215,6 @@ function AttemptRow({
           <span className="text-sm font-medium text-foreground">
             {studentName}
           </span>
-          {nameMap.get(principal) && (
-            <code className="block text-xs text-muted-foreground/60 font-mono mt-0.5">
-              {truncatedPrincipal}
-            </code>
-          )}
         </TableCell>
         <TableCell className="text-sm text-foreground font-semibold">
           {subjectName}

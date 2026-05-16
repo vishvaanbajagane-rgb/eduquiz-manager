@@ -5,8 +5,9 @@ const pythonSubjectId = BigInt(1);
 const jsSubjectId = BigInt(2);
 
 export const mockBackend: backendInterface = {
-  assignCallerUserRole: async () => undefined,
   _initializeAccessControl: async () => undefined,
+
+  assignCallerUserRole: async () => undefined,
 
   createQuestion: async (payload) => ({
     id: BigInt(10),
@@ -333,6 +334,21 @@ export const mockBackend: backendInterface = {
 
   generateCertificateShareToken: async () => null,
 
+
+  getAllStudentNames: async () => [
+    {
+      principal: { _isPrincipal: true, toText: () => "2vxsx-fae" } as any,
+      name: "Alex Johnson",
+    },
+    {
+      principal: { _isPrincipal: true, toText: () => "3xwpq-abc" } as any,
+      name: "Maria Garcia",
+    },
+    {
+      principal: { _isPrincipal: true, toText: () => "4yzrs-xyz" } as any,
+      name: "David Chen",
+    },
+  ],
   getCertificateByToken: async () => null,
 
 };
